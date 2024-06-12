@@ -260,7 +260,7 @@ namespace PokemonUnity
 		/// <summary>
 		/// Default window frame (see also <seealso cref="Game.TextFrames"/>)
 		/// </summary>
-		public int frame				    { get; set; }
+		public int frame					{ get; set; }
 		/// <summary>
 		/// Speech frame
 		/// </summary>
@@ -280,7 +280,7 @@ namespace PokemonUnity
 		/// <summary>
 		/// Screen border (0=off, 1=on)
 		/// </summary>
-		public int border				    { get; set; }
+		public int border					{ get; set; }
 		/// <summary>
 		/// Run key functionality (0=hold to run, 1=toggle auto-run)
 		/// </summary>

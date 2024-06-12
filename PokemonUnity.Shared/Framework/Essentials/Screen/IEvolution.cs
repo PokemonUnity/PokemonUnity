@@ -19,6 +19,7 @@ namespace PokemonEssentials.Interface.Screen
 {
 	public interface IPokemonEvolutionScene : IScene
 	{
+		IPokemonEvolutionScene initialize(); //Maybe not needed, since startscreen is called after this
 		void EndScreen();
 		void Evolution(bool cancancel = true);
 		void FlashInOut(bool canceled,string oldstate,string oldstate2);

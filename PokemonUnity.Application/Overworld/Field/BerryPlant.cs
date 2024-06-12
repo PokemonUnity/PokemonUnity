@@ -461,7 +461,7 @@ namespace PokemonUnity//.Inventory.Plants
 									berry=screen.ChooseBerryScreen();
 								});
 								if (ret>0) {
-									if (Item.IsMulch(ret)) { //this is IGameItem gi && gi
+									if (IsMulch(ret)) { //this is IGameItem gi && gi
 										//berryData.Mulch=ret;
 										gm6.Message(Game._INTL("The {1} was scattered on the soil.",ret.ToString(TextScripts.Name)));
 										if (gm6.ConfirmMessage(Game._INTL("Want to plant a Berry?"))) {

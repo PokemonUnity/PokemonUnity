@@ -224,6 +224,6 @@ namespace PokemonUnity.Combat
 		public override void GainEXP() {
 		}
 
-		void IScene.Refresh() { }
+		void IHasDisplayMessage.Refresh() { scene.Refresh(); }
 	}
 }

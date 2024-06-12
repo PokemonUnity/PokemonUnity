@@ -21,7 +21,7 @@ namespace PokemonEssentials.Interface.Screen
 {
 	public interface IPartyDisplayScene : IScene
 	{
-		//IPartyDisplayScene initialize();
+		IPartyDisplayScene initialize();
 		int ShowCommands(string helptext, string[] commands,int index= 0);
 		void update();
 		void SetHelpText(string helptext);
@@ -36,6 +36,8 @@ namespace PokemonEssentials.Interface.Screen
 		void HardRefresh();
 		void PreSelect(IPokemon pkmn);
 		void ChoosePokemon(bool switching= false, int initialsel= -1);
+		int ChoosePokemon(string helptext= null);			//Moved from DisplayScreen
+		int ChooseMove(IPokemon pokemon,string helptext);	//Moved from DisplayScreen
 		void Select(Items item);
 		//void Display(string text);
 		void SwitchBegin(int oldid,int newid);
@@ -52,7 +54,7 @@ namespace PokemonEssentials.Interface.Screen
 	{
 		IPartyDisplayScreen initialize(IPartyDisplayScene scene, IList<IPokemon> party);
 		void HardRefresh();
-		void Refresh();
+		//void Refresh();
 		void RefreshSingle(int i);
 		//void Display(string text);
 		//void Confirm(string text);
@@ -63,8 +65,8 @@ namespace PokemonEssentials.Interface.Screen
 		void PokemonGiveScreen(Items item);
 		void PokemonGiveMailScreen(int mailIndex);
 		void StartScene(string helptext,bool doublebattle,string[] annotations= null);
-		int ChoosePokemon(string helptext= null);
-		void ChooseMove(IPokemon pokemon,string helptext);
+		int ChoosePokemon(string helptext= null);				//Moved to Scene...
+		//void ChooseMove(IPokemon pokemon,string helptext);	//Moved to Scene...
 		void EndScene();
 		/// <summary>
 		/// Checks for identical species
@@ -78,7 +80,8 @@ namespace PokemonEssentials.Interface.Screen
 		void CheckItems(Items[] array);
 		IPokemon[] PokemonMultipleEntryScreenEx(IPokemonRuleSet ruleset);
 		int ChooseAblePokemon(Predicate<IPokemon> ableProc,bool allowIneligible= false);
-		void RefreshAnnotations(bool ableProc);
+		//void RefreshAnnotations(bool ableProc);
+		void RefreshAnnotations(Predicate<IPokemon> ableProc);
 		void ClearAnnotations();
 		void PokemonDebug(IPokemon pkmn, int pkmnid);
 		void PokemonScreen();

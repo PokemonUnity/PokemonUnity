@@ -4701,6 +4701,11 @@ namespace PokemonUnity.Combat
 		{
 			return Random(x);
 		}
+
+		void IHasDisplayMessage.Refresh()
+		{
+			scene.Refresh();
+		}
 		#endregion
 #pragma warning restore 0162
 	}

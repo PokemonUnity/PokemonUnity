@@ -16,7 +16,7 @@ using PokemonEssentials.Interface.PokeBattle;
 namespace PokemonUnity.Inventory
 {
 	[Obsolete("Move Everything over to Game class using interface `IItemChecker` and `IGameItem`")]
-	public static partial class Item {
+	public static partial class Item { //: IItemCheck
 		public const int ITEMID        = 0;
 		public const int ITEMNAME      = 1;
 		public const int ITEMPLURAL    = 2;
@@ -490,7 +490,7 @@ namespace PokemonUnity.Inventory
 			return pokemon.IsNotNullOrNone() && !pokemon.isEgg;
 		}
 
-		public static bool ConsumeItemInBattle(PokemonBag bag,Items item) {
+		public static bool ConsumeItemInBattle(PokemonEssentials.Interface.Screen.IBag bag,Items item) {
 			if (item!=0 && Kernal.ItemData[item].Flags.Consumable && //!=3 disappear after use
 				//Kernal.ItemData[item].Flags!=4 && //used on enemy and disappears after use (i.e. pokeball)
 				Kernal.ItemData[item].Flags.Useable_In_Battle) { //!=0 cannot be used in battle
@@ -694,6 +694,7 @@ namespace PokemonUnity.Inventory
 
 		private static void TopRightWindow(string text) {
 			IWindow_AdvancedTextPokemon window = null; //new Window_AdvancedTextPokemon(text);
+			window.initialize(text);
 			window.z=99999;
 			window.width=198;
 			window.y=0;
@@ -898,7 +899,7 @@ namespace PokemonUnity.Inventory
 		}
 
 		//static ItemHandlers() {
-		/*private static void RegisterItemHandlers() {
+		/*private static void RegisterItemHandlers(object sender, OnStepTaken ) {
 			//Events.OnStepTaken+=OnStepTakenEventHandler;
 			#region UseFromBag handlers
 			UseFromBag.Add(Items.REPEL, () => { return Repel(Items.REPEL, 100); });

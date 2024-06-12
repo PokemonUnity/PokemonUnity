@@ -61,6 +61,8 @@ namespace PokemonEssentials.Interface.Screen
 	}
 	public interface IHasDisplayMessage
 	{
+		void Refresh();
+
 		void Display(string v);
 		//bool Confirm(string v);
 		//ToDo: rename to "DisplayConfirmMessage"?
@@ -83,7 +85,7 @@ namespace PokemonEssentials.Interface.Screen
 		/// </summary>
 		int Id { get; }
 
-		void Refresh();
+		//void Refresh();
 
 		/// <summary>
 		/// Shows the player's Poké Ball being thrown to capture a Pokémon.

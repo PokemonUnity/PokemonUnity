@@ -90,7 +90,7 @@
     <Compile Include="Game\Options.cs" />
     <Compile Include="Game\Temporary\PokemonTemp.cs" />
     <Compile Include="Game\Temporary\GlobalMetadata.cs" />
-    <Compile Include="Game\Item.cs" />
+    <Compile Include="Game\Game.Item.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Inventory\Item\Item.cs" />
     <Compile Include="Inventory\Item\Item.Effects.cs" />

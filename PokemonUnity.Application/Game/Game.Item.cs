@@ -233,7 +233,7 @@ namespace PokemonUnity//.Inventory
 				Pokemons newspecies=CheckEvolution(pokemon)[0];
 				if (newspecies>0) {
 					FadeOutInWithMusic(99999, block: () => {
-						IPokemonEvolutionScene evo=Scenes.EvolvingScene; //new PokemonEvolutionScene();
+						IPokemonEvolutionScene evo=Scenes.EvolvingScene.initialize(); //new PokemonEvolutionScene();
 						evo.StartScreen(pokemon,newspecies);
 						evo.Evolution();
 						evo.EndScreen();
@@ -250,7 +250,7 @@ namespace PokemonUnity//.Inventory
 			return hpgain;
 		}
 
-		public bool HPItem(IPokemon pokemon,int restorehp,IScene scene) {
+		public bool HPItem(IPokemon pokemon,int restorehp,PokemonEssentials.Interface.Screen.IHasDisplayMessage scene) {
 			if (pokemon.HP<=0 || pokemon.HP==pokemon.TotalHP || pokemon.isEgg) {
 				scene.Display(Game._INTL("It won't have any effect."));
 				return false;
@@ -262,7 +262,7 @@ namespace PokemonUnity//.Inventory
 			}
 		}
 
-		public bool BattleHPItem(IPokemon pokemon,IBattler battler,int restorehp,IScene scene) {
+		public bool BattleHPItem(IPokemon pokemon,IBattler battler,int restorehp, PokemonEssentials.Interface.Screen.IHasDisplayMessage scene) {
 			if (pokemon.HP<=0 || pokemon.HP==pokemon.TotalHP || pokemon.isEgg) {
 				scene.Display(Game._INTL("But it had no effect!"));
 				return false;
@@ -321,7 +321,7 @@ namespace PokemonUnity//.Inventory
 			return evgain;
 		}
 
-		public bool RaiseHappinessAndLowerEV(IPokemon pokemon,IScene scene,Stats ev,string[] messages) {
+		public bool RaiseHappinessAndLowerEV(IPokemon pokemon, PokemonEssentials.Interface.Screen.IHasDisplayMessage scene,Stats ev,string[] messages) {
 			bool h=(pokemon.Happiness<255);
 			bool e=(pokemon.EV[(int)ev]>0);
 			if (!h && !e) {
@@ -363,7 +363,7 @@ namespace PokemonUnity//.Inventory
 
 		public bool BikeCheck() {
 			if (Global.surfing ||
-				(!Global.bicycle && Terrain.onlyWalk((this as PokemonEssentials.Interface.Field.IGameField).GetTerrainTag()))) {
+				(!Global.bicycle && Terrain.onlyWalk((this is PokemonEssentials.Interface.Field.IGameField f ? f.GetTerrainTag() : (Terrains?)null)))) {
 				GameMessage.Message(Game._INTL("Can't use that here."));
 				return false;
 			}
@@ -594,7 +594,7 @@ namespace PokemonUnity//.Inventory
 					}
 				}
 				FadeOutIn(99999, block: () => {
-					IPartyDisplayScene scene=Scenes.Party; //new PokemonScreen_Scene();
+					IPartyDisplayScene scene=Scenes.Party.initialize(); //new PokemonScreen_Scene();
 					IPartyDisplayScreen screen=Screens.Party.initialize(scene,Trainer.party); //new PokemonScreen(scene,Trainer.party);
 					screen.StartScene(Game._INTL("Use on which Pokémon?"),false,annot.ToArray());
 					do { //;loop
@@ -650,7 +650,7 @@ namespace PokemonUnity//.Inventory
 
 		public Items ChooseItem(int var=0,params Items[] args) {
 			Items ret=0; //int?
-			IBagScene scene=Scenes.Bag; //new PokemonBag_Scene();
+			IBagScene scene=Scenes.Bag.initialize(); //new PokemonBag_Scene();
 			IBagScreen screen=Screens.Bag.initialize(scene,Bag); //new PokemonBagScreen(scene,Bag);
 			FadeOutIn(99999, block: () => {
 				ret=screen.ChooseItemScreen();
@@ -697,6 +697,7 @@ namespace PokemonUnity//.Inventory
 
 		public void TopRightWindow(string text) {
 			IWindow_AdvancedTextPokemon window = null; //new Window_AdvancedTextPokemon(text);
+			window.initialize(text);
 			window.z=99999;
 			window.width=198;
 			window.y=0;

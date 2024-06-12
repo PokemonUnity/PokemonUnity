@@ -41,7 +41,8 @@ namespace PokemonEssentials.Interface
 			//int Id { get { return EventId; } }
 			Items Item { get; set; }
 			IPokemon Pokemon { get; set; }
-			PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
+			//PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
+			PokemonEssentials.Interface.Screen.IPartyDisplayScene Scene { get; set; }
 			bool Response { get; set; }
 		}
 		public interface IBattleUseOnPokemonEventArgs : IEventArgs
@@ -52,7 +53,8 @@ namespace PokemonEssentials.Interface
 			Items Item { get; set; }
 			IPokemon Pokemon { get; set; }
 			IBattler Battler { get; set; }
-			PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
+			//PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
+			PokemonEssentials.Interface.Screen.IPartyDisplayScene Scene { get; set; }
 			bool Response { get; set; }
 		}
 		public interface IBattleUseOnBattlerEventArgs : IEventArgs
@@ -91,7 +93,7 @@ namespace PokemonEssentials.Interface
 			//IDictionary<Items, BattleUseOnBattlerDelegate> BattleUseOnBattler { get; }
 			//IDictionary<Items, BattleUseOnPokemonDelegate> BattleUseOnPokemon { get; }
 			//IDictionary<Items, UseInBattleDelegate> UseInBattle { get; }
-			
+
 			//event EventHandler<IUseFromBagEventArgs> OnUseFromBag;
 			event Action<object,IUseFromBagEventArgs> OnUseFromBag;
 			//event EventHandler<IUseInFieldEventArgs> OnUseInField;
@@ -236,7 +238,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Extension of <seealso cref="IGame"/>
 		/// </summary>
-		public interface IGameItem 
+		public interface IGameItem
 		{
 			void TopRightWindow(string text);
 
@@ -244,15 +246,18 @@ namespace PokemonEssentials.Interface
 
 			int ItemRestoreHP(IPokemon pokemon, int restorehp);
 
-			bool HPItem(IPokemon pokemon, int restorehp, PokemonEssentials.Interface.Screen.IScene scene);
+			//bool HPItem(IPokemon pokemon, int restorehp, PokemonEssentials.Interface.Screen.IScene scene);
+			bool HPItem(IPokemon pokemon, int restorehp, PokemonEssentials.Interface.Screen.IHasDisplayMessage scene);
 
-			bool BattleHPItem(IPokemon pokemon, IBattler battler, int restorehp, PokemonEssentials.Interface.Screen.IScene scene);
+			//bool BattleHPItem(IPokemon pokemon, IBattler battler, int restorehp, PokemonEssentials.Interface.Screen.IScene scene);
+			bool BattleHPItem(IPokemon pokemon, IBattler battler, int restorehp, PokemonEssentials.Interface.Screen.IHasDisplayMessage scene);
 
 			int JustRaiseEffortValues(IPokemon pokemon, PokemonUnity.Monster.Stats ev, int evgain);
 
 			int RaiseEffortValues(IPokemon pokemon, PokemonUnity.Monster.Stats ev, int evgain = 10, bool evlimit = true);
 
-			bool RaiseHappinessAndLowerEV(IPokemon pokemon, PokemonEssentials.Interface.Screen.IScene scene, PokemonUnity.Monster.Stats ev, string[] messages);
+			//bool RaiseHappinessAndLowerEV(IPokemon pokemon, PokemonEssentials.Interface.Screen.IScene scene, PokemonUnity.Monster.Stats ev, string[] messages);
+			bool RaiseHappinessAndLowerEV(IPokemon pokemon, PokemonEssentials.Interface.Screen.IHasDisplayMessage scene, PokemonUnity.Monster.Stats ev, string[] messages);
 
 			int RestorePP(IPokemon pokemon, int move, int pp);
 
