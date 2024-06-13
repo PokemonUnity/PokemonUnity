@@ -16,68 +16,6 @@ using PokemonEssentials.Interface.Field;
 
 namespace PokemonUnity//.Inventory
 {
-	#region Item Handlers EventArgs
-	public class UseFromBagEventArgs : EventArgs, IUseFromBagEventArgs
-	{
-		public static readonly int EventId = typeof(UseFromBagEventArgs).GetHashCode();
-
-		public int Id { get { return EventId; } }
-		public Items Item { get; set; }
-		public ItemUseResults Response { get; set; }
-	}
-	public class UseInFieldEventArgs : EventArgs, IUseInFieldEventArgs
-	{
-		public static readonly int EventId = typeof(UseInFieldEventArgs).GetHashCode();
-
-		public int Id { get { return EventId; } }
-		public Items Item { get; set; }
-		//public Action Action { get; set; }
-		public bool Response { get; set; }
-	}
-	public class UseOnPokemonEventArgs : EventArgs, IUseOnPokemonEventArgs
-	{
-		public static readonly int EventId = typeof(UseOnPokemonEventArgs).GetHashCode();
-
-		public int Id { get { return EventId; } }
-		public Items Item { get; set; }
-		public IPokemon Pokemon { get; set; }
-		//public PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
-		public PokemonEssentials.Interface.Screen.IPartyDisplayScene Scene { get; set; }
-		public bool Response { get; set; }
-	}
-	public class BattleUseOnPokemonEventArgs : EventArgs, IBattleUseOnPokemonEventArgs
-	{
-		public static readonly int EventId = typeof(BattleUseOnPokemonEventArgs).GetHashCode();
-
-		public int Id { get { return EventId; } }
-		public Items Item { get; set; }
-		public IPokemon Pokemon { get; set; }
-		public IBattler Battler { get; set; }
-		//public PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
-		public PokemonEssentials.Interface.Screen.IPartyDisplayScene Scene { get; set; }
-		public bool Response { get; set; }
-	}
-	public class BattleUseOnBattlerEventArgs : EventArgs, IBattleUseOnBattlerEventArgs
-	{
-		public static readonly int EventId = typeof(BattleUseOnBattlerEventArgs).GetHashCode();
-
-		public int Id { get { return EventId; } }
-		public Items Item { get; set; }
-		public IBattler Battler { get; set; }
-		public PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
-		public bool Response { get; set; }
-	}
-	public class UseInBattleEventArgs : EventArgs, IUseInBattleEventArgs
-	{
-		public static readonly int EventId = typeof(UseInBattleEventArgs).GetHashCode();
-
-		public int Id { get { return EventId; } }
-		public Items Item { get; set; }
-		public IBattler Battler { get; set; }
-		public IBattle Battle { get; set; }
-	}
-	#endregion
-
 	//public static partial class ItemHandlers
 	public partial class Game : IGameItemEffect
 	{
@@ -3017,5 +2955,70 @@ namespace PokemonUnity//.Inventory
 				}
 			}
 		}
+	}
+
+	namespace EventArg
+	{
+		#region Item Handlers EventArgs
+		public class UseFromBagEventArgs : EventArgs, IUseFromBagEventArgs
+		{
+			public static readonly int EventId = typeof(UseFromBagEventArgs).GetHashCode();
+
+			public int Id { get { return EventId; } }
+			public Items Item { get; set; }
+			public ItemUseResults Response { get; set; }
+		}
+		public class UseInFieldEventArgs : EventArgs, IUseInFieldEventArgs
+		{
+			public static readonly int EventId = typeof(UseInFieldEventArgs).GetHashCode();
+
+			public int Id { get { return EventId; } }
+			public Items Item { get; set; }
+			//public Action Action { get; set; }
+			public bool Response { get; set; }
+		}
+		public class UseOnPokemonEventArgs : EventArgs, IUseOnPokemonEventArgs
+		{
+			public static readonly int EventId = typeof(UseOnPokemonEventArgs).GetHashCode();
+
+			public int Id { get { return EventId; } }
+			public Items Item { get; set; }
+			public IPokemon Pokemon { get; set; }
+			//public PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
+			public PokemonEssentials.Interface.Screen.IPartyDisplayScene Scene { get; set; }
+			public bool Response { get; set; }
+		}
+		public class BattleUseOnPokemonEventArgs : EventArgs, IBattleUseOnPokemonEventArgs
+		{
+			public static readonly int EventId = typeof(BattleUseOnPokemonEventArgs).GetHashCode();
+
+			public int Id { get { return EventId; } }
+			public Items Item { get; set; }
+			public IPokemon Pokemon { get; set; }
+			public IBattler Battler { get; set; }
+			//public PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
+			public PokemonEssentials.Interface.Screen.IPartyDisplayScene Scene { get; set; }
+			public bool Response { get; set; }
+		}
+		public class BattleUseOnBattlerEventArgs : EventArgs, IBattleUseOnBattlerEventArgs
+		{
+			public static readonly int EventId = typeof(BattleUseOnBattlerEventArgs).GetHashCode();
+
+			public int Id { get { return EventId; } }
+			public Items Item { get; set; }
+			public IBattler Battler { get; set; }
+			public PokemonEssentials.Interface.Screen.IHasDisplayMessage Scene { get; set; }
+			public bool Response { get; set; }
+		}
+		public class UseInBattleEventArgs : EventArgs, IUseInBattleEventArgs
+		{
+			public static readonly int EventId = typeof(UseInBattleEventArgs).GetHashCode();
+
+			public int Id { get { return EventId; } }
+			public Items Item { get; set; }
+			public IBattler Battler { get; set; }
+			public IBattle Battle { get; set; }
+		}
+		#endregion
 	}
 }

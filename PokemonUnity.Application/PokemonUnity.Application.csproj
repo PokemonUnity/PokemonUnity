@@ -93,9 +93,9 @@
     <Compile Include="Game\Game.Item.cs" />
     <Compile Include="Input.cs" />
     <Compile Include="Inventory\Item\Item.cs" />
-    <Compile Include="Inventory\Item\Item.Effects.cs" />
+    <Compile Include="Game\Game.ItemEffects.cs" />
     <Compile Include="Inventory\Item\Item.Helper.cs" />
-    <Compile Include="Inventory\Item\Item.Pokeball.cs" />
+    <Compile Include="Game\Game.ItemPokeball.cs" />
     <Compile Include="Monster\BattlePeer.cs" />
     <Compile Include="Monster\Chatter.cs" />
     <Compile Include="Monster\Pokemon\Pokemon.Evolution.cs" />

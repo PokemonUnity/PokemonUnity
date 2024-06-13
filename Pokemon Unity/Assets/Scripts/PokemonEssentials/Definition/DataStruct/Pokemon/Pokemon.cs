@@ -895,25 +895,25 @@ namespace PokemonUnity.Interface.UnityEngine
 					foreach (var j in foe.moves) {
 						Attack.Data.MoveData movedata=Kernal.MoveData[j.id];
 						int power=movedata.Power??0;
-						if (movedata.Effect == Attack.Effects.x027) power=160;    // OHKO
-						if (movedata.Effect == Attack.Effects.x0BF) power=150;    // Eruption
-						if (movedata.Effect == Attack.Effects.x05A || // Counter
-									movedata.Effect == Attack.Effects.x091 || // Mirror Coat
-									movedata.Effect == Attack.Effects.x0E4) power=120;// || // Metal Burst
-						if (movedata.Effect == Attack.Effects.x083 ||  // SonicBoom
-									movedata.Effect == Attack.Effects.x02A ||  // Dragon Rage
-									movedata.Effect == Attack.Effects.x058 ||  // Night Shade
-									movedata.Effect == Attack.Effects.x0BE ||  // Endeavor
-									movedata.Effect == Attack.Effects.x059 ||  // Psywave
-									movedata.Effect == Attack.Effects.x07A ||  // Return
-									movedata.Effect == Attack.Effects.x07C ||  // Frustration
-									movedata.Effect == Attack.Effects.x0EE ||  // Crush Grip
-									movedata.Effect == Attack.Effects.x0DC ||  // Gyro Ball
-									movedata.Effect == Attack.Effects.x088 ||  // Hidden Power
-									movedata.Effect == Attack.Effects.x0DF ||  // Natural Gift
-									movedata.Effect == Attack.Effects.x0EC ||  // Trump Card
-									movedata.Effect == Attack.Effects.x064 ||  // Flail
-									movedata.Effect == Attack.Effects.x0C5) power=80;     // Grass Knot
+						if (movedata.Effect == Attack.Effects.x027) power=160;		// OHKO
+						if (movedata.Effect == Attack.Effects.x0BF) power=150;		// Eruption
+						if (movedata.Effect == Attack.Effects.x05A ||				// Counter
+							movedata.Effect == Attack.Effects.x091 ||				// Mirror Coat
+							movedata.Effect == Attack.Effects.x0E4) power=120;// ||	// Metal Burst
+						if (movedata.Effect == Attack.Effects.x083 ||				// SonicBoom
+							movedata.Effect == Attack.Effects.x02A ||				// Dragon Rage
+							movedata.Effect == Attack.Effects.x058 ||				// Night Shade
+							movedata.Effect == Attack.Effects.x0BE ||				// Endeavor
+							movedata.Effect == Attack.Effects.x059 ||				// Psywave
+							movedata.Effect == Attack.Effects.x07A ||				// Return
+							movedata.Effect == Attack.Effects.x07C ||				// Frustration
+							movedata.Effect == Attack.Effects.x0EE ||				// Crush Grip
+							movedata.Effect == Attack.Effects.x0DC ||				// Gyro Ball
+							movedata.Effect == Attack.Effects.x088 ||				// Hidden Power
+							movedata.Effect == Attack.Effects.x0DF ||				// Natural Gift
+							movedata.Effect == Attack.Effects.x0EC ||				// Trump Card
+							movedata.Effect == Attack.Effects.x064 ||				// Flail
+							movedata.Effect == Attack.Effects.x0C5) power=80;		// Grass Knot
 						if (power > highpower) {
 							fwmoves=new List<Moves>() { j.id }; highpower=power;
 						} else if (power==highpower)

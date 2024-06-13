@@ -20,6 +20,8 @@ using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
+using PokemonUnity.Legacy;
+using UnityEngine;
 //using UnityEngine;
 //using UnityEngine.UI;
 //using UnityEngine.Serialization;
@@ -37,159 +39,171 @@ namespace PokemonUnity.Interface.UnityEngine
 		//const string UI_MESSAGEWINDOW = "messagewindow";
 		//const string UI_COMMANDWINDOW = "commandwindow";
 		//const string UI_FIGHTWINDOW = "fightwindow";
-		private MenuCommands[] lastcmd;
-		//private IList<int> lastcmd;
-		private int[] lastmove;
-		//private PokemonEssentials.Interface.PokeBattle.IBattle battle;
-		//public PokemonUnity.Combat.Battle battle;
-		private PokemonUnity.Interface.UnityEngine.IBattleIE battle;
-		public IGameAudioPlay AudioHandler;
-		public ITrainerFadeAnimation fadeanim;
-		public IPokeballSendOutAnimation sendout;
-		public IWindow_CommandPokemon commandPokemon;
-		/// <summary>
-		/// Select turn action; Fight, Bag, Item, Run...
-		/// </summary>
-		public CommandMenuDisplay commandWindow;
-		/// <summary>
-		/// Select Pokemon's attack move for given turn
-		/// </summary>
-		public FightMenuDisplay fightWindow;
-		public IWindow_UnformattedTextPokemon helpWindow;
-		/// <summary>
-		/// Display text and system responses to player
-		/// </summary>
-		public IWindow_AdvancedTextPokemon messageWindow;
-		/// <summary>
-		/// The container canvas frame with custom UI border
-		/// </summary>
-		public IWindow_AdvancedTextPokemon messageBox;
-		public IPartyDisplayScreen @switchscreen;
-		public IGameObject player;
-		public IGameObject playerB;
-		public IGameObject trainer;
-		public IGameObject trainer2;
-		public IGameObject battlebg;
-		public IGameObject enemybase;
-		public IGameObject playerbase;
-		public IGameObject partybarfoe;
-		public IGameObject partybarplayer;
-		/// <summary>
-		/// HP, Exp, and other status of battling pokemon; Player side slot 1
-		/// </summary>
-		public PokemonDataBox battlebox0;
-		/// <summary>
-		/// HP, Exp, and other status of battling pokemon; Enemy side slot 1
-		/// </summary>
-		public PokemonDataBox battlebox1;
-		/// <summary>
-		/// HP, Exp, and other status of battling pokemon; Player side slot 2
-		/// </summary>
-		public PokemonDataBox battlebox2;
-		/// <summary>
-		/// HP, Exp, and other status of battling pokemon; Enemy side slot 2
-		/// </summary>
-		public PokemonDataBox battlebox3;
-		/// <summary>
-		/// Your side primary battle pokemon; slot one
-		/// </summary>
-		public IPokemonBattlerSprite pokemon0;
-		/// <summary>
-		/// Your side ally battle pokemon; slot two (only appears in double battles)
-		/// </summary>
-		public IPokemonBattlerSprite pokemon2;
-		/// <summary>
-		/// Enemy side primary battle pokemon; slot one
-		/// </summary>
-		public IPokemonBattlerSprite pokemon1;
-		/// <summary>
-		/// Enemy side ally battle pokemon; slot two (only appears in double battles)
-		/// </summary>
-		public IPokemonBattlerSprite pokemon3;
-		public IIconSprite shadow0;
-		public IIconSprite shadow1;
-		public IIconSprite shadow2;
-		public IIconSprite shadow3;
-		/// <summary>
-		/// pokeball thrown at pokemons for capture animation
-		/// </summary>
-		public IIconSprite spriteBall;
-		public IList<IWindow> pkmnwindows;
-		private IDictionary<string, object> sprites;
-		//public Dictionary<string, UnityEngine.GameObject> sprites;
-		public bool aborted;
-		public bool abortable;
-		public bool battlestart;
-		public bool messagemode;
-		public bool briefmessage;
-		public bool showingplayer;
-		public bool showingenemy;
-		public bool enablePartyAnim;
-		public int partyAnimPhase;
-		public IViewport viewport;
-		private float xposplayer;
-		private float xposenemy;
-		private float foeyoffset;
-		private float traineryoffset;
-		#endregion
-		#region Unity's MonoBehavior Variables
-		/*#region Pokemon HUD
-		public UnityEngine.GameObject _fadeanim;
-		public UnityEngine.GameObject _sendout;
-		public UnityEngine.GameObject _commandPokemon;
-		public UnityEngine.GameObject _commandWindow;
-		public UnityEngine.GameObject _fightWindow;
-		public UnityEngine.GameObject _helpWindow;
-		public UnityEngine.GameObject _messageWindow;
-		public UnityEngine.GameObject _messageBox;
-		public UnityEngine.GameObject _switchscreen;
-		public UnityEngine.GameObject _player;
-		public UnityEngine.GameObject _playerB;
-		public UnityEngine.GameObject _trainer;
-		public UnityEngine.GameObject _trainer2;
-		public UnityEngine.GameObject _battlebg;
-		public UnityEngine.GameObject _enemybase;
-		public UnityEngine.GameObject _playerbase;
-		public UnityEngine.GameObject _partybarfoe;
-		public UnityEngine.GameObject _partybarplayer;
-		public UnityEngine.GameObject _battlebox0;
-		public UnityEngine.GameObject _battlebox1;
-		public UnityEngine.GameObject _battlebox2;
-		public UnityEngine.GameObject _battlebox3;
-		/// <summary>
-		/// Your side primary battle pokemon; slot one
-		/// </summary>
-		public UnityEngine.GameObject _pokemon0;
-		/// <summary>
-		/// Your side ally battle pokemon; slot two (only appears in double battles)
-		/// </summary>
-		public UnityEngine.GameObject _pokemon2;
-		/// <summary>
-		/// Enemy side primary battle pokemon; slot one
-		/// </summary>
-		public UnityEngine.GameObject _pokemon1;
-		/// <summary>
-		/// Enemy side ally battle pokemon; slot two (only appears in double battles)
-		/// </summary>
-		public UnityEngine.GameObject _pokemon3;
-		public UnityEngine.GameObject _shadow0;
-		public UnityEngine.GameObject _shadow1;
-		public UnityEngine.GameObject _shadow2;
-		public UnityEngine.GameObject _shadow3;
-		/// <summary>
-		/// pokeball thrown at pokemons for capture animation
-		/// </summary>
-		public UnityEngine.GameObject _spriteBall;
-		#endregion*/
-		#endregion
-
-		public bool inPartyAnimation { get { return @enablePartyAnim && @partyAnimPhase < 3; } }
 
 		/// <summary>
 		/// Scene Id; Match against unity's scene loader management, and use this value as input parameter
 		/// </summary>
-		public int Id { get { return 0; } }
+		public int								Id { get { return (int)Scenes.Battle; } }
+		//public IGameAudioPlay					AudioHandler {  get { return AudioManager.AudioHandler; } }
+		public IAudio							AudioHandler {  get { return AudioManager.AudioHandler; } }
+		public bool								inPartyAnimation { get { return @enablePartyAnim && @partyAnimPhase < 3; } }
+		public MenuCommands[]					lastcmd	{ get { return _lastcmd; } set { _lastcmd = value; } }
+		//public IList<int>						lastcmd	{ get { return _lastcmd; } set { _lastcmd = value; } }
+		public int[]							lastmove	{ get { return _lastmove; } set { _lastmove = value; } }
+		//public PokemonEssentials.Interface.PokeBattle.IBattle			battle	{ get { return _battle; } set { _battle = value; } }
+		//public PokemonUnity.Combat.Battle			battle	{ get { return _battle; } set { _battle = value; } }
+		public PokemonUnity.Interface.UnityEngine.IBattleIE			battle	{ get { return _battle; } set { _battle = value; } }
+		public ITrainerFadeAnimation				fadeanim	{ get { return _fadeanim; } set { _fadeanim = value; } }
+		public IPokeballSendOutAnimation			sendout	{ get { return _sendout; } set { _sendout = value; } }
+		public IWindow_CommandPokemon				commandPokemon	{ get { return _commandPokemon; } set { _commandPokemon = value; } }
+		/// <summary>
+		/// public turn			action	{ get { return _action; } set { _action = value; } } Fight, Bag, Item, Run...
+		/// </summary>
+		public ICommandMenuDisplay					commandWindow	{ get { return _commandWindow; } set { _commandWindow = value as CommandMenuDisplay; } }
+		/// <summary>
+		/// Select Pokemon's attack move for given turn
+		/// </summary>
+		public IFightMenuDisplay					fightWindow	{ get { return _fightWindow; } set { _fightWindow = value as FightMenuDisplay; } }
+		public IWindow_UnformattedTextPokemon		helpWindow	{ get { return _helpWindow; } set { _helpWindow = value; } }
+		/// <summary>
+		/// Display text and system responses to player
+		/// </summary>
+		public IWindow_AdvancedTextPokemon			messageWindow	{ get { return _messageWindow; } set { _messageWindow = value; } }
+		/// <summary>
+		/// The container canvas frame with custom UI border
+		/// </summary>
+		public IWindow_AdvancedTextPokemon			messageBox	{ get { return _messageBox; } set { _messageBox = value; } }
+		public IPartyDisplayScreen					@switchscreen	{ get { return _switchscreen; } set { _switchscreen = value; } }
+		public IGameObject							player	{ get { return _player; } set { _player = value; } }
+		public IGameObject							playerB	{ get { return _playerB; } set { _playerB = value; } }
+		public IGameObject							trainer	{ get { return _trainer; } set { _trainer = value; } }
+		public IGameObject							trainer2	{ get { return _trainer2; } set { _trainer2 = value; } }
+		public IGameObject							battlebg	{ get { return _battlebg; } set { _battlebg = value; } }
+		public IGameObject							enemybase	{ get { return _enemybase; } set { _enemybase = value; } }
+		public IGameObject							playerbase	{ get { return _playerbase; } set { _playerbase = value; } }
+		public IGameObject							partybarfoe	{ get { return _partybarfoe; } set { _partybarfoe = value; } }
+		public IGameObject							partybarplayer	{ get { return _partybarplayer; } set { _partybarplayer = value; } }
+		/// <summary>
+		/// HP, Exp, public other status of battling			pokemon	{ get { return _pokemon; } set { _pokemon = value; } } Player side slot 1
+		/// </summary>
+		public IPokemonDataBox						battlebox0	{ get { return _battlebox0; } set { _battlebox0 = value as PokemonDataBox; } }
+		/// <summary>
+		/// HP, Exp, public other status of battling			pokemon	{ get { return _pokemon; } set { _pokemon = value; } } Enemy side slot 1
+		/// </summary>
+		public IPokemonDataBox						battlebox1	{ get { return _battlebox1; } set { _battlebox1 = value as PokemonDataBox; } }
+		/// <summary>
+		/// HP, Exp, public other status of battling			pokemon	{ get { return _pokemon; } set { _pokemon = value; } } Player side slot 2
+		/// </summary>
+		public IPokemonDataBox						battlebox2	{ get { return _battlebox2; } set { _battlebox2 = value as PokemonDataBox; } }
+		/// <summary>
+		/// HP, Exp, public other status of battling			pokemon	{ get { return _pokemon; } set { _pokemon = value; } } Enemy side slot 2
+		/// </summary>
+		public IPokemonDataBox						battlebox3	{ get { return _battlebox3; } set { _battlebox3 = value as PokemonDataBox; } }
+		/// <summary>
+		/// public side primary battle			pokemon	{ get { return _pokemon; } set { _pokemon = value; } } slot one
+		/// </summary>
+		public IPokemonBattlerSprite				pokemon0	{ get { return _pokemon0; } set { _pokemon0 = value; } }
+		/// <summary>
+		/// public side ally battle			pokemon	{ get { return _pokemon; } set { _pokemon = value; } } slot two (only appears in double battles)
+		/// </summary>
+		public IPokemonBattlerSprite				pokemon2	{ get { return _pokemon2; } set { _pokemon2 = value; } }
+		/// <summary>
+		/// public side primary battle			pokemon	{ get { return _pokemon; } set { _pokemon = value; } } slot one
+		/// </summary>
+		public IPokemonBattlerSprite				pokemon1	{ get { return _pokemon1; } set { _pokemon1 = value; } }
+		/// <summary>
+		/// public side ally battle			pokemon	{ get { return _pokemon; } set { _pokemon = value; } } slot two (only appears in double battles)
+		/// </summary>
+		public IPokemonBattlerSprite				pokemon3	{ get { return _pokemon3; } set { _pokemon3 = value; } }
+		public IIconSprite			shadow0	{ get { return _shadow0; } set { _shadow0 = value; } }
+		public IIconSprite			shadow1	{ get { return _shadow1; } set { _shadow1 = value; } }
+		public IIconSprite			shadow2	{ get { return _shadow2; } set { _shadow2 = value; } }
+		public IIconSprite			shadow3	{ get { return _shadow3; } set { _shadow3 = value; } }
+		/// <summary>
+		/// pokeball thrown at pokemons for capture animation
+		/// </summary>
+		public IIconSprite			spriteBall	{ get { return _spriteBall; } set { _spriteBall = value; } }
+		public IList<IWindow>			pkmnwindows	{ get { return _pkmnwindows; } set { _pkmnwindows = value; } }
+		public IDictionary<string, object>			sprites	{ get { return _sprites; } set { _sprites = value; } }
+		//public Dictionary<string, UnityEngine.GameObject>			sprites	{ get { return _sprites; } set { _sprites = value; } }
+		public IViewport			viewport	{ get { return _viewport; } set { _viewport = value; } }
+		public bool					aborted	{ get { return _aborted; } set { _aborted = value; } }
+		public bool					abortable	{ get { return _abortable; } set { _abortable = value; } }
+		public bool					battlestart	{ get { return _battlestart; } set { _battlestart = value; } }
+		public bool					messagemode	{ get { return _messagemode; } set { _messagemode = value; } }
+		public bool					briefmessage	{ get { return _briefmessage; } set { _briefmessage = value; } }
+		public bool					showingplayer	{ get { return _showingplayer; } set { _showingplayer = value; } }
+		public bool					showingenemy	{ get { return _showingenemy; } set { _showingenemy = value; } }
+		public bool					enablePartyAnim	{ get { return _enablePartyAnim; } set { _enablePartyAnim = value; } }
+		public int					partyAnimPhase	{ get { return _partyAnimPhase; } set { _partyAnimPhase = value; } }
+		public float				xposplayer	{ get { return _xposplayer; } set { _xposplayer = value; } }
+		public float				xposenemy	{ get { return _xposenemy; } set { _xposenemy = value; } }
+		public float				foeyoffset	{ get { return _foeyoffset; } set { _foeyoffset = value; } }
+		public float				traineryoffset	{ get { return _traineryoffset; } set { _traineryoffset = value; } }
+		#endregion
 
+		#region Unity's MonoBehavior Inspector Properties
+		[SerializeField] private IDictionary<string, object>		_sprites;
+		[Header("Scene Canvas Panel Layers")]
+		[SerializeField] private IViewport							_viewport;
+		[SerializeField] private IWindow_CommandPokemon				_commandPokemon;
+		[SerializeField] private CommandMenuDisplay					_commandWindow;
+		[SerializeField] private FightMenuDisplay					_fightWindow;
+		[SerializeField] private IWindow_UnformattedTextPokemon		_helpWindow;
+		[SerializeField] private IWindow_AdvancedTextPokemon		_messageWindow;
+		[SerializeField] private IWindow_AdvancedTextPokemon		_messageBox;
+		[SerializeField] private IPartyDisplayScreen				_switchscreen;
+		[SerializeField] private IList<IWindow>						_pkmnwindows;
+		[Space()]
+		[Header("Scene Battle GameObjects")]
+		[Space()]
+		[Header("Trainer Avatars")]
+		[SerializeField] private IGameObject						_player;
+		[SerializeField] private IGameObject						_playerB;
+		[SerializeField] private IGameObject						_trainer;
+		[SerializeField] private IGameObject						_trainer2;
+		[SerializeField] private IGameObject						_battlebg;
+		[SerializeField] private IGameObject						_enemybase;
+		[SerializeField] private IGameObject						_playerbase;
+		[SerializeField] private IGameObject						_partybarfoe;
+		[SerializeField] private IGameObject						_partybarplayer;
+		[SerializeField] private IIconSprite						_spriteBall;
+		[SerializeField] private ITrainerFadeAnimation				_fadeanim;
+		[SerializeField] private IPokeballSendOutAnimation			_sendout;
+		[Header("HP and Experience Meter")]
+		[SerializeField] private PokemonDataBox						_battlebox0;
+		[SerializeField] private PokemonDataBox						_battlebox1;
+		[SerializeField] private PokemonDataBox						_battlebox2;
+		[SerializeField] private PokemonDataBox						_battlebox3;
+		[Header("Pokemon Avatars with Shadow")]
+		[SerializeField] private IPokemonBattlerSprite				_pokemon0;
+		[SerializeField] private IPokemonBattlerSprite				_pokemon2;
+		[SerializeField] private IPokemonBattlerSprite				_pokemon1;
+		[SerializeField] private IPokemonBattlerSprite				_pokemon3;
+		[SerializeField] private IIconSprite						_shadow0;
+		[SerializeField] private IIconSprite						_shadow1;
+		[SerializeField] private IIconSprite						_shadow2;
+		[SerializeField] private IIconSprite						_shadow3;
+		[Header("Debugging Battle Data")]
+		[SerializeField] private IBattleIE							_battle;
+		[SerializeField] private MenuCommands[]						_lastcmd;
+		[SerializeField] private int[]								_lastmove;
+		[SerializeField] private bool								_aborted;
+		[SerializeField] private bool								_abortable;
+		[SerializeField] private bool								_battlestart;
+		[SerializeField] private bool								_messagemode;
+		[SerializeField] private bool								_briefmessage;
+		[SerializeField] private bool								_showingplayer;
+		[SerializeField] private bool								_showingenemy;
+		[SerializeField] private bool								_enablePartyAnim;
+		[SerializeField] private int								_partyAnimPhase;
+		[SerializeField] private float								_xposplayer;
+		[SerializeField] private float								_xposenemy;
+		[SerializeField] private float								_foeyoffset;
+		[SerializeField] private float								_traineryoffset;
+		#endregion
+
+		#region Unity MonoBehavior Functions
 		private void Awake()
 		{
 			//messageBox = _messageBox.GetComponent<>() as IGameObject;
@@ -271,7 +285,9 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			battle.StartBattle(true);
 		}
+		#endregion
 
+		#region Interface Methods
 		public IPokeBattle_SceneIE initialize()
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
@@ -3920,7 +3936,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			yield break;
 		}
 
-		void IPokeBattle_Scene.Throw(Items ball, int shakes, bool critical, int targetBattler, bool showplayer) { }
+		void IPokeBattle_Scene.Throw(Items ball, int shakes, bool critical, int targetBattler, bool showplayer) { StartCoroutine(this.Throw(ball, shakes, critical, targetBattler, showplayer)); }
 
 		public IEnumerator ThrowSuccess()
 		{
@@ -3942,7 +3958,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			yield break;
 		}
 
-		void IPokeBattle_Scene.ThrowSuccess() { }
+		void IPokeBattle_Scene.ThrowSuccess() { StartCoroutine(this.ThrowSuccess()); }
 
 		public IEnumerator HideCaptureBall()
 		{
@@ -3962,7 +3978,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 		}
 
-		void IPokeBattle_Scene.HideCaptureBall() { }
+		void IPokeBattle_Scene.HideCaptureBall() { StartCoroutine(HideCaptureBall()); }
 
 		public IEnumerator ThrowBait()
 		{
@@ -4173,7 +4189,9 @@ namespace PokemonUnity.Interface.UnityEngine
 			//UnityEngine.Canvas.ForceUpdateCanvases();
 			yield return null; //new UnityEngine.WaitForEndOfFrame();
 		}
+		#endregion
 
+		#region Interface Implicit Implementation
 		IPokeBattle_DebugSceneNoGraphics IPokeBattle_DebugSceneNoGraphics.initialize()
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
@@ -4246,5 +4264,6 @@ namespace PokemonUnity.Interface.UnityEngine
 			DisplayConfirmMessage(v, result: r => value = r);
 			return value;
 		}
+		#endregion
 	}
 }

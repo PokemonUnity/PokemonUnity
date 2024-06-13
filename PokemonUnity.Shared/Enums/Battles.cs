@@ -68,15 +68,15 @@
 		DRAW = 5
 	}
 
-    public enum MenuCommands : int
-    {
-        CANCEL  = -1,
-        FIGHT   = 0,
-        BAG     = 1,
-        POKEMON = 2,
-        RUN     = 3,
-        CALL    = 4
-    }
+	public enum MenuCommands : int
+	{
+		CANCEL	= -1,
+		FIGHT	= 0,
+		BAG		= 1,
+		POKEMON	= 2,
+		RUN		= 3,
+		CALL	= 4
+	}
 	#endregion
 	public enum Weather
 	{

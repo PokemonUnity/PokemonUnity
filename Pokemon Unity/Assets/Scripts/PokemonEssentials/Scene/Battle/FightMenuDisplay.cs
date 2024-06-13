@@ -19,6 +19,7 @@ namespace PokemonUnity.Interface.UnityEngine
 	[RequireComponent(typeof(FightMenuButtons))]
 	public partial class FightMenuDisplay : MonoBehaviour, IFightMenuDisplay, IViewport, IGameObject
 	{
+		#region Unity Inspector
 		[SerializeField] private FightMenuButtons buttons;
 		[SerializeField] private int _index;
 		[SerializeField] private int _megaButton;
@@ -28,8 +29,9 @@ namespace PokemonUnity.Interface.UnityEngine
 		private IIconSprite display;
 		private bool disposedValue;
 		private string ctag;
+		#endregion
 
-		#region
+		#region Interface Properties
 		public IBattler battler
 		{
 			get { return _battler; }

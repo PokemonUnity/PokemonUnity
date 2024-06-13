@@ -24,8 +24,9 @@ namespace PokemonUnity.Interface.UnityEngine
 	public class InputManager : PokemonUnity.Input, IInput
 	{
 		#region Variables
+		public override event Action<object, IButtonEventArgs> OnKeyPress; //{ add { foreach (UserInputController controller in userInputControllers) controller.OnKeyPress += value; } remove { foreach (UserInputController controller in userInputControllers) controller.OnKeyPress -= value; } }
 		//public event ButtonEventArgs OnKeyPress;
-		public event Action<object, IButtonEventArgs> OnKeyPress;
+		//public event Action<object, IButtonEventArgs> OnKeyPress;
 		//public event Action<object, IButtonEventArgs> OnKeyDown;
 		//public event Action<object, IButtonEventArgs> OnKeyUp;
 		//public event EventHandler UpdateInput;

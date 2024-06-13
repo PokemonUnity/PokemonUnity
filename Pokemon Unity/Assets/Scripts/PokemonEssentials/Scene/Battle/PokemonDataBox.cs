@@ -25,7 +25,7 @@ namespace PokemonUnity.Interface.UnityEngine
 	public class PokemonDataBox : SafariDataBox, IPokemonDataBox, IGameObject
 	{
 		public IBattlerIE battler { get; protected set; }
-		IBattler IPokemonDataBox.battler { get; }
+		IBattler IPokemonDataBox.battler { get { return this.battler; } }
 		//public int selected { get; set; }
 		//public bool appearing { get; }
 		public bool animatingHP { get; protected set; }

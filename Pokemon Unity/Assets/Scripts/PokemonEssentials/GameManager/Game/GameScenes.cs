@@ -71,7 +71,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		#endregion
 
 		#region Public Interface Property
-		public PokemonEssentials.Interface.Screen.IPokemonEntryScene TextEntryScene	{ get { return textEntryScene; } }
+		public PokemonEssentials.Interface.Screen.IPokemonEntryScene TextEntryScene	{ get { return textEntryScene; } set { textEntryScene = (TypingForm)value; } }
 		public PokemonEssentials.Interface.Screen.IIntroEventScene IntroScene	{ get { return introScene; } set { introScene = value; } }
 		public PokemonEssentials.Interface.Screen.ILoadScene Load	{ get { return load; } set { load = value; } }
 		public PokemonEssentials.Interface.Screen.ISaveScene Save	{ get { return save; } set { save = value; } }
@@ -101,7 +101,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public PokemonEssentials.Interface.Screen.IPurifyChamberScene PurityChamber	{ get { return purityChamber; } set { purityChamber = value; } } //Shadow Pokemon
 
 		// Battle Scenes
-		public PokemonEssentials.Interface.Screen.IPokeBattle_Scene BattleScene	{ get { return battleScene; } } //set { battleScene = (IPokeBattle_Scene)value; } }
+		public PokemonEssentials.Interface.Screen.IPokeBattle_Scene BattleScene	{ get { return battleScene; } set { battleScene = (BattleScene)value; } }
 		public PokemonEssentials.Interface.Screen.IPokeBattleArena_Scene BattleArenaScene	{ get { return battleArenaScene; } set { battleArenaScene = value; } }
 		public PokemonEssentials.Interface.Screen.IBattleSwapScene BattleSwapScene	{ get { return battleSwapScene; } set { battleSwapScene = value; } }
 		//public PokemonEssentials.Interface.Screen. BattlePalaceScene	{ get { return battlePalaceScene; } set { battlePalaceScene = value; } }
@@ -202,9 +202,13 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// <see cref="PokemonEssentials.Interface.Screen.IPokemonEntryScreen"/>
 		/// </remarks>
 		TextEntry,
+		/// <summary>
+		/// Scene used for a regulat pokemon battle
+		/// </summary>
+		/// <see cref="PokemonEssentials.Interface.Screen.IPokeBattle_Scene"/>
+		Battle
 		// "MainMenu"
 		// "Gameplay"
-		// "Battle"
 		// "Pokedex"
 		// "Bag"
 		// "Options"

@@ -11,7 +11,7 @@ using PokemonEssentials.Interface.PokeBattle;
 namespace PokemonUnity
 {
 	[System.Serializable]
-	public partial class Trainer : PokemonEssentials.Interface.PokeBattle.ITrainer, IEquatable<Trainer>, IEqualityComparer<Trainer>
+	public partial class Trainer : PokemonEssentials.Interface.PokeBattle.ITrainer, IEquatable<Trainer>//, IEqualityComparer<Trainer>
 	{
 		#region Variables
 		public string name { get; set; }
@@ -460,14 +460,14 @@ namespace PokemonUnity
 		{
 			return Equals(obj: (object)other);
 		}
-		bool IEqualityComparer<Trainer>.Equals(Trainer x, Trainer y)
-		{
-			return x == y;
-		}
-		int IEqualityComparer<Trainer>.GetHashCode(Trainer obj)
-		{
-			return obj.GetHashCode();
-		}
+		//bool IEqualityComparer<Trainer>.Equals(Trainer x, Trainer y)
+		//{
+		//	return x == y;
+		//}
+		//int IEqualityComparer<Trainer>.GetHashCode(Trainer obj)
+		//{
+		//	return obj.GetHashCode();
+		//}
 		#endregion
 	}
 }
