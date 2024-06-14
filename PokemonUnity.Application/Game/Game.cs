@@ -35,8 +35,6 @@ namespace PokemonUnity
 
 		public Game()
 		{
-			//Rival = new string[0];
-			Features = new Feature();
 			#region Public Constructor
 			//	Game boots up
 			//		* Game engine calls private constructor to begin process
@@ -49,42 +47,19 @@ namespace PokemonUnity
 			//		* give warning to player if problems
 			//	Scan for save files and previous game progress
 			// Load Player/Character/Overworld THEN Encounter
-			//ResetSqlConnection();
-			//con.Open();
-			//InitTypes();
-			//InitNatures();
-			//InitPokemons();
-			//InitPokemonForms();
-			//InitPokemonMoves();
-			//InitPokemonEvolutions();
-			//InitPokemonItems();
-			//InitMoves();
-			//InitItems();
-			//InitBerries();
-			//InitTrainers();
-			//InitRegions();
-			//InitLocations();
-			//InitPlayerCharacter();
-			//InitLoadFile();
 			#endregion
 		}
 
-		public Game(PokemonEssentials.Interface.IGamePlayer player, Feature? features = null, Challenges challenge = Challenges.Classic, //string[] rival = null,
-			string playerItemData = null, string playerDayCareData = null, string playerBerryData = null, string playerNPCData = null, string playerApricornData = null)
-		{
-			Features = features ?? new Feature();
-			Challenge = challenge;
-			//Player = player ?? new Player();
-			//Trainer = trainer ?? new Combat.Trainer();
-			//Rival = rival							?? new string[0];//throw new ArgumentNullException(nameof(rival));
-			PlayerItemData = playerItemData			?? string.Empty;//throw new ArgumentNullException(nameof(playerItemData));
-			PlayerDayCareData = playerDayCareData	?? string.Empty;//throw new ArgumentNullException(nameof(playerDayCareData));
-			PlayerBerryData = playerBerryData		?? string.Empty;//throw new ArgumentNullException(nameof(playerBerryData));
-			PlayerNPCData = playerNPCData			?? string.Empty;//throw new ArgumentNullException(nameof(playerNPCData));
-			PlayerApricornData = playerApricornData	?? string.Empty;//throw new ArgumentNullException(nameof(playerApricornData));
-			//PC = pC ?? throw new ArgumentNullException(nameof(pC));
-			//Bag = bag ?? throw new ArgumentNullException(nameof(bag));
-		}
+		//public Game(PokemonEssentials.Interface.IGamePlayer player, Feature? features = null, Challenges challenge = Challenges.Classic, //string[] rival = null,
+		//	string playerItemData = null, string playerDayCareData = null, string playerBerryData = null, string playerNPCData = null, string playerApricornData = null)
+		//{
+		//	Features = features ?? new Feature();
+		//	Challenge = challenge;
+		//	//Player = player ?? new Player();
+		//	//Trainer = trainer ?? new Combat.Trainer();
+		//	//PC = pC ?? throw new ArgumentNullException(nameof(pC));
+		//	//Bag = bag ?? throw new ArgumentNullException(nameof(bag));
+		//}
 		#endregion
 
 		public Game SetScenes(params PokemonEssentials.Interface.Screen.IScene[] scenes)
@@ -100,32 +75,5 @@ namespace PokemonUnity
 			Screens = new PokemonUnity.Interface.Screen(screens);
 			return this;
 		}
-
-		//public static implicit operator Game(GameState state)
-		//{
-		//	Game game = new Game()
-		//	{
-		//		Player				= state.GetPlayer()
-		//		,RepelSteps			= state.RepelSteps
-		//		//,Rival				= state.Rival
-		//		//,PlayerPosition		= state.PlayerPosition
-		//		,Checkpoint			= (Locations)state.PokeCenterId
-		//		//,Area				= data.ActiveMapId;
-		//		//,PC					= state.PlayerPC
-		//		//,Bag				= state.PlayerBag
-		//		//PlayerItemData		= state.PlayerItemData
-		//		//,PlayerBerryData	= state.PlayerBerryData
-		//		//,PlayerNPCData		= state.PlayerNPCData
-		//		//,PlayerApricornData	= state.PlayerApricornData
-		//		//PC_Poke = data.PC.GetPokemonsFromSeri();
-		//		//PC_boxNames = data.PC.BoxNames;
-		//		//PC_boxTexture = data.PC.BoxTextures;
-		//		//PC_Items = new List<Items>(data.PC.GetItemsFromSeri());
-		//		//Bag_Items = data.PlayerBag;
-		//		,Challenge = state.Challenge
-		//		,Features = state.Features
-		//	};
-		//	return game;
-		//}
 	}
 }

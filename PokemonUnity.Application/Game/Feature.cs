@@ -546,7 +546,8 @@ namespace PokemonUnity.Application
 		}
 		public override int GetHashCode()
 		{
-			return GetGuid().GetHashCode();
+			//return GetGuid().GetHashCode();
+			return GetBinary();
 		}
 
 		//bool IEqualityComparer<Feature>.Equals(Feature x, Feature y)
@@ -561,6 +562,10 @@ namespace PokemonUnity.Application
 		#endregion
 
 		#region Methods
+		/// <summary>
+		/// Generated Unqiue Identifier representing the current state of the features enabled.
+		/// </summary>
+		/// <returns></returns>
 		public string GetGuid()
 		{
 			//ToDo: Use Bitwise Operators to represent value as a binary integer
@@ -636,6 +641,81 @@ namespace PokemonUnity.Application
 			ReleasedPokemonsReturnToEncounterArea	 = text[2][19] == '1';
 			ReleasedPokemonsRoamNearbyAreas			 = text[2][20] == '1';
 			SandBoxMode                              = text[2][21] == '1';
+		}
+
+		public int GetBinary()
+		{
+			int binary = 0;
+			binary |= (BattleShiftStyle ? 1 : 0							);
+			binary |= (CanOnlyCaptureFirstWildEncounter ? 1 : 0			) << 1;
+			binary |= (CanOnlySaveAtPokemonCenter ? 1 : 0				) << 2;
+			binary |= (CatchPokemonsWithEggMoves ? 1 : 0				) << 3;
+			binary |= (ChallengeEndsAfter ? 1 : 0						) << 4;
+			binary |= (EnableCloudStorage ? 1 : 0						) << 5;
+			binary |= (FailChallengeWipesData ? 1 : 0					) << 6;
+			binary |= (ForcePokemonNaming ? 1 : 0						) << 7;
+			binary |= (GameOverOnWhiteOut ? 1 : 0						) << 8;
+			binary |= (NoCapturesAllowed ? 1 : 0						) << 9;
+			binary |= (NoHealingItemsInsideBattle ? 1 : 0				) << 10;
+			binary |= (NoHealingItemsOutsideBattle ? 1 : 0				) << 11;
+			binary |= (NoHealingNPCs ? 1 : 0							) << 12;
+			binary |= (NoPC ? 1 : 0										) << 13;
+			binary |= (NoPokemonCenterHeals ? 1 : 0						) << 14;
+			binary |= (NoStoreBoughtMedicine ? 1 : 0					) << 15;
+			binary |= (NuzlockeSkipDuplicates ? 1 : 0					) << 16;
+			binary |= (OnlinePlayEnabled ? 1 : 0						) << 17;
+			binary |= (OverflowPokemonsIntoNextBox ? 1 : 0				) << 18;
+			binary |= (PcDoesNotHealPokemons ? 1 : 0					) << 19;
+			binary |= (PokemonCenterHealsResetTrainers ? 1 : 0			) << 20;
+			binary |= (PokemonCentersCostMoney ? 1 : 0					) << 21;
+			binary |= (PokemonDeathOnFaint ? 1 : 0						) << 22;
+			binary |= (PokemonSentToPcOnDeath ? 1 : 0					) << 23;
+			binary |= (RandomBossEncounters ? 1 : 0						) << 24;
+			binary |= (RandomizePartyAfterBattle ? 1 : 0				) << 25;
+			binary |= (RandomStarters ? 1 : 0							) << 26;
+			binary |= (RandomWildEncounters ? 1 : 0						) << 27;
+			binary |= (ReleasedPokemonsReturnToEncounterArea ? 1 : 0	) << 28;
+			binary |= (ReleasedPokemonsRoamNearbyAreas ? 1 : 0			) << 29;
+			binary |= (SandBoxMode ? 1 : 0								) << 30;
+			binary |= ((int)LimitPokemonPartySize						) << 31; //Has to remain last because of value type
+
+			return binary;
+		}
+
+		public void LoadBinary(int binary)
+		{
+			BattleShiftStyle						= (binary & (1 << 0)) != 0;
+			CanOnlyCaptureFirstWildEncounter		= (binary & (1 << 1)) != 0;
+			CanOnlySaveAtPokemonCenter				= (binary & (1 << 2)) != 0;
+			CatchPokemonsWithEggMoves				= (binary & (1 << 3)) != 0;
+			ChallengeEndsAfter						= (binary & (1 << 4)) != 0;
+			EnableCloudStorage						= (binary & (1 << 5)) != 0;
+			FailChallengeWipesData					= (binary & (1 << 6)) != 0;
+			ForcePokemonNaming						= (binary & (1 << 7)) != 0;
+			GameOverOnWhiteOut						= (binary & (1 << 8)) != 0;
+			NoCapturesAllowed						= (binary & (1 << 9)) != 0;
+			NoHealingItemsInsideBattle				= (binary & (1 << 10)) != 0;
+			NoHealingItemsOutsideBattle				= (binary & (1 << 11)) != 0;
+			NoHealingNPCs							= (binary & (1 << 12)) != 0;
+			NoPC									= (binary & (1 << 13)) != 0;
+			NoPokemonCenterHeals					= (binary & (1 << 14)) != 0;
+			NoStoreBoughtMedicine					= (binary & (1 << 15)) != 0;
+			NuzlockeSkipDuplicates					= (binary & (1 << 16)) != 0;
+			OnlinePlayEnabled						= (binary & (1 << 17)) != 0;
+			OverflowPokemonsIntoNextBox				= (binary & (1 << 18)) != 0;
+			PcDoesNotHealPokemons					= (binary & (1 << 19)) != 0;
+			PokemonCenterHealsResetTrainers			= (binary & (1 << 20)) != 0;
+			PokemonCentersCostMoney					= (binary & (1 << 21)) != 0;
+			PokemonDeathOnFaint						= (binary & (1 << 22)) != 0;
+			PokemonSentToPcOnDeath					= (binary & (1 << 23)) != 0;
+			RandomBossEncounters					= (binary & (1 << 24)) != 0;
+			RandomizePartyAfterBattle				= (binary & (1 << 25)) != 0;
+			RandomStarters							= (binary & (1 << 26)) != 0;
+			RandomWildEncounters					= (binary & (1 << 27)) != 0;
+			ReleasedPokemonsReturnToEncounterArea	= (binary & (1 << 28)) != 0;
+			ReleasedPokemonsRoamNearbyAreas			= (binary & (1 << 29)) != 0;
+			SandBoxMode								= (binary & (1 << 30)) != 0;
+			LimitPokemonPartySize					= (byte)(binary >> 31);
 		}
 
 		public void StartingOver()

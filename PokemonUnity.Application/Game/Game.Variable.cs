@@ -58,32 +58,6 @@ namespace PokemonUnity
 		public PokemonEssentials.Interface.IInterpreter Interpreter { get; set; }
 		public PokemonEssentials.Interface.Screen.IGameScenesUI Scenes { get; set; }
 		public PokemonEssentials.Interface.Screen.IGameScreensUI Screens { get; set; }
-		public Feature Features { get; private set; }
-		public Challenges Challenge { get; private set; }
-		//public GameModes Mode { get; private set; }
-
-		#region Player and Overworld Data
-		//public Regions Region { get; private set; }
-		//private byte slotIndex { get; set; }
-		#endregion
-
-		#region Private Records of Player Storage Data
-		//ToDo: Honey Tree, smearing honey on tree will spawn pokemon in 6hrs, for 24hrs (21 trees)
-		//Honey tree timer is done in minutes (1440, spawns at 1080), only goes down while playing...
-		//ToDo: a bool variable for PC background (if texture is unlocked) `bool[]`
-		public string PlayerDayCareData { get; set; } //KeyValuePair<Pokemon,steps>[]
-		public string PlayerItemData { get; set; }
-		public string PlayerBerryData { get; set; }
-		public string PlayerNPCData { get; set; }
-		public string PlayerApricornData { get; set; }
-		//public Pokemon[,] PC_Poke { get; set; }
-		//public string[] PC_boxNames { get; set; }
-		//public int[] PC_boxTexture { get; set; }
-		//public List<Items> PC_Items { get; set; }
-		//public List<Items> Bag_Items { get; set; }
-		//public Character.PC PC { get; private set; }
-		//public Character.Bag Bag { get; private set; }
-		#endregion
 
 		#region Events used by Game Interface
 		//public PokemonEssentials.Interface.IEvents Events { get; private set; }

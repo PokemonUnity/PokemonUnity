@@ -67,7 +67,7 @@ namespace PokemonUnity
 
 	public partial class GlobalMetadata : PokemonEssentials.Interface.Field.IGlobalMetadata
 	{
-		public IWaveData trainerRecording { get; set; }
+		public IWaveData trainerRecording	{ get; set; }
 		public bool bicycle					{ get; set; }
 		public bool surfing					{ get; set; }
 		public bool diving					{ get; set; }
@@ -79,7 +79,7 @@ namespace PokemonUnity
 		/// Should not stack (encourage users to deplete excessive money);
 		/// reset count based on repel used.
 		///ToDo: Missing Variables for RepelType, Swarm
-		public int repel				    { get; set; }
+		public int repel					{ get; set; }
 		public bool flashUsed				{ get; set; }
 		public float bridge					{ get; set; }
 		public bool runningShoes			{ get; set; }
@@ -90,44 +90,71 @@ namespace PokemonUnity
 		/// Has player beaten the game already and viewed credits from start to end
 		/// </summary>
 		/// New Game Plus
-		public bool creditsPlayed			                { get; set; }
+		public bool creditsPlayed							{ get; set; }
 		public int playerID									{ get; set; }
-		public int coins				                    { get; set; }
+		public int coins									{ get; set; }
 		public int sootsack									{ get; set; }
 		public IList<IMail> mailbox							{ get; set; }
 		public IPCItemStorage pcItemStorage					{ get; set; }
-		public int stepcount				                { get; set; }
-		public int happinessSteps				            { get; set; }
+		public int stepcount								{ get; set; }
+		public int happinessSteps							{ get; set; }
 		public DateTime? pokerusTime						{ get; set; }
 		public IDayCare daycare								{ get; set; }
 		public bool daycareEgg								{ get; set; } //ToDo: int?...
 		public int daycareEggSteps							{ get; set; }
-		public bool[] pokedexUnlocked			            { get; set; } // Array storing which Dexes are unlocked
+		public bool[] pokedexUnlocked						{ get; set; } // Array storing which Dexes are unlocked
 		public IList<int> pokedexViable						{ get; set; } // All Dexes of non-zero length and unlocked
-		public int pokedexDex				                { get; set; } // Dex currently looking at (-1 is National Dex)
-		public int[] pokedexIndex				            { get; set; } // Last species viewed per Dex
+		public int pokedexDex								{ get; set; } // Dex currently looking at (-1 is National Dex)
+		public int[] pokedexIndex							{ get; set; } // Last species viewed per Dex
 		public int pokedexMode								{ get; set; } // Search mode
 		public ITilePosition healingSpot					{ get; set; }
 		public ITilePosition escapePoint					{ get; set; }
 		public int pokecenterMapId							{ get; set; }
-		public float pokecenterX				            { get; set; }
-		public float pokecenterY				            { get; set; }
+		public float pokecenterX							{ get; set; }
+		public float pokecenterY							{ get; set; }
 		public int pokecenterDirection						{ get; set; }
 		public ITilePosition pokecenter						{ get; set; }
 		public IDictionary<int,bool> visitedMaps			{ get; set; }
-		public IList<int> mapTrail				            { get; set; }
+		public IList<int> mapTrail							{ get; set; }
 		public IAudioBGM nextBattleBGM						{ get; set; }
 		public IAudioME nextBattleME						{ get; set; }
-		public IAudioObject nextBattleBack			        { get; set; }
+		public IAudioObject nextBattleBack					{ get; set; }
 		public ISafariState safariState						{ get; set; }
 		public IBugContestState bugContestState				{ get; set; }
 		public ITrainer partner								{ get; set; }
-		public IBattleChallenge challenge				   { get; set; }
+		public IBattleChallenge challenge					{ get; set; }
 		public IBattleRecordData lastbattle					{ get; set; }
 		public IList<IPhoneContact> phoneNumbers			{ get; set; }
-		public int phoneTime				                { get; set; }
-		public bool safesave				                { get; set; }
+		public int phoneTime								{ get; set; }
+		public bool safesave								{ get; set; }
 		public IDictionary<KeyValuePair<int,int>,long> eventvars				{ get; set; }
+
+		public PokemonUnity.Application.Feature Features						{ get; private set; }
+		public PokemonUnity.Application.Challenges Challenge					{ get; private set; }
+		//public GameModes Mode								{ get; private set; }
+
+		#region Player and Overworld Data
+		//public Regions Region { get; private set; }
+		//private byte slotIndex { get; set; }
+		#endregion
+
+		#region Private Records of Player Storage Data
+		//ToDo: Honey Tree, smearing honey on tree will spawn pokemon in 6hrs, for 24hrs (21 trees)
+		//Honey tree timer is done in minutes (1440, spawns at 1080), only goes down while playing...
+		//ToDo: a bool variable for PC background (if texture is unlocked) `bool[]`
+		//public string PlayerDayCareData { get; set; } //KeyValuePair<Pokemon,steps>[]
+		//public string PlayerItemData { get; set; }
+		//public string PlayerBerryData { get; set; }
+		//public string PlayerNPCData { get; set; }
+		//public string PlayerApricornData { get; set; }
+		//public Pokemon[,] PC_Poke { get; set; }
+		//public string[] PC_boxNames { get; set; }
+		//public int[] PC_boxTexture { get; set; }
+		//public List<Items> PC_Items { get; set; }
+		//public List<Items> Bag_Items { get; set; }
+		//public Character.PC PC { get; private set; }
+		//public Character.Bag Bag { get; private set; }
+		#endregion
 
 		//public float bridge { get {
 		//  if (@bridge == null) @bridge=0;
@@ -191,6 +218,14 @@ namespace PokemonUnity
 			@phoneTime            = 0;
 			@eventvars            = new Dictionary<KeyValuePair<int, int>, long>();
 			@safesave             = false;
+			Features			  = new PokemonUnity.Application.Feature();
+			Challenge			  = PokemonUnity.Application.Challenges.Classic;
+			//Rival = rival							?? new string[0];//throw new ArgumentNullException(nameof(rival));
+			//PlayerItemData = playerItemData			?? string.Empty;//throw new ArgumentNullException(nameof(playerItemData));
+			//PlayerDayCareData = playerDayCareData	?? string.Empty;//throw new ArgumentNullException(nameof(playerDayCareData));
+			//PlayerBerryData = playerBerryData		?? string.Empty;//throw new ArgumentNullException(nameof(playerBerryData));
+			//PlayerNPCData = playerNPCData			?? string.Empty;//throw new ArgumentNullException(nameof(playerNPCData));
+			//PlayerApricornData = playerApricornData	?? string.Empty;//throw new ArgumentNullException(nameof(playerApricornData));
 		}
 	}
 }
