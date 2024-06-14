@@ -1656,8 +1656,8 @@ namespace PokemonUnity
 				}
 				CancelVehicles();
 				if (this is IGameDependantEvents d) d.RemoveDependencies();
-				GameSwitches[Core.STARTING_OVER_SWITCH]=true; //ToDo: Use GameData.Feature
-				Features.StartingOver();
+				GameSwitches[Core.STARTING_OVER_SWITCH]=true;
+				//Global.StartingOver(); //ToDo: Uncomment and implement a starting over count-up
 				GameTemp.player_new_map_id=Global.pokecenterMapId;
 				GameTemp.player_new_x=Global.pokecenterX;
 				GameTemp.player_new_y=Global.pokecenterY;
@@ -1684,11 +1684,11 @@ namespace PokemonUnity
 					CancelVehicles();
 					if (this is IGameDependantEvents d) d.RemoveDependencies();
 					GameSwitches[Core.STARTING_OVER_SWITCH]=true;
-					Features.StartingOver();
-					GameTemp.player_new_map_id=homedata.Value.MapId; //homedata[0]
-					GameTemp.player_new_x=homedata.Value.X; //homedata[1]
-					GameTemp.player_new_y=homedata.Value.Y; //homedata[2]
-					GameTemp.player_new_direction=homedata.Value.Direction; //homedata[3]
+					//Global.StartingOver(); //ToDo: Uncomment and implement a starting over count-up
+					GameTemp.player_new_map_id=homedata.Value.MapId;		//homedata[0]
+					GameTemp.player_new_x=homedata.Value.X;					//homedata[1]
+					GameTemp.player_new_y=homedata.Value.Y;					//homedata[2]
+					GameTemp.player_new_direction=homedata.Value.Direction;	//homedata[3]
 					if (Scene is ISceneMap s) s.transfer_player();
 					GameMap.refresh();
 				} else {
@@ -1869,7 +1869,7 @@ namespace PokemonUnity
 		public bool Pokerus() {
 			if (GameSwitches[Core.SEEN_POKERUS_SWITCH]) return false;
 			//if (Core.SEEN_POKERUS_SWITCH) return false;
-			if (Features.SeenPokerusSwitch) return false;
+			if (Global.Features.SeenPokerusSwitch) return false;
 			foreach (IPokemon i in Trainer.party) {
 				//if (i.PokerusStage==1) return true;
 				if (i.PokerusStage==true) return true;

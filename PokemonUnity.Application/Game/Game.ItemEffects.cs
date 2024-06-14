@@ -2408,7 +2408,7 @@ namespace PokemonUnity//.Inventory
 						}
 					}
 					//if (battle.Player().party.Length>=6 && !PC.full) {
-					if (battle.Player().party.GetCount()>=Features.LimitPokemonPartySize && !PokemonStorage.full) {
+					if (battle.Player().party.GetCount()>=Global.Features.LimitPokemonPartySize && !PokemonStorage.full) {
 						scene.Display(Game._INTL("There is no room left in the PC!"));
 						args.Response = false;
 					}

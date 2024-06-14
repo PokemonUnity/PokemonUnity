@@ -717,12 +717,6 @@ namespace PokemonUnity.Application
 			SandBoxMode								= (binary & (1 << 30)) != 0;
 			LimitPokemonPartySize					= (byte)(binary >> 31);
 		}
-
-		public void StartingOver()
-		{
-			StartingOverSwitch = true;
-			PlayerHasStartedOverCounter += 1;
-		}
 		#endregion
 	}
 

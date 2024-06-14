@@ -130,7 +130,7 @@ namespace PokemonUnity
 		public IDictionary<KeyValuePair<int,int>,long> eventvars				{ get; set; }
 
 		public PokemonUnity.Application.Feature Features						{ get; private set; }
-		public PokemonUnity.Application.Challenges Challenge					{ get; private set; }
+		public PokemonUnity.Application.Challenges Challenge					{ get; set; }
 		//public GameModes Mode								{ get; private set; }
 
 		#region Player and Overworld Data

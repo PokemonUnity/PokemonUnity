@@ -1569,7 +1569,7 @@ namespace PokemonUnity.Monster
 			resetMoves();
 			int numMove = Core.Rand.Next(4) + 1; //number of moves pokemon will have, between 0 and 3
 			List<Moves> movelist = new List<Moves>();
-			if (isEgg || egg || (Game.GameData as Game).Features.CatchPokemonsWithEggMoves)
+			if (isEgg || egg || (Game.GameData as Game).Global.Features.CatchPokemonsWithEggMoves)
 				movelist.AddRange(Kernal.PokemonMovesData[pokemons].Egg);
 			IList<int?> rejected = new int?[movelist.Count]; //default null, to exclude `0`
 			switch (level)

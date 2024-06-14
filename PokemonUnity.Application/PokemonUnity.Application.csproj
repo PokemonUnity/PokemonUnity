@@ -76,7 +76,6 @@
     <Compile Include="Extensions\AbilityExtension.cs" />
     <Compile Include="Extensions\MoveExtension.cs" />
     <Compile Include="Extensions\TrainerExtension.cs" />
-    <Compile Include="Game\Feature.cs" />
     <Compile Include="Game\Game.Debugger.cs" />
     <Compile Include="Game\Game.Conditions.cs" />
     <Compile Include="Game\Game.cs" />

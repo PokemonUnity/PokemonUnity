@@ -957,20 +957,20 @@ namespace PokemonUnity.Combat
 		public int SecondPartyBegin(int battlerIndex) {
 			if (IsOpposing(battlerIndex)) {
 				//return @fullparty2 ? 6 : 3; //split in half for doubles
-				return @fullparty2 ? (Game.GameData as Game).Features.LimitPokemonPartySize : (int)(Core.MAXPARTYSIZE * .5);
+				return @fullparty2 ? (Game.GameData as Game).Global.Features.LimitPokemonPartySize : (int)(Core.MAXPARTYSIZE * .5);
 			}
 			else {
 				//return @fullparty1 ? 6 : 3; //split in half for doubles
-				return @fullparty1 ? (Game.GameData as Game).Features.LimitPokemonPartySize : (int)(Core.MAXPARTYSIZE * .5);
+				return @fullparty1 ? (Game.GameData as Game).Global.Features.LimitPokemonPartySize : (int)(Core.MAXPARTYSIZE * .5);
 			}
 		}
 
 		public int PartyLength(int battlerIndex) {
 			if (IsOpposing(battlerIndex)) {
-				return (@opponent.Length > 0) ? SecondPartyBegin(battlerIndex) : (Game.GameData as Game).Features.LimitPokemonPartySize;
+				return (@opponent.Length > 0) ? SecondPartyBegin(battlerIndex) : (Game.GameData as Game).Global.Features.LimitPokemonPartySize;
 			}
 			else {
-				return @player.Length > 0 ? SecondPartyBegin(battlerIndex) : (Game.GameData as Game).Features.LimitPokemonPartySize;
+				return @player.Length > 0 ? SecondPartyBegin(battlerIndex) : (Game.GameData as Game).Global.Features.LimitPokemonPartySize;
 			}
 		}
 

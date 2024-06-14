@@ -1388,7 +1388,7 @@ namespace PokemonUnity
 		public void CreatePokemon() { }
 
 		public bool BoxesFull() {
-			return Trainer == null || (Trainer.party.Length==Features.LimitPokemonPartySize && PokemonStorage.full);
+			return Trainer == null || (Trainer.party.Length==Global.Features.LimitPokemonPartySize && PokemonStorage.full);
 		}
 
 		public void Nickname(PokemonEssentials.Interface.PokeBattle.IPokemon pokemon) {
@@ -1408,7 +1408,7 @@ namespace PokemonUnity
 				return;
 			}
 			pokemon.RecordFirstMoves();
-			if (Trainer.party.Length < Features.LimitPokemonPartySize) {
+			if (Trainer.party.Length < Global.Features.LimitPokemonPartySize) {
 				//Changed to `.Add(Pokemon)`...
 				//Trainer.party[Trainer.party.Length]=pokemon;
 				((IList)Trainer.party).Add(pokemon);
@@ -1498,7 +1498,7 @@ namespace PokemonUnity
 			Trainer.owned[pokemon.Species]=true;
 			if (seeform) SeenForm(pokemon);
 			pokemon.RecordFirstMoves();
-			if (Trainer.party.Length<Features.LimitPokemonPartySize) {
+			if (Trainer.party.Length<Global.Features.LimitPokemonPartySize) {
 				//ToDo: Change to `.Add(Pokemon)`?
 				Trainer.party[Trainer.party.Length]=pokemon;
 			} else {
@@ -1513,7 +1513,7 @@ namespace PokemonUnity
 			Trainer.owned[pokemon.Species]=true;
 			if (seeform) SeenForm(pokemon);
 			pokemon.RecordFirstMoves();
-			if (Trainer.party.Length<Features.LimitPokemonPartySize) {
+			if (Trainer.party.Length<Global.Features.LimitPokemonPartySize) {
 				//ToDo: Change to `.Add(Pokemon)`?
 				Trainer.party[Trainer.party.Length]=pokemon;
 			} else {
@@ -1523,7 +1523,7 @@ namespace PokemonUnity
 		}
 
 		public bool AddToParty(Pokemons pkmn,int? level=null,bool seeform=true) {
-			if (pkmn == Pokemons.NONE || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
+			if (pkmn == Pokemons.NONE || Trainer == null || Trainer.party.Length>=Global.Features.LimitPokemonPartySize) return false;
 			IPokemon pokemon = null;
 			//if (pokemon is String || pokemon is Symbol) {
 			//  pokemon=getID(Species,pokemon);
@@ -1539,7 +1539,7 @@ namespace PokemonUnity
 		}
 
 		public bool AddToParty(IPokemon pokemon,int? level=null,bool seeform=true) {
-			if (!pokemon.IsNotNullOrNone() || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
+			if (!pokemon.IsNotNullOrNone() || Trainer == null || Trainer.party.Length>=Global.Features.LimitPokemonPartySize) return false;
 			string speciesname=Game._INTL(pokemon.Species.ToString(TextScripts.Name));
 			(this as IGameMessage).Message(Game._INTL(@"{1} obtained {2}!\\se[PokemonGet]\1",Trainer.name,speciesname));
 			NicknameAndStore(pokemon);
@@ -1548,7 +1548,7 @@ namespace PokemonUnity
 		}
 
 		public bool AddToPartySilent(Pokemons pkmn,int? level=null,bool seeform=true) {
-			if (pkmn == Pokemons.NONE || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
+			if (pkmn == Pokemons.NONE || Trainer == null || Trainer.party.Length>=Global.Features.LimitPokemonPartySize) return false;
 			IPokemon pokemon = null;
 			//if (pokemon is String || pokemon is Symbol) {
 			//  pokemon=getID(Species,pokemon);
@@ -1565,7 +1565,7 @@ namespace PokemonUnity
 		}
 
 		public bool AddToPartySilent(IPokemon pokemon,int? level=null,bool seeform=true) {
-			if (!pokemon.IsNotNullOrNone() || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
+			if (!pokemon.IsNotNullOrNone() || Trainer == null || Trainer.party.Length>=Global.Features.LimitPokemonPartySize) return false;
 			Trainer.seen[pokemon.Species]=true;
 			Trainer.owned[pokemon.Species]=true;
 			if (seeform) SeenForm(pokemon);
@@ -1575,7 +1575,7 @@ namespace PokemonUnity
 		}
 
 		public bool AddForeignPokemon(Pokemons pkmn,int? level=null,string ownerName=null,string nickname=null,int ownerGender=0,bool seeform=true) {
-			if (pkmn == Pokemons.NONE || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
+			if (pkmn == Pokemons.NONE || Trainer == null || Trainer.party.Length>=Global.Features.LimitPokemonPartySize) return false;
 			IPokemon pokemon = null;
 			//if (pokemon is String || pokemon is Symbol) {
 			//  pokemon=getID(Species,pokemon);
@@ -1607,7 +1607,7 @@ namespace PokemonUnity
 		}
 
 		public bool AddForeignPokemon(IPokemon pokemon,int? level=null,string ownerName=null,string nickname=null,int ownerGender=0,bool seeform=true) {
-			if (!pokemon.IsNotNullOrNone() || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
+			if (!pokemon.IsNotNullOrNone() || Trainer == null || Trainer.party.Length>=Global.Features.LimitPokemonPartySize) return false;
 			//Set original trainer to a foreign one (if ID isn't already foreign)
 			if (pokemon.trainerID==Trainer.id) {
 				pokemon.trainerID=Trainer.getForeignID();
@@ -1632,7 +1632,7 @@ namespace PokemonUnity
 		}
 
 		public bool GenerateEgg(Pokemons pkmn,string text="") {
-			if (pkmn == Pokemons.NONE || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
+			if (pkmn == Pokemons.NONE || Trainer == null || Trainer.party.Length>=Global.Features.LimitPokemonPartySize) return false;
 			IPokemon pokemon = null;
 			//if (pokemon is String || pokemon is Symbol) {
 			//  pokemon=getID(Species,pokemon);
@@ -1657,7 +1657,7 @@ namespace PokemonUnity
 		}
 
 		public bool GenerateEgg(IPokemon pokemon,string text="") {
-			if (!pokemon.IsNotNullOrNone() || Trainer == null || Trainer.party.Length>=Features.LimitPokemonPartySize) return false;
+			if (!pokemon.IsNotNullOrNone() || Trainer == null || Trainer.party.Length>=Global.Features.LimitPokemonPartySize) return false;
 			// Get egg steps
 			//dexdata=OpenDexData();
 			//DexDataOffset(dexdata,pokemon.Species,21);

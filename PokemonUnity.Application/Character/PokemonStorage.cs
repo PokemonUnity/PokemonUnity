@@ -144,7 +144,7 @@ namespace PokemonUnity
 
 			public static implicit operator PokemonBox (PokemonEssentials.Interface.PokeBattle.IPokemon[] party)
 			{
-				IPokemonBox box = new PokemonBox("party", (Game.GameData as Game).Features.LimitPokemonPartySize);
+				IPokemonBox box = new PokemonBox("party", (Game.GameData as Game).Global.Features.LimitPokemonPartySize);
 				int i = 0;
 				foreach(PokemonEssentials.Interface.PokeBattle.IPokemon p in party)
 				{
@@ -202,7 +202,7 @@ namespace PokemonUnity
 
 			public int maxPokemon(int box) {
 				if (box>=this.maxBoxes) return 0;
-				return box<0 ? (Game.GameData as Game).Features.LimitPokemonPartySize : this[box].length;
+				return box<0 ? (Game.GameData as Game).Global.Features.LimitPokemonPartySize : this[box].length;
 			}
 
 			public IPokemonBox this[int x] { get {
@@ -356,7 +356,7 @@ namespace PokemonUnity
 					//ToDo: Feature not setup...
 					this.party=party;
 				} else {
-					@party=new Pokemon[(Game.GameData as Game).Features.LimitPokemonPartySize];
+					@party=new Pokemon[(Game.GameData as Game).Global.Features.LimitPokemonPartySize];
 				}
 				return this;
 			}

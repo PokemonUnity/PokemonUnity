@@ -103,6 +103,9 @@ namespace PokemonEssentials.Interface.Field
 		bool safesave { get; set; }
 		IDictionary<KeyValuePair<int, int>, long> eventvars { get; set; }
 
+		PokemonUnity.Application.Feature Features { get; }
+		PokemonUnity.Application.Challenges Challenge { get; set; }
+
 
 		//IGlobalMetadata initialize();
 	}
