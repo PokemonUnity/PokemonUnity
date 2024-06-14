@@ -160,7 +160,8 @@ namespace PokemonEssentials.Interface.Screen
 		//STARTZOOM=0.125;
 
 		//IPokeballSendOutAnimation initialize(ISprite sprite, int spritehash, IPokemon pkmn, IPokemon illusionpoke, bool doublebattle);
-		IPokeballSendOutAnimation initialize(IPokemonBattlerSprite sprite, IDictionary<string,ISprite> spritehash, IBattler pkmn, IPokemon illusionpoke, bool doublebattle);
+		//IPokeballSendOutAnimation initialize(IPokemonBattlerSprite sprite, IDictionary<string,ISprite> spritehash, IBattler pkmn, IPokemon illusionpoke, bool doublebattle);
+		IPokeballSendOutAnimation initialize(IPokemonBattlerSprite sprite, IDictionary<string,object> spritehash, IBattler pkmn, IPokemon illusionpoke, bool doublebattle);
 
 		bool disposed { get; }
 
@@ -202,7 +203,8 @@ namespace PokemonEssentials.Interface.Screen
 	public interface ITrainerFadeAnimation
 	{
 		//ITrainerFadeAnimation initialize(ISprite[] sprites);
-		ITrainerFadeAnimation initialize(IDictionary<string,ISprite> sprites);
+		//ITrainerFadeAnimation initialize(IDictionary<string,ISprite> sprites);
+		ITrainerFadeAnimation initialize(IDictionary<string,object> sprites);
 
 		bool animdone { get; }
 

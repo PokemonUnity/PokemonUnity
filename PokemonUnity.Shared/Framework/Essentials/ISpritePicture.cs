@@ -45,8 +45,9 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// Pokémon sprite (used in battle)
 	/// </summary>
-	public interface IPokemonBattlerSprite //: RPG.ISprite
+	public interface IPokemonBattlerSprite : IRPGSprite //IGameObject
 	{
+		IBitmap bitmap				{ get; set; }
 		int selected				{ get; set; }
 
 		IPokemonBattlerSprite initialize(bool doublebattle, int index, IViewport viewport = null);

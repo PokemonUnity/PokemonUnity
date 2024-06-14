@@ -195,8 +195,8 @@ namespace PokemonUnity.Overworld
 			//@enctypes=new NestedDictionary<EncounterOptions, NestedDictionary<Pokemons, int[]>>();
 			@enctypes=new Dictionary<EncounterOptions, IList<IEncounterPokemon>>();
 			try {
-				IDictionary<int, IEncounters> data = null;//load_data("Data/encounters.dat");
-				Kernal.load_data(out data, "Data/encounters.dat");
+				IDictionary<int, IEncounters> data = new Dictionary<int, IEncounters>();//load_data("Data/encounters.dat");
+				Kernal.load_data(data, "Data/encounters.dat");
 				if (data[mapID] != null) { //data.is_a(Hash) &&
 					@density=data[mapID].EnctypeDensities.Values.ToArray();	//[0] | ToDo: refactor this and remove private variable?
 					@enctypes=data[mapID].EnctypeEncounters;	//[1]
@@ -215,8 +215,8 @@ namespace PokemonUnity.Overworld
 		}
 
 		public bool MapHasEncounter (int mapID, EncounterOptions enctype) {
-			IDictionary<int, IEncounters> data = null;//load_data("Data/encounters.dat");
-			Kernal.load_data(out data, "Data/encounters.dat");
+			IDictionary<int, IEncounters> data = new Dictionary<int, IEncounters>();//load_data("Data/encounters.dat");
+			Kernal.load_data(data, "Data/encounters.dat");
 			//Kernal.EncounterData[mapID]
 			if (data[mapID] != null) { //data.is_a(Hash) &&
 				enctypes=data[mapID].EnctypeEncounters;	//[1]
@@ -236,8 +236,8 @@ namespace PokemonUnity.Overworld
 				Core.Logger.LogError(Game._INTL("Encounter type out of range"));
 				return null;
 			}
-			IDictionary<int, IEncounters> data = null;//load_data("Data/encounters.dat");
-			Kernal.load_data(out data, "Data/encounters.dat");
+			IDictionary<int, IEncounters> data = new Dictionary<int, IEncounters>();//load_data("Data/encounters.dat");
+			Kernal.load_data(data, "Data/encounters.dat");
 			if (data[mapID] != null) { //data.is_a(Hash) &&
 				enctypes=data[mapID].EnctypeEncounters;	//[1]
 			} else {

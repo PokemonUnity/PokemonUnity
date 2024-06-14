@@ -13,6 +13,7 @@ using PokemonEssentials.Interface.Battle;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 using System.Collections;
+using PokemonUnity.Character;
 
 namespace PokemonUnity
 {
@@ -758,185 +759,192 @@ namespace PokemonUnity
 			return dexdata.Type;
 		}
 
-		public virtual IEnumerator TrainerInfo(IList<IPokemonSerialized> pokemonlist, int trfile, IPokemonChallengeRules rules, Action block_given = null) {
-			//IList<PokemonUnity.Character.TrainerMetaData> bttrainers=GetBTTrainers(trfile);
-			//IPokemonSerialized[] btpokemon=GetBTPokemon(trfile);
-			////trainertypes=load_data("Data/trainertypes.dat");
-			//IDictionary<TrainerTypes,Character.TrainerMetaData> trainertypes=Kernal.TrainerMetaData;
-			//if (bttrainers.Count==0) {
-			//	for (int i = 0; i < 200; i++) {
-			//		if (block_given != null && i%50==0) yield return null; //block_given?
-			//		TrainerTypes trainerid=0;
-			//		int money=30;
-			//		do { //;loop
-			//			trainerid = (TrainerTypes)Core.Rand.Next(Kernal.TrainerMetaData.Count) + 1; //Trainers.maxValue
-			//			if (Core.Rand.Next(30) == 0) trainerid = TrainerTypes.YOUNGSTER; //getID(Trainers,:YOUNGSTER);
-			//			//if (trainerid.ToString(TextScripts.Name) == "") continue;
-			//			money = (//trainertypes[trainerid]==null ||
-			//					 trainertypes[trainerid].BaseMoney==null) ? 30 : trainertypes[trainerid].BaseMoney;
-			//			if (money >= 100) continue;
-			//			break;
-			//		} while (true);
-			//		int gender=(//trainertypes[trainerid] == null ||
-			//					trainertypes[trainerid].Gender == null) ? 2 : trainertypes[trainerid].Gender; //[7]
-			//		string randomName=getRandomNameEx(gender,null,0,12);
-			//		Character.TrainerMetaData tr=new Character.TrainerMetaData(trainerid,@double: false,//randomName,
-			//			scriptBattleIntro: _INTL("Here I come!"),scriptBattleEnd: new string[] { _INTL("Yes, I won!"), _INTL("Man, I lost!") });
-			//		bttrainers.Add(tr);
-			//	}
-			//	//bttrainers.sort!{|a,b|
-			//	//	money1=(!trainertypes[a[0]] ||
-			//	//			!trainertypes[a[0]][3]) ? 30 : trainertypes[a[0]][3];
-			//	//	money2=(!trainertypes[b[0]] ||
-			//	//			!trainertypes[b[0]][3]) ? 30 : trainertypes[b[0]][3];
-			//	//	money1==money2 ? a[0]<=>b[0] : money1<=>money2;
-			//	//}
-			//	bttrainers.OrderBy(a => a.BaseMoney); //ToDo: Sort 2nd Filter Criteria
-			//}
-			//if (block_given != null) yield return null;
-			//int suggestedLevel=rules.ruleset.suggestedLevel;
-			//IPokemonRuleSet rulesetTeam=rules.ruleset.copy().clearPokemonRules();
-			//IList<Types[]> pkmntypes=new List<Types[]>();
-			//IList<bool> validities=new List<bool>();
-			//Types[] t=new Time();
-			//foreach (var pkmn in pokemonlist) {
-			//	if (pkmn.Level!=suggestedLevel) pkmn.Level=suggestedLevel;
-			//	pkmntypes.Add(getTypes(pkmn.Species));
-			//	validities.Add(rules.ruleset.isPokemonValid(pkmn));
-			//}
-			//IList<IPokemonSerialized> newbttrainers=new List<IPokemonSerialized>();
-			//for (int btt = 0; btt < bttrainers.Count; btt++) {
-			//	if (block_given != null && btt%50==0) yield return null;
-			//	Character.TrainerMetaData trainerdata=bttrainers[btt];
-			//	IList<> pokemonnumbers=trainerdata[5] ?? new List<IPokemon>();
-			//	IList<Pokemons> species=new List<Pokemons>();
-			//	IDictionary<Types,int> types=new Dictionary<Types,int>();
-			//	// p trainerdata[1]
-			//	//for (int typ = 0; typ < (Types.maxValue+1); typ++) { types[typ]=0; }
-			//	foreach (Types typ in Kernal.TypeData.Keys) { types.Add(typ,0); }
-			//	foreach (var pn in pokemonnumbers) {
-			//		IPokemonSerialized pkmn=btpokemon[pn];
-			//		species.Add(pkmn.species);
-			//		t=getTypes(pkmn.species);
-			//		foreach (Types typ in t) {
-			//			types[typ]+=1;
-			//		}
-			//	}
-			//	species=species ?? new List<Pokemons>(); // remove duplicates
-			//	int count=0;
-			//	//for (int typ = 0; typ < (Types.maxValue+1); typ++) {
-			//	foreach (Types typ in Kernal.TypeData.Keys) {
-			//		if (types[typ]>=5) {
-			//			types[typ]/=4;
-			//			if (types[typ]>10) types[typ]=10;
-			//		} else {
-			//			types[typ]=0;
-			//		}
-			//		count+=(int)types[typ];
-			//	}
-			//	if (count==0) types[0]=(int)1;
-			//	if (pokemonnumbers.Count==0) {
-			//		//int typ = 0; do {//|typ|
-			//		//	types[typ]=1; typ++;
-			//		//} while (typ < ); //(Types.maxValue+1).times
-			//		foreach (Types typ in Kernal.TypeData.Keys) //replaces the loop above
-			//			types[typ]=1;
-			//	}
-			//	IList<int> numbers=new List<int>();
-			//	if (pokemonlist!=null) {
-			//		IList<IPokemonSerialized> numbersPokemon=new List<IPokemonSerialized>();
-			//		//  p species
-			//		for (int index = 0; index < pokemonlist.Count; index++) {
-			//			IPokemonSerialized pkmn=pokemonlist[index];
-			//			if (!validities[index]) continue;
-			//			int absDiff=Math.Abs((index*8/pokemonlist.Count)-(btt*8/bttrainers.Count));
-			//			bool sameDiff=(absDiff==0);
-			//			if (species.Contains(pkmn.species)) {
-			//				int weight= new []{ 32,12,5,2,1,0,0,0 }[Math.Min(absDiff,7)];
-			//				if (Core.Rand.Next(40)<weight) {
-			//					numbers.Add(index);
-			//					numbersPokemon.Add(pokemonlist[index]);
-			//				}
-			//			} else {
-			//				t=pkmntypes[index];
-			//				foreach (var typ in t) {
-			//					int weight= new []{ 32,12,5,2,1,0,0,0 }[Math.Min(absDiff,7)];
-			//					weight*=types[typ];
-			//					if (Core.Rand.Next(40)<weight) {
-			//						numbers.Add(index);
-			//						numbersPokemon.Add(pokemonlist[index]);
-			//					}
-			//				}
-			//			}
-			//		}
-			//		numbers=numbers??new List<int>();
-			//		if ((numbers.Count<6 ||
-			//			!rulesetTeam.hasValidTeam(numbersPokemon))) {
-			//			for (int index = 0; index < pokemonlist.Count; index++) {
-			//				IPokemonSerialized pkmn =pokemonlist[index];
-			//				if (!validities[index]) continue;
-			//				if (species.Contains(pkmn.species)) {
-			//					numbers.Add(index);
-			//					numbersPokemon.Add(pokemonlist[index]);
-			//				} else {
-			//					t=pkmntypes[index];
-			//					foreach (var typ in t) {
-			//						if (types[typ]>0 && !numbers.Contains(index)) {
-			//							numbers.Add(index);
-			//							numbersPokemon.Add(pokemonlist[index]);
-			//							break;
-			//						}
-			//					}
-			//				}
-			//				if (numbers.Count>=6 && rules.ruleset.hasValidTeam(numbersPokemon)) break;
-			//			}
-			//			if (numbers.Count<6 || !rules.ruleset.hasValidTeam(numbersPokemon)) {
-			//				while (numbers.Count<pokemonlist.Count &&
-			//					(numbers.Count<6 || !rules.ruleset.hasValidTeam(numbersPokemon))) {
-			//					int index=Core.Rand.Next(pokemonlist.Count);
-			//					if (!numbers.Contains(index)) {
-			//						numbers.Add(index);
-			//						numbersPokemon.Add(pokemonlist[index]);
-			//					}
-			//				}
-			//			}
-			//		}
-			//		numbers.OrderBy(a=>a);//.sort!;
-			//	}
-			//	//newbttrainers.Add([trainerdata[0],trainerdata[1],trainerdata[2],
-			//	//					trainerdata[3],trainerdata[4],numbers]);
-			//	newbttrainers.Add(new PBPokemon(trainerdata[0],trainerdata[1],trainerdata[2],
-			//						trainerdata[3],trainerdata[4],numbers));
-			//}
-			//if (block_given!=null) yield return null;
-			//pokemonlist=[];
-			//foreach (IPokemon pkmn in pokemonlist) {
-			//	pokemonlist.Add(PBPokemon.fromPokemon(pkmn));
-			//}
-			//IList<> trlists=(Kernal.load_data("Data/trainerlists.dat")); //rescue []
-			//bool hasDefault=false;
-			//int trIndex=-1;
-			//for (int i = 0; i < trlists.Count; i++) {
-			//	if (trlists[i][5]) hasDefault=true;
-			//}
-			//for (int i = 0; i < trlists.Count; i++) {
-			//	if (trlists[i][2].Contains(trfile)) {
-			//		trIndex=i;
-			//		trlists[i][0]=newbttrainers;
-			//		trlists[i][1]=pokemonlist;
-			//		trlists[i][5]=!hasDefault;
-			//	}
-			//}
-			//if (block_given!=null) yield return null;
-			//if (trIndex<0) {
-			//	info=new string[] { newbttrainers,pokemonlist,new[] { trfile },
-			//			trfile+"tr.txt",trfile+"pm.txt",!hasDefault };
-			//	trlists.Add(info);
-			//}
-			//if (block_given!=null) yield return null;
-			//Kernal.save_data(trlists,"Data/trainerlists.dat");
-			//if (block_given!=null) yield return null;
-			//SaveTrainerLists();
+		//public virtual IEnumerator TrainerInfo(IList<IPokemonSerialized> pokemonlist, int trfile, IPokemonChallengeRules rules, Action block_given = null) {
+		public virtual IEnumerator TrainerInfo(IList<IPokemon> pokemonlist, int trfile, IPokemonChallengeRules rules, Action block_given = null) {
+			IList<PokemonUnity.Character.ITrainerData> bttrainers=GetBTTrainers(trfile);
+			IPokemonSerialized[] btpokemon=GetBTPokemon(trfile);
+			//trainertypes=load_data("Data/trainertypes.dat");
+			IDictionary<TrainerTypes,Character.TrainerMetaData> trainertypes=Kernal.TrainerMetaData;
+			if (bttrainers.Count==0) {
+				for (int i = 0; i < 200; i++) {
+					if (block_given != null && i%50==0) yield return null; //block_given?
+					TrainerTypes trainerid=0;
+					int money=30;
+					do { //;loop
+						trainerid = (TrainerTypes)Core.Rand.Next(Kernal.TrainerMetaData.Count) + 1; //Trainers.maxValue
+						if (Core.Rand.Next(30) == 0) trainerid = TrainerTypes.YOUNGSTER; //getID(Trainers,:YOUNGSTER);
+						//if (trainerid.ToString(TextScripts.Name) == "") continue;
+						money = (//trainertypes[trainerid]==null ||
+								 trainertypes[trainerid].BaseMoney==null) ? 30 : trainertypes[trainerid].BaseMoney;
+						if (money >= 100) continue;
+						break;
+					} while (true);
+					int gender=(//trainertypes[trainerid] == null ||
+								trainertypes[trainerid].Gender == null) ? 2 : trainertypes[trainerid].Gender.Value ? 1 : 0; //[7]
+					string randomName=getRandomNameEx(gender,null,0,12);
+					ITrainerData tr =new Character.TrainerMetaData(trainerid,@double: false,//randomName,
+						scriptBattleIntro: _INTL("Here I come!"),scriptBattleEnd: new string[] { _INTL("Yes, I won!"), _INTL("Man, I lost!") });
+					bttrainers.Add(tr);
+				}
+				//bttrainers.sort!{|a,b|
+				//	money1=(!trainertypes[a[0]] ||
+				//			!trainertypes[a[0]][3]) ? 30 : trainertypes[a[0]][3];
+				//	money2=(!trainertypes[b[0]] ||
+				//			!trainertypes[b[0]][3]) ? 30 : trainertypes[b[0]][3];
+				//	money1==money2 ? a[0]<=>b[0] : money1<=>money2;
+				//}
+				bttrainers.OrderBy(a => trainertypes[a.ID].BaseMoney); //ToDo: Sort 2nd Filter Criteria
+			}
+			if (block_given != null) yield return null;
+			int suggestedLevel=rules.ruleset.suggestedLevel;
+			IPokemonRuleSet rulesetTeam=rules.ruleset.copy().clearPokemonRules();
+			IList<Types[]> pkmntypes=new List<Types[]>();
+			IList<bool> validities=new List<bool>();
+			Types[] t=new Types[2];//new Time(); | random types generated by datetime?
+			foreach (IPokemon pkmn in pokemonlist) {
+				if (pkmn.Level!=suggestedLevel) ((Monster.Pokemon)pkmn).SetLevel((byte)suggestedLevel);//pkmn.Level=suggestedLevel;
+				pkmntypes.Add(getTypes(pkmn.Species));
+				validities.Add(rules.ruleset.isPokemonValid(pkmn));
+			}
+			IList<ITrainerData> newbttrainers=new List<ITrainerData>();
+			for (int btt = 0; btt < bttrainers.Count; btt++) {
+				if (block_given != null && btt%50==0) yield return null;
+				ITrainerData trainerdata=bttrainers[btt];
+				IList<int> pokemonnumbers=trainerdata.PokemonNos; //[5]; | Party data
+				IList<Pokemons> species=new List<Pokemons>();
+				IDictionary<Types,int> types=new Dictionary<Types,int>(); //count of each pokemon type in collection
+				// p trainerdata[1]
+				//for (int typ = 0; typ < (Types.maxValue+1); typ++) { types[typ]=0; }
+				foreach (Types typ in Kernal.TypeData.Keys) { types.Add(typ,0); }
+				foreach (int pn in pokemonnumbers) {
+					IPokemonSerialized pkmn=btpokemon[pn];
+					species.Add(pkmn.species);
+					t=getTypes(pkmn.species);
+					foreach (Types typ in t) {
+						types[typ]+=1;
+					}
+				}
+				species=species ?? new List<Pokemons>(); // remove duplicates
+				int count=0;
+				//for (int typ = 0; typ < (Types.maxValue+1); typ++) {
+				foreach (Types typ in Kernal.TypeData.Keys) {
+					if (types[typ]>=5) {
+						types[typ]/=4;
+						if (types[typ]>10) types[typ]=10;
+					} else {
+						types[typ]=0;
+					}
+					count+=(int)types[typ];
+				}
+				if (count==0) types[0]=(int)1;
+				if (pokemonnumbers.Count==0) {
+					//int typ = 0; do {//|typ|
+					//	types[typ]=1; typ++;
+					//} while (typ < ); //(Types.maxValue+1).times
+					foreach (Types typ in Kernal.TypeData.Keys) //replaces the loop above
+						types[typ]=1;
+				}
+				IList<int> numbers=new List<int>();
+				if (pokemonlist!=null) {
+					//IList<IPokemonSerialized> numbersPokemon=new List<IPokemonSerialized>();
+					IList<IPokemon> numbersPokemon=new List<IPokemon>();
+					//  p species
+					for (int index = 0; index < pokemonlist.Count; index++) {
+						//IPokemonSerialized pkmn=pokemonlist[index];
+						IPokemon pkmn=pokemonlist[index];
+						if (!validities[index]) continue;
+						int absDiff=Math.Abs((index*8/pokemonlist.Count)-(btt*8/bttrainers.Count));
+						bool sameDiff=(absDiff==0);
+						if (species.Contains(pkmn.Species)) {
+							int weight= new []{ 32,12,5,2,1,0,0,0 }[Math.Min(absDiff,7)];
+							if (Core.Rand.Next(40)<weight) {
+								numbers.Add(index);
+								numbersPokemon.Add(pokemonlist[index]);
+							}
+						} else {
+							t=pkmntypes[index];
+							foreach (var typ in t) {
+								int weight= new []{ 32,12,5,2,1,0,0,0 }[Math.Min(absDiff,7)];
+								weight*=types[typ];
+								if (Core.Rand.Next(40)<weight) {
+									numbers.Add(index);
+									numbersPokemon.Add(pokemonlist[index]);
+								}
+							}
+						}
+					}
+					numbers=numbers??new List<int>();
+					if ((numbers.Count<6 ||
+						!rulesetTeam.hasValidTeam(numbersPokemon))) {
+						for (int index = 0; index < pokemonlist.Count; index++) {
+							IPokemon pkmn=pokemonlist[index]; //IPokemonSerialized
+							if (!validities[index]) continue;
+							if (species.Contains(pkmn.Species)) {
+								numbers.Add(index);
+								numbersPokemon.Add(pokemonlist[index]);
+							} else {
+								t=pkmntypes[index];
+								foreach (var typ in t) {
+									if (types[typ]>0 && !numbers.Contains(index)) {
+										numbers.Add(index);
+										numbersPokemon.Add(pokemonlist[index]);
+										break;
+									}
+								}
+							}
+							if (numbers.Count>=6 && rules.ruleset.hasValidTeam(numbersPokemon)) break;
+						}
+						if (numbers.Count<6 || !rules.ruleset.hasValidTeam(numbersPokemon)) {
+							while (numbers.Count<pokemonlist.Count &&
+								(numbers.Count<6 || !rules.ruleset.hasValidTeam(numbersPokemon))) {
+								int index=Core.Rand.Next(pokemonlist.Count);
+								if (!numbers.Contains(index)) {
+									numbers.Add(index);
+									numbersPokemon.Add(pokemonlist[index]);
+								}
+							}
+						}
+					}
+					numbers.OrderBy(a=>a);//.sort!;
+				}
+				//newbttrainers.Add([trainerdata[0],trainerdata[1],trainerdata[2],
+				//					trainerdata[3],trainerdata[4],numbers]);
+				//newbttrainers.Add(new PBPokemon(trainerdata[0],trainerdata[1],trainerdata[2],
+				//					trainerdata[3],trainerdata[4],numbers));
+				//((List<int>)trainerdata.PokemonNos).AddRange(numbers); Kernal.TrainerData.Add(Kernal.TrainerData.Count,trainerdata);
+				((List<int>)trainerdata.PokemonNos).AddRange(numbers); newbttrainers.Add(trainerdata);
+			}
+			if (block_given!=null) yield return null;
+			pokemonlist.Clear();//=new List<>();
+			foreach (IPokemon pkmn in pokemonlist) {
+				//pokemonlist.Add(PBPokemon.fromPokemon(pkmn));
+				pokemonlist.Add(pkmn);
+			}
+			IList<ITrainerChallengeData> trlists=new List<ITrainerChallengeData>(); //Kernal.load_data("Data/trainerlists.dat"); //rescue []
+			Kernal.load_data(trlists,"Data/trainerlists.dat"); //rescue []
+			bool hasDefault=false;
+			int trIndex=-1;
+			for (int i = 0; i < trlists.Count; i++) {
+				if (trlists[i].IsDefault) hasDefault=true;	//[5]
+			}
+			for (int i = 0; i < trlists.Count; i++) {
+				if (trlists[i].Tags.Contains(trfile)) {		//[2]
+					trIndex=i;
+					trlists[i].Trainers=newbttrainers;		//[0]
+					trlists[i].Pokemons=pokemonlist;		//[1]
+					trlists[i].IsDefault=!hasDefault;		//[5]
+				}
+			}
+			if (block_given!=null) yield return null;
+			if (trIndex<0) {
+				//ITrainerChallengeData info=new object { newbttrainers,pokemonlist,new int[] { trfile },
+				//		trfile+"tr.txt",trfile+"pm.txt",!hasDefault };
+				//trlists.Add(info); //ToDo: Uncomment after implementing interface class
+			}
+			if (block_given!=null) yield return null;
+			Kernal.save_data(trlists,"Data/trainerlists.dat");
+			if (block_given!=null) yield return null;
+			SaveTrainerLists();
 			if (block_given!=null) yield return null;
 		}
 
@@ -1025,182 +1033,190 @@ namespace PokemonUnity
 			}
 		}
 
-		public IEnumerator<string> GenerateChallenge(IPokemonChallengeRules rule, int tag) {
-			//IPokemonChallengeRules oldrule=rule;
-			//yield return _INTL("Preparing to generate teams");
-			//rule=rule.copy().setNumber(2);
-			//yield return null;
-			//IList<IPokemon> party=Kernal.load_data(tag+".rxdata"); //rescue []
-			//IList<IRuledTeam> teams=Kernal.load_data(tag+"teams.rxdata"); //rescue []
-			//if (teams.Count<10) {
-			//	IPokemonSerialized[] btpokemon=GetBTPokemon(tag);
-			//	if (btpokemon!=null && btpokemon.Length!=0) {
-			//		int suggestedLevel=rule.ruleset.suggestedLevel;
-			//		foreach (var pk in btpokemon) {
-			//			IPokemon pkmn=pk.createPokemon(suggestedLevel,31,null);
-			//			if (rule.ruleset.isPokemonValid(pkmn)) party.Add(pkmn);
-			//		}
-			//	}
-			//}
-			//yield return null;
-			//party=RemoveDuplicates(party);
-			//yield return null;
-			//int maxteams=600;
-			//int cutoffrating=65;
-			//int toolowrating=40;
-			//int iterations=11;
-			//int iter = 0; do {//|iter|
-			//	Kernal.save_data(party,tag+".rxdata");
-			//	yield return _INTL("Generating teams ({1} of {2})",iter+1,iterations);
-			//	int i=0;while (i<teams.Count) {
-			//		if (i%10==0) yield return null;
-			//		ReplenishBattlePokemon(party,rule);
-			//		if (teams[i].rating<cutoffrating && teams[i].totalGames>=80) {
-			//			teams[i]=new RuledTeam(party,rule);
-			//		} else if (teams[i].length<2) {
-			//			teams[i]=new RuledTeam(party,rule);
-			//		} else if (i>=maxteams) {
-			//			teams[i]=null;
-			//			//teams.compact!;
-			//		} else if (teams[i].totalGames>=250) {
-			//			//  retire
-			//			for (int j = 0; j < teams[i].length; j++) {
-			//				party.Add(teams[i][j]);
-			//			}
-			//			teams[i]=new RuledTeam(party,rule);
-			//		} else if (teams[i].rating<toolowrating) {
-			//			teams[i]=new RuledTeam(party,rule);
-			//		}
-			//		i+=1;
-			//	}
-			//	Kernal.save_data(teams,tag+"teams.rxdata");
-			//	yield return null;
-			//	while (teams.Count<maxteams) {
-			//		if (teams.Count%10==0) yield return null;
-			//		ReplenishBattlePokemon(party,rule);
-			//		teams.Add(new RuledTeam(party,rule));
-			//	}
-			//	Kernal.save_data(party,tag+".rxdata");
-			//	teams=teams.OrderBy(a => a.rating).ToList(); //.sort{|a,b| b.rating<=>a.rating }
-			//	yield return _INTL("Simulating battles ({1} of {2})",iter+1,iterations);
-			//	int i=0;  do { //;loop
-			//		bool changed=false;
-			//		for (int j = 0; j < teams.Count; j++) {
-			//			yield return null;
-			//			int other=j; int n = 0; do {//;
-			//				other=Core.Rand.Next(teams.Count);
-			//				if (other==j) continue; n++;
-			//			} while (n < 5); //5.times
-			//			if (other==j) continue;
-			//			changed=true;
-			//			RuledBattle(teams[j],teams[other],rule);
-			//		}
-			//		//  i+=1; if (i>=5) break;
-			//		i+=1;
-			//		int gameCount=0;
-			//		foreach (var team in teams) {
-			//			gameCount+=team.games;
-			//		}
-			//		// p [gameCount,teams.Length,gameCount/teams.Length]
-			//		yield return null;
-			//		if ((gameCount/teams.Count)>=12) {
-			//			// p "Iterations: #{i}"
-			//			foreach (var team in teams) {
-			//				int games=team.games;
-			//				team.updateRating();
-			//				// if (Core.INTERNAL) p [games,team.totalGames,team.ratingRaw]
-			//			}
-			//			// p [gameCount,teams.Length,gameCount/teams.Length]
-			//			break;
-			//		}
-			//	} while (true);
-			//	teams.OrderBy(a => a.rating); //.sort!{|a,b| b.rating<=>a.rating }
-			//	Kernal.save_data(teams,tag+"teams.rxdata");
-			//} while (iter < iterations); //iterations.times
-			//party=[];
-			//yield return null;
-			//teams.OrderBy(a => a.rating); //.sort{|a,b| a.rating<=>b.rating }
-			//foreach (var team in teams) {
-			//	if (team.rating>cutoffrating) {
-			//		for (int i = 0; i < team.length; i++) {
-			//			party.Add(team[i]);
-			//		}
-			//	}
-			//}
-			//rule=oldrule;
-			//yield return null;
-			//party=RemoveDuplicates(party);
-			//yield return _INTL("Writing results");
-			//party=ArrangeByTier(party,rule);
-			//yield return null;
-			//TrainerInfo(party, tag, rule, block_given: () => { yield return null; });
+		//public IEnumerator<string> GenerateChallenge(IPokemonChallengeRules rule, int tag) {
+		public IEnumerator GenerateChallenge(IPokemonChallengeRules rule, int tag, Action<string> action) {
+			IPokemonChallengeRules oldrule=rule;
+			action?.Invoke(_INTL("Preparing to generate teams")); //yield return
+			rule=rule.copy().setNumber(2);
+			yield return null;
+			IList<IPokemon> party=new List<IPokemon>();//Kernal.load_data(tag+".rxdata"); //rescue []
+			Kernal.load_data(party,tag+".rxdata"); //rescue []
+			IList<IRuledTeam> teams=new List<IRuledTeam>();//Kernal.load_data(tag+"teams.rxdata"); //rescue []
+			Kernal.load_data(teams, tag+"teams.rxdata"); //rescue []
+			if (teams.Count<10) {
+				IPokemonSerialized[] btpokemon=GetBTPokemon(tag);
+				if (btpokemon!=null && btpokemon.Length!=0) {
+					int suggestedLevel=rule.ruleset.suggestedLevel;
+					foreach (var pk in btpokemon) {
+						IPokemon pkmn=pk.createPokemon(suggestedLevel,31,null);
+						if (rule.ruleset.isPokemonValid(pkmn)) party.Add(pkmn);
+					}
+				}
+			}
+			yield return null;
+			party=RemoveDuplicates(party);
+			yield return null;
+			int maxteams=600;
+			int cutoffrating=65;
+			int toolowrating=40;
+			int iterations=11;
+			int iter = 0; do {//|iter|
+				Kernal.save_data(party,tag+".rxdata");
+				yield return _INTL("Generating teams ({1} of {2})",iter+1,iterations);
+				int i=0;while (i<teams.Count) {
+					if (i%10==0) yield return null;
+					ReplenishBattlePokemon(party,rule);
+					if (teams[i].rating<cutoffrating && teams[i].totalGames>=80) {
+						teams[i]=new RuledTeam(party,rule);
+					} else if (teams[i].length<2) {
+						teams[i]=new RuledTeam(party,rule);
+					} else if (i>=maxteams) {
+						teams[i]=null;
+						//teams.compact!;
+					} else if (teams[i].totalGames>=250) {
+						//  retire
+						for (int j = 0; j < teams[i].length; j++) {
+							party.Add(teams[i][j]);
+						}
+						teams[i]=new RuledTeam(party,rule);
+					} else if (teams[i].rating<toolowrating) {
+						teams[i]=new RuledTeam(party,rule);
+					}
+					i+=1;
+				}
+				Kernal.save_data(teams,tag+"teams.rxdata");
+				yield return null;
+				while (teams.Count<maxteams) {
+					if (teams.Count%10==0) yield return null;
+					ReplenishBattlePokemon(party,rule);
+					teams.Add(new RuledTeam(party,rule));
+				}
+				Kernal.save_data(party,tag+".rxdata");
+				teams=teams.OrderBy(a => a.rating).ToList(); //.sort{|a,b| b.rating<=>a.rating }
+				yield return _INTL("Simulating battles ({1} of {2})",iter+1,iterations);
+				i=0;  do { //;loop
+					bool changed=false;
+					for (int j = 0; j < teams.Count; j++) {
+						yield return null;
+						int other=j; int n = 0; do {//;
+							other=Core.Rand.Next(teams.Count);
+							if (other==j) continue; n++;
+						} while (n < 5); //5.times
+						if (other==j) continue;
+						changed=true;
+						RuledBattle(teams[j],teams[other],rule);
+					}
+					//  i+=1; if (i>=5) break;
+					i+=1;
+					int gameCount=0;
+					foreach (var team in teams) {
+						gameCount+=team.games;
+					}
+					// p [gameCount,teams.Length,gameCount/teams.Length]
+					yield return null;
+					if ((gameCount/teams.Count)>=12) {
+						// p "Iterations: #{i}"
+						foreach (var team in teams) {
+							int games=team.games;
+							team.updateRating();
+							// if (Core.INTERNAL) p [games,team.totalGames,team.ratingRaw]
+						}
+						// p [gameCount,teams.Length,gameCount/teams.Length]
+						break;
+					}
+				} while (true);
+				teams.OrderBy(a => a.rating); //.sort!{|a,b| b.rating<=>a.rating }
+				Kernal.save_data(teams,tag+"teams.rxdata");
+			} while (iter < iterations); //iterations.times
+			party.Clear(); //=new List<IPokemon>();
+			yield return null;
+			teams.OrderBy(a => a.rating); //.sort{|a,b| a.rating<=>b.rating }
+			foreach (var team in teams) {
+				if (team.rating>cutoffrating) {
+					for (int i = 0; i < team.length; i++) {
+						party.Add(team[i]);
+					}
+				}
+			}
+			rule=oldrule;
+			yield return null;
+			party=RemoveDuplicates(party);
+			yield return _INTL("Writing results");
+			party=ArrangeByTier(party,rule);
+			yield return null;
+			TrainerInfo(party, tag, rule, block_given: () => { return; });
 			yield return null;
 		}
 
 		public void WriteCup(int id, IPokemonChallengeRules rules) {
 			if (!Core.DEBUG) return;
-			//IList<ITrainer> bttrainers=[];
-			//IList<ITrainer> trlists=(Kernal.load_data("Data/trainerlists.dat")); //rescue []
-			//IList<string> list=new List<string>();
-			//for (int i = 0; i < trlists.Count; i++) {
-			//	ITrainer tr=trlists[i];
-			//	if (tr[5]) {
-			//		list.Add("*"+(tr[3].sub(/\.txt$/,"")));
-			//	} else {
-			//		list.Add((tr[3].sub(/\.txt$/,"")));
-			//	}
-			//}
-			//int cmd=0;
-			//if (trlists.Count!=0) {
-			//	cmd=(this as IGameMessage).Message(_INTL("Generate Pokemon teams for this challenge?"),
-			//	new string[] { _INTL("NO"), _INTL("YES, USE EXISTING"), _INTL("YES, USE NEW") },1);
-			//} else {
-			//	cmd=(this as IGameMessage).Message(_INTL("Generate Pokemon teams for this challenge?"),
-			//		new string[] { _INTL("YES"), _INTL("NO") },2);
-			//	if (cmd==0) {
-			//		cmd=2;
-			//	} else if (cmd==1) {
-			//		cmd=0;
-			//	}
-			//}
-			//if (cmd==0) return;	// No
-			//if (cmd==1) {		// Yes, use existing
-			//	cmd=(this as IGameMessage).Message(_INTL("Choose a challenge."),list,-1);
-			//	if (cmd>=0) {
-			//		(this as IGameMessage).Message(_INTL("This challenge will use the Pokemon list from {1}.",list[cmd]));
-			//		for (int i = 0; i < trlists.Count; i++) {
-			//			ITrainer tr=trlists[i];
-			//			while (!tr[5] && tr[2].Contains(id)) {
-			//				tr[2].delete(id);
-			//			}
-			//		}
-			//		if (!trlists[cmd][5]) {
-			//			trlists[cmd][2].Add(id);
-			//		}
-			//		Kernal.save_data(trlists,"Data/trainerlists.dat");
-			//		Graphics.update();
-			//		SaveTrainerLists();
-			//		Graphics.update();
-			//		return;
-			//	} else {
-			//		return;
-			//	}
-			//	//  Yes, use new
-			//} else if (cmd==2 && !(this as IGameMessage).ConfirmMessage(_INTL("This may take a long time. Are you sure?"))) {
-			//	return;
-			//}
-			//IWindow_AdvancedTextPokemon mw=(this as IGameMessage).CreateMessageWindow();
+			IList<ITrainerData> bttrainers=new ITrainerData[0];
+			IList<ITrainerChallengeData> trlists=new List<ITrainerChallengeData>();//(Kernal.load_data("Data/trainerlists.dat")); //rescue []
+			Kernal.load_data(trlists,"Data/trainerlists.dat"); //rescue []
+			IList<string> list=new List<string>();
+			for (int i = 0; i < trlists.Count; i++) {
+				ITrainerChallengeData tr =trlists[i];
+				if (tr.IsDefault) { //[5]
+					//list.Add("*"+(tr[3].sub(/\.txt$/,"")));			//String ends with ".txt"
+					list.Add("*"+tr.TrainerFile.Replace(".txt",""));	//[3] | String ends with ".txt"
+				} else {
+					//list.Add((tr[3].sub(/\.txt$/,"")));				//String ends with ".txt"
+					list.Add(tr.TrainerFile.Replace(".txt",""));		//[3] | String ends with ".txt"
+				}
+			}
+			int cmd=0;
+			if (trlists.Count!=0) {
+				cmd=(this as IGameMessage).Message(_INTL("Generate Pokemon teams for this challenge?"),
+				new string[] { _INTL("NO"), _INTL("YES, USE EXISTING"), _INTL("YES, USE NEW") },1);
+			} else {
+				cmd=(this as IGameMessage).Message(_INTL("Generate Pokemon teams for this challenge?"),
+					new string[] { _INTL("YES"), _INTL("NO") },2);
+				if (cmd==0) {
+					cmd=2;
+				} else if (cmd==1) {
+					cmd=0;
+				}
+			}
+			if (cmd==0) return;	// No
+			if (cmd==1) {		// Yes, use existing
+				cmd=(this as IGameMessage).Message(_INTL("Choose a challenge."),list.ToArray(),-1);
+				if (cmd>=0) {
+					(this as IGameMessage).Message(_INTL("This challenge will use the Pokemon list from {1}.",list[cmd]));
+					for (int i = 0; i < trlists.Count; i++) {
+						ITrainerChallengeData tr=trlists[i];
+						while (!tr.IsDefault && tr.Tags.Contains(id)) {	//[5] | tr[2] is a list of tags
+							//tr[2].delete(id);
+							tr.Tags.Remove(id);
+						}
+					}
+					if (!trlists[cmd].IsDefault) {	//[5]
+						trlists[cmd].Tags.Add(id);	//[2]
+					}
+					Kernal.save_data(trlists,"Data/trainerlists.dat");
+					Graphics.update();
+					SaveTrainerLists();
+					Graphics.update();
+					return;
+				} else {
+					return;
+				}
+				//  Yes, use new
+			} else if (cmd==2 && !(this as IGameMessage).ConfirmMessage(_INTL("This may take a long time. Are you sure?"))) {
+				return;
+			}
+			IWindow_AdvancedTextPokemon mw=(this as IGameMessage).CreateMessageWindow();
 			//t=Time.now;
-			//GenerateChallenge(rules, id, (message) => {
-			//	if ((Time.now - t) >= 5) {
-			//		Graphics.update(); t = Time.now;
-			//	}
-			//	if (message != null) {
-			//		(this as IGameMessage).MessageDisplay(mw, message, false);
-			//		Graphics.update(); t = Time.now;
-			//	}
-			//});
-			//(this as IGameMessage).DisposeMessageWindow(mw);
+			DateTime t=Game.GetTimeNow;
+			GenerateChallenge(rules, id, (message) => {
+				if ((Game.GetTimeNow - t).Ticks >= 5) { //Time.now
+					Graphics.update(); t = Game.GetTimeNow; //Time.now;
+				}
+				if (message != null) {
+					(this as IGameMessage).MessageDisplay(mw, message, false);
+					Graphics.update(); t = Game.GetTimeNow; //Time.now;
+				}
+			});
+			(this as IGameMessage).DisposeMessageWindow(mw);
 			(this as IGameMessage).Message(_INTL("Team generation complete."));
 		}
 	}

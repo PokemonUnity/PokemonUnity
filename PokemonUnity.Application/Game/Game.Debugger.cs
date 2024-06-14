@@ -5,55 +5,6 @@ using System.Text;
 namespace PokemonUnity
 {
 	/// <summary>
-	/// Static class for logging messages to console and file
-	/// </summary>
-	/// <remarks>
-	/// Singleton for <see cref="IDebugger"/>
-	/// </remarks>
-	public static class GameDebug //: IDebugger
-	{
-		//private static IDebugger debugger = Debugger.Instance;
-
-		public static void Init(string logfilePath, string logBaseName, IDebugger debugger = null)
-		{
-			if (debugger != null)
-				//GameDebug.debugger = debugger;
-				Core.Logger = debugger;
-			debugger.Init(logfilePath, logBaseName);
-		}
-
-		public static void Shutdown()
-		{
-			//debugger.Shutdown();
-			Core.Logger.Shutdown();
-		}
-
-		public static void Log(string message, params object[] param)
-		{
-			//debugger.Log(message, param);
-			Core.Logger.Log(message, param);
-		}
-
-		public static void LogDebug(string message, params object[] param)
-		{
-			//debugger.LogDebug(message, param);
-			Core.Logger.LogDebug(message, param);
-		}
-
-		public static void LogWarning(string message, params object[] param)
-		{
-			//debugger.LogWarning(message, param);
-			Core.Logger.LogWarning(message, param);
-		}
-
-		public static void LogError(string message, params object[] param)
-		{
-			//debugger.LogError(message, param);
-			Core.Logger.LogError(message, param);
-		}
-	}
-
-	/// <summary>
 	/// Logging of messages
 	/// <para>
 	/// There are three different types of messages:

@@ -12,10 +12,11 @@ using PokemonUnity.Saving.SerializableClasses;
 using PokemonUnity.Utility;
 using PokemonUnity.Monster;
 using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Battle;
 
 namespace PokemonEssentials.Interface.PokeBattle
 {
-	public interface IPokemon : ICloneable, IEquatable<IPokemon>//, IEqualityComparer<IPokemon>
+	public interface IPokemon : IPokemonSerialized, ICloneable, IEquatable<IPokemon>//, IEqualityComparer<IPokemon>
 	{
 		/// <summary>
 		/// Current Total HP

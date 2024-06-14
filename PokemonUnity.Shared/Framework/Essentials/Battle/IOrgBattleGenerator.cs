@@ -246,7 +246,7 @@ namespace PokemonEssentials.Interface.Battle
 		Types[] getTypes(Pokemons species);
 
 		//void TrainerInfo(IList<IPokemonSerialized> pokemonlist, string trfile, IPokemonChallengeRules rules);
-		IEnumerator TrainerInfo(IList<IPokemonSerialized> pokemonlist, int trfile, IPokemonChallengeRules rules, Action block_given = null);
+		IEnumerator TrainerInfo(IList<IPokemon> pokemonlist, int trfile, IPokemonChallengeRules rules, Action block_given = null);
 
 		//#if FAKERGSS
 		//public void Kernel.MessageDisplay(mw,txt,lbl) {
@@ -269,7 +269,8 @@ namespace PokemonEssentials.Interface.Battle
 
 		void ReplenishBattlePokemon(IList<IPokemon> party, IPokemonChallengeRules rule);
 
-		IEnumerator<string> GenerateChallenge(IPokemonChallengeRules rule, int tag);
+		//IEnumerator<string> GenerateChallenge(IPokemonChallengeRules rule, int tag);
+		IEnumerator GenerateChallenge(IPokemonChallengeRules rule, int tag, Action<string> action);
 
 		void WriteCup(int id, IPokemonChallengeRules rules);
 	}

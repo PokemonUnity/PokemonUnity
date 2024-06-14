@@ -14,6 +14,7 @@ using PokemonUnity.Saving.SerializableClasses;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.Item;
+using PokemonEssentials.Interface.Battle;
 
 namespace PokemonUnity.Monster
 {
@@ -192,6 +193,10 @@ namespace PokemonUnity.Monster
 		/// <summary>
 		/// Max total EVs
 		/// </summary>
+		/// <remarks>
+		/// This Pokémon's level multiplied by 1.5 (rounded down), up to a maximum of 85
+		/// (510/6, i.e. the maximum number of EVs a Pokémon can have, divided equally between its six stats)
+		/// </remarks>
 		public const int EVLIMIT = 510;
 		/// <summary>
 		/// Max EVs that a single stat can have
@@ -2985,6 +2990,15 @@ namespace PokemonUnity.Monster
 		string IPokemon.kind	{ get; } //{ return Species.ToString(TextScripts.Description); } }
 		string IPokemon.dexEntry	{ get { return pokemons.ToString(TextScripts.Description); } }
 
+		Pokemons IPokemonSerialized.species { get { return Species; } }
+		Items IPokemonSerialized.item { get { return Item; } }
+		Natures IPokemonSerialized.nature { get { return natureFlag; } }
+		Moves IPokemonSerialized.move1	{ get { return moves[0].id; } }
+		Moves IPokemonSerialized.move2	{ get { return moves[1].id; } }
+		Moves IPokemonSerialized.move3	{ get { return moves[2].id; } }
+		Moves IPokemonSerialized.move4	{ get { return moves[3].id; } }
+		int IPokemonSerialized.ev { get { return -1; } } //FixMe: Not sure what to put here...
+
 		bool IPokemon.isFemale(int b, int genderRate)
 		{
 			if (genderRate == 254) return true;		// AlwaysFemale
@@ -3015,7 +3029,42 @@ namespace PokemonUnity.Monster
 
 		IPokemon IPokemon.initialize(Pokemons species, int level, ITrainer player, bool withMoves)
 		{
+			return this; //FIXME;
+		}
+
+		IPokemonSerialized IPokemonSerialized.fromInspected(string str)
+		{
+			return this; //FIXME;
+		}
+
+		IPokemonSerialized IPokemonSerialized.fromPokemon(IPokemon pokemon)
+		{
+			return pokemon;
+		}
+
+		string IPokemonSerialized.inspect()
+		{
+			return ToString();
+		}
+
+		string IPokemonSerialized.tocompact()
+		{
+			return null;
+		}
+
+		IPokemonSerialized IPokemonSerialized.fromString(string str)
+		{
+			return this;
+		}
+
+		Moves IPokemonSerialized.convertMove(Moves move)
+		{
 			throw new NotImplementedException();
+		}
+
+		IPokemon IPokemonSerialized.createPokemon(int level, int iv, ITrainer trainer)
+		{
+			return this; //FIXME;
 		}
 		#endregion
 

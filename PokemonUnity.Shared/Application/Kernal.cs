@@ -18,6 +18,8 @@ using PokemonUnity.Inventory.Plants;
 using PokemonUnity.Attack.Data;
 using PokemonUnity.Character;
 using Newtonsoft.Json;
+using PokemonEssentials.Interface.Battle;
+using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonUnity
 {
@@ -66,8 +68,9 @@ namespace PokemonUnity
 		public static IDictionary<int,IMapEncounterMetadata> EncounterData { get; private set; }
 		//public static IDictionary<Method,IMapEncounterMetadata> EncounterMethodData { get; private set; }
 		//public static IDictionary<int,PokemonEssentials.Interface.Field.IEncounters> MapEncounterData { get; private set; }
-		public static IDictionary<TrainerTypes,TrainerMetaData> TrainerMetaData { get; private set; }
+		public static IDictionary<int, ITrainerData> TrainerData { get; private set; }
 		public static IDictionary<int,TrainerMetaData> TrainerPartyData { get; private set; }
+		public static IDictionary<TrainerTypes,TrainerMetaData> TrainerMetaData { get; private set; }
 		public static IDictionary<GymBadges,Character.BadgeData> BadgeData { get; private set; }
 		public static IDictionary<HiddenMoves,HiddenMoveData> HiddenMoveData { get; private set; }
 		public static IDictionary<int,MachineData> MachineData { get; private set; }
@@ -175,9 +178,13 @@ namespace PokemonUnity
 
 		#region Write to and Read from Methods
 		public static void load_data(string filepath = null) { }
-		public static void load_data(out IDictionary<int, PokemonEssentials.Interface.Field.IEncounters> encdata, string filepath = null)
+		public static void load_data(IList<IPokemon> party, string filepath = null) { }
+		public static void load_data(IList<ITrainerData> trainers, string filepath = null) { }
+		public static void load_data(IList<ITrainerChallengeData> trainers, string filepath = null) { }
+		public static void load_data(IList<IRuledTeam> teams, string filepath = null) { }
+		public static void load_data(IDictionary<int, PokemonEssentials.Interface.Field.IEncounters> encdata, string filepath = null)
 		{
-			encdata = new Dictionary<int, PokemonEssentials.Interface.Field.IEncounters>();
+			encdata.Clear(); //= new Dictionary<int, PokemonEssentials.Interface.Field.IEncounters>();
 			//if path is used, then the information will source from hard file
 			if (!string.IsNullOrEmpty(filepath)) //and file exist...
 			{

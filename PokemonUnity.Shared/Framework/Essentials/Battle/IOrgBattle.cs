@@ -30,8 +30,9 @@ namespace PokemonEssentials.Interface.Battle
 	{
 		bool HasEligible(); //params object[] args
 
-		PokemonUnity.Character.TrainerMetaData[] GetBTTrainers(int challengeID);
-		IPokemonSerialized[] GetBTPokemon(int challengeID);
+		ITrainerData[] GetBTTrainers(int challengeID);
+		//IPokemonSerialized[] GetBTPokemon(int challengeID);
+		IPokemon[] GetBTPokemon(int challengeID);
 
 
 		void RecordLastBattle();
@@ -49,7 +50,7 @@ namespace PokemonEssentials.Interface.Battle
 		IBattleChallenge BattleChallenge { get; }
 
 		//ITrainer BattleChallengeTrainer(int numwins, ITrainer[] bttrainers);
-		int BattleChallengeTrainer(int numwins, PokemonUnity.Character.TrainerMetaData[] bttrainers);
+		int BattleChallengeTrainer(int numwins, ITrainerData[] bttrainers);
 
 		void BattleChallengeGraphic(IGameCharacter @event);
 
