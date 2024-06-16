@@ -39,7 +39,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		#region Unity Monobehavior
 		void Awake()
 		{
-			GameEvents.current.onLoadLevel += Scene_onLoadLevel;
+			GameManager.current.onLoadLevel += Scene_onLoadLevel;
 			SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 		}
 
@@ -64,7 +64,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		void OnDestroy()
 		{
-			GameEvents.current.onLoadLevel -= Scene_onLoadLevel;
+			GameManager.current.onLoadLevel -= Scene_onLoadLevel;
 			SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
 		}
 		#endregion

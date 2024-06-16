@@ -41,14 +41,22 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// <summary>
 		/// <see cref="IPokeBattle_SceneIE"/>
 		/// </summary>
-		[SerializeField] private BattleScene battle;
+		//[SerializeField] private BattleScene battle;
 		#endregion
 
 		#region Unity Monobehavior
 		void Awake()
 		{
 			Debug.Log("Game Events is Awake!");
-			current = this;
+			//current = this;
+			if (current == null)
+			{
+				current = this;
+			}
+			else if (current != this)
+			{
+				Destroy(gameObject);
+			}
 			//UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject
 
 			Core.Logger?.Init("\\Logs", "GameLog"); //Path = "Logs\GameLog.txt"
@@ -141,21 +149,21 @@ namespace PokemonUnity.Interface.UnityEngine
 		//{
 		//	if (onLoadLevel != null) onLoadLevel(id);
 		//}
-		public void OnLoadLevel(IScene scene)
-		{
-			if (onLoadLevel != null) onLoadLevel(scene);
-		}
-
-		private void ConfigureScenes()
-		{
-			Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
-
-			game.Scenes = gameObject.GetComponent<LevelLoader>() as IGameScenesUI;
-			//ToDo: Load all the different game scenes into an array, from unity inspector, and pass them as an input parameter below
-			//game.Scenes.initialize((IScene[])(object[])sceneList);
-			//game.Scenes.initialize((IPokeBattle_Scene)battle.GetComponent<BattleScene>());
-			(game as Game).SetScenes((IPokeBattle_SceneIE)battle.GetComponent<BattleScene>());
-		}
+		//public void OnLoadLevel(IScene scene)
+		//{
+		//	if (onLoadLevel != null) onLoadLevel(scene);
+		//}
+		//
+		//private void ConfigureScenes()
+		//{
+		//	Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
+		//
+		//	game.Scenes = gameObject.GetComponent<LevelLoader>() as IGameScenesUI;
+		//	//ToDo: Load all the different game scenes into an array, from unity inspector, and pass them as an input parameter below
+		//	//game.Scenes.initialize((IScene[])(object[])sceneList);
+		//	//game.Scenes.initialize((IPokeBattle_Scene)battle.GetComponent<BattleScene>());
+		//	//(game as Game).SetScenes((IPokeBattle_SceneIE)battle.GetComponent<BattleScene>());
+		//}
 		#endregion
 	}
 }

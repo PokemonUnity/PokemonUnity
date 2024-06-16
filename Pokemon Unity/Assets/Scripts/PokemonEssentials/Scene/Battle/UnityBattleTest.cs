@@ -3096,7 +3096,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			@decision = BattleResults.InProgress;
 			try {
 				//yield return StartBattleCore(canlose);
-				GameEvents.current.StartCoroutine(StartBattleCore(canlose));
+				GameManager.current.StartCoroutine(StartBattleCore(canlose));
 			} catch (BattleAbortedException e) { //rescue BattleAbortedException;
 				Core.Logger.LogError(e.Message);
 				Core.Logger.LogError(e.StackTrace);
@@ -3104,7 +3104,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				@decision = BattleResults.ABORTED;
 				if (@scene is IPokeBattle_SceneIE s0)
 					//yield return s0.EndBattle(@decision);
-					GameEvents.current.StartCoroutine(s0.EndBattle(@decision));
+					GameManager.current.StartCoroutine(s0.EndBattle(@decision));
 			}
 			return @decision; //result?.Invoke(@decision);
 		}
