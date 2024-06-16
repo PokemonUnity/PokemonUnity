@@ -207,6 +207,7 @@
     <Compile Include="Combat\Data\DamageState.cs" />
     <Compile Include="Combat\Data\SuccessState.cs" />
     <Compile Include="Framework\IFrontend.cs" />
+    <Compile Include="Framework\IResources.cs" />
     <Compile Include="Framework\IGame.cs" />
     <Compile Include="Inventory\Data\Machine.cs" />
     <Compile Include="Inventory\Data\Base.cs" />

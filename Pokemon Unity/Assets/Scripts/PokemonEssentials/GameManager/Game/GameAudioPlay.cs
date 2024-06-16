@@ -427,6 +427,10 @@ namespace PokemonUnity.Interface.UnityEngine
 			//{
 			//	SEPlay(Game.GameData.DataSystem.sounds[2]);
 			//}
+			else if (FileTest.Instance.SoundEffectChoose != null)
+			{
+				SEPlay(FileTest.Instance.SoundEffectChoose, 80);
+			}
 			else if (FileTest.audio_exist("Audio/SE/Choose"))
 			{
 				SEPlay("Choose", 80);

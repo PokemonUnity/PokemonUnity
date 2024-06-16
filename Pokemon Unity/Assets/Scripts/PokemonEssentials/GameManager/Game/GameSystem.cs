@@ -310,22 +310,22 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public void me_fade(float time)
 		{
-			//if (!@bgm_paused)
-			//{
-			//	@bgm_position = 0;
-			//}
-			//@playing_bgm = null;
-			//if (defaultBGM == null) AudioManager.AudioHandler.me_fade((int)Math.Floor(time * 1000));
+			if (!@bgm_paused)
+			{
+				@bgm_position = 0;
+			}
+			@playing_bgm = null;
+			if (defaultBGM == null) AudioManager.AudioHandler.me_fade((int)Math.Floor(time * 1000));
 		}
 
 		public void me_stop()
 		{
-			//if (!@bgm_paused)
-			//{
-			//	@bgm_position = 0;
-			//}
-			//@playing_bgm = null;
-			//if (defaultBGM == null) AudioManager.AudioHandler.me_stop();
+			if (!@bgm_paused)
+			{
+				@bgm_position = 0;
+			}
+			@playing_bgm = null;
+			if (defaultBGM == null) AudioManager.AudioHandler.me_stop();
 		}
 
 		// ###############################################################################
@@ -349,7 +349,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				@playing_bgs = null;
 				AudioManager.AudioHandler.bgs_stop();
 			}
-			//(Game.GameData as Game).Graphics.frame_reset();
+			(Game.GameData as Game).Graphics.frame_reset();
 		}
 		/// <inheritdoc/>
 		public void bgs_pause(float fadetime = 0.0f)
@@ -526,13 +526,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				@timer -= 1;
 			}
-			//if (Input.trigger(Input.F5) && Game is IGameMessage m && m.pbCurrentEventCommentInput(1, "Cut Scene"))
-			//{
-			//	@event = @map_interpreter.get_character(0);
-			//	@map_interpreter.pbSetSelfSwitch(@event.id, "A", true);
-			//	@map_interpreter.command_end();
-			//	@event.start();
-			//}
+			if (Input.trigger(Input.F5) && Game.GameData.GameMessage.CurrentEventCommentInput(1, "Cut Scene") != null)
+			{
+				IGameCharacter @event = null;
+				if (@map_interpreter is IInterpreter i) @event = i.get_character(0);
+				if (@map_interpreter is IInterpreterMixinMessage im)  im.SetSelfSwitch(@event.id, "A", true);
+				if (@map_interpreter is IInterpreter imm) imm.command_end();
+				@event.start();
+			}
 		}
 
 		void IAudio.bgm_play(string filename, float volume, float pitch)
