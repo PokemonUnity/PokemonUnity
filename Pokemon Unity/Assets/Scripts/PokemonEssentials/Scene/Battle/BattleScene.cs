@@ -20,7 +20,6 @@ using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
-using PokemonUnity.Legacy;
 using UnityEngine;
 //using UnityEngine;
 //using UnityEngine.UI;
