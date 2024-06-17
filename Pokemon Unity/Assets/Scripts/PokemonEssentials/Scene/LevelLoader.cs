@@ -40,11 +40,32 @@ namespace PokemonUnity.Interface.UnityEngine
 		void Awake()
 		{
 			GameEvents.current.onLoadLevel += Scene_onLoadLevel;
+			SceneManager.sceneLoaded += SceneManager_sceneLoaded;
+		}
+
+		/// <summary>
+		/// Start is called before the first frame update
+		/// </summary>
+		/// <remarks>
+		/// If gameobject persist, should only ever be called once.
+		/// </remarks>
+		void Start()
+		{
+			// Begin all scenes with a fade in effect
+			if (canvasGroup != null)
+			{
+				canvasGroup.gameObject.SetActive(true);
+				canvasGroup.blocksRaycasts = false;
+				canvasGroup.interactable = false;
+				canvasGroup.alpha = 1f;
+				LeanTween.alphaCanvas(canvasGroup, 0f, transitionTime);
+			}
 		}
 
 		void OnDestroy()
 		{
 			GameEvents.current.onLoadLevel -= Scene_onLoadLevel;
+			SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
 		}
 		#endregion
 
@@ -71,7 +92,45 @@ namespace PokemonUnity.Interface.UnityEngine
 			yield return new WaitForSeconds(transitionTime);
 
 			//load scene
-			SceneManager.LoadScene(level);
+			SceneManager.LoadScene(level, LoadSceneMode.Single);
+
+			//ToDo: collect garbage while waiting for scene to load...
+			GC.Collect();
+
+			//ToDo: check start fade, and use matching ending or random fade...
+
+			//undo fade to black...
+			canvasGroup.interactable = false;
+			canvasGroup.blocksRaycasts = false;
+			//play animation
+			//ToDo: check start fade, and use matching ending or random fade...
+			LeanTween.alphaCanvas(canvasGroup, 0f, transitionTime);
+		}
+
+		/// <summary>
+		/// Unity Scenes that are UI only, and do not require a player character to be loaded.
+		/// </summary>
+		/// <remarks>
+		/// UI Scenes are scenes that are used to display information to the player,
+		/// overlay on top of the game world, or are used to display the game's menu.
+		/// Should still continue to Garbage Collect, check for memory leaks, and add black-out transitions.
+		/// </remarks>
+		/// <param name="scene">UI Scene</param>
+		/// <returns></returns>
+		IEnumerator LoadScene(IScene scene)
+		{
+			//begin fade to black...
+			canvasGroup.interactable = true;
+			canvasGroup.blocksRaycasts = true;
+			//play animation
+			LeanTween.alphaCanvas(canvasGroup, 1f, transitionTime);
+
+			// wait
+			yield return new WaitForSeconds(transitionTime);
+
+			//load scene
+			//SceneManager.LoadScene(scene, LoadSceneMode.Additive);
+			((object)scene as GameObject).gameObject.SetActive(true); //We can assume the scene is attached to a monobehavior class
 
 			//ToDo: collect garbage while waiting for scene to load...
 			GC.Collect();
@@ -111,15 +170,20 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		private void Scene_onLoadLevel(int level)
 		{
-			//SceneManager.LoadScene(level);
 			StartCoroutine(LoadLevel(level));
+			//StartCoroutine(LoadScene(level));
 		}
 
 		private void Scene_onLoadLevel(IScene level)
 		{
 			//SceneManager.LoadScene(level);
 			//StartCoroutine(LoadLevel(level.Id));
-			StartCoroutine(LoadLevel((int)GetSceneType(level)));
+			Scene_onLoadLevel((int)GetSceneType(level));
+		}
+
+		private void Scene_onLoadLevel(Scenes level)
+		{
+			Scene_onLoadLevel((int)level);
 		}
 
 		private void Scene_onLoadLevel(IOnLoadLevelEventArgs args)
@@ -127,6 +191,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			//SceneManager.LoadScene(level);
 			//StartCoroutine(LoadLevel(args.Scene.Id));
 			Scene_onLoadLevel(args.Scene);
+		}
+
+		private void SceneManager_sceneLoaded(global::UnityEngine.SceneManagement.Scene arg0, LoadSceneMode arg1)
+		{
+			//ToDo: Can extend the duration of transition fade or loading screen using loaded boolean...
+			//ToDo: check if scene is loaded, and if so, remove from list of scenes to load...
 		}
 
 		private Scenes GetSceneType(IScene scene)

@@ -29,6 +29,7 @@ namespace PokemonUnity.Interface.UnityEngine
 	public partial class UnityBattleTest : PokemonUnity.Combat.Battle, IBattleIE, IHasDisplayMessageIE, ISerializable
 	{
 #pragma warning disable 0162 //Warning CS0162  Unreachable code detected
+#pragma warning disable 1066 //Warning CS1066  The default value of an automatically implemented property or indexer will have the same default value as the property or indexer type.
 		#region Variables
 		///// <summary>
 		///// Scene object for this battle
@@ -5091,5 +5092,6 @@ namespace PokemonUnity.Interface.UnityEngine
 		}
 		#endregion
 #pragma warning restore 0162
+#pragma warning restore 1066
 	}
 }

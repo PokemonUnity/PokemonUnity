@@ -963,7 +963,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				if (Core.USENEWBATTLEMECHANICS) return 100;
 				if (attacker.pokemon.IsNotNullOrNone() && attacker.pokemon is IPokemonChatter a && a.chatter != null) {
-					return a.chatter.intensity() * 10 / 127;
+					return a.chatter.intensity * 10 / 127;
 				}
 				return 0;
 			}
