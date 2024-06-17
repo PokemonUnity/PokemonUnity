@@ -38,6 +38,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		[SerializeField] private FightMoveButton button4;
 		[SerializeField] private global::UnityEngine.GameObject selected;
 		[SerializeField] private global::UnityEngine.UI.Toggle buttonMega;
+		private static readonly global::UnityEngine.Sprite spriteNull = Resources.Load<global::UnityEngine.Sprite>("null");
 
 		public IFightMenuButtons initialize(int index= 0, IBattleMove[] moves = null, IViewport viewport= null)
 		{
@@ -66,7 +67,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public void refresh(int index, IBattleMove[] moves, int megaButton)
 		{
-			global::UnityEngine.Sprite spriteNull = Resources.Load<global::UnityEngine.Sprite>("null");
+			//global::UnityEngine.Sprite spriteNull = Resources.Load<global::UnityEngine.Sprite>("null");
 			if (moves == null) return;
 			//this.bitmap.clear();
 			//IList<ITextPosition> textpos = new List<ITextPosition>();

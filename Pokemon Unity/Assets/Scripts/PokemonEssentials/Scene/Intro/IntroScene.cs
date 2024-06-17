@@ -197,7 +197,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			//  Play random cry
 			IAudioObject cry = null;
 			//IAudioObject cry = CryFile(1 + Core.Rand.Next(Species.maxValue));
-			if (Game.GameData is IGameUtility gu) gu.CryFile((Pokemons)(1 + Core.Rand.Next(Kernal.PokemonData.Count)));
+			if (Game.GameData is IGameUtility gu) gu.CryFile((Pokemons)(1 + Core.Rand.Next(Core.PokemonIndexLimit)));
 			if (cry != null && Game.GameData is IGameAudioPlay gap) gap.SEPlay(cry, 80, 100);
 			//  Fade out
 			//@pic.moveOpacity(15, 0, 0);
@@ -211,8 +211,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			//Destroy scene and load next scene
 			//IPokemonLoadScene sscene = new PokemonLoadScene();
 			//IPokemonLoad sscreen = new PokemonLoad(sscene);
-			ILoadScene sscene = GameEvents.game.Scenes.Load;
-			ILoadScreen sscreen = GameEvents.game.Screens.Load.initialize(sscene);
+			ILoadScene sscene = GameManager.current.game.Scenes.Load;
+			ILoadScreen sscreen = GameManager.current.game.Screens.Load.initialize(sscene);
 			sscreen.StartLoadScreen();
 		}
 
@@ -228,7 +228,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			IAudioObject cry = null;
 			//  Play random cry
 			//IAudioObject cry = CryFile(1 + Core.Rand.Next(Species.maxValue));
-			if (Game.GameData is IGameUtility gu) gu.CryFile((Pokemons)(1 + Core.Rand.Next(Kernal.PokemonData.Count)));
+			if (Game.GameData is IGameUtility gu) gu.CryFile((Pokemons)(1 + Core.Rand.Next(Core.PokemonIndexLimit)));
 			if (cry != null && Game.GameData is IGameAudioPlay gap) gap.SEPlay(cry, 80, 100);
 			//  Fade out
 			//@pic.moveOpacity(15, 0, 0);
@@ -242,8 +242,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			//Destroy scene and load next scene
 			//IPokemonLoadScene sscene = new PokemonLoadScene();
 			//IPokemonLoad sscreen = new PokemonLoad(sscene);
-			ILoadScene sscene = GameEvents.game.Scenes.Load;
-			ILoadScreen sscreen = GameEvents.game.Screens.Load.initialize(sscene);
+			ILoadScene sscene = GameManager.current.game.Scenes.Load;
+			ILoadScreen sscreen = GameManager.current.game.Screens.Load.initialize(sscene);
 			sscreen.StartDeleteScreen();
 		}
 

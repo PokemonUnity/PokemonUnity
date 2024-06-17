@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using PokemonEssentials.Interface;
 using PokemonUnity;
+using PokemonUnity.Legacy;
 using UnityEngine;
 
 namespace PokemonUnity.Interface.UnityEngine
@@ -40,7 +41,15 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		private void Awake()
 		{
-			AudioHandler = this;
+			//AudioHandler = this;
+			if (AudioHandler == null)
+			{
+				AudioHandler = this;
+			}
+			else if ((object)AudioHandler != this)
+			{
+				Destroy(gameObject);
+			}
 			// Create different AudioSource components for different types of audio
 			bgmSource = gameObject.AddComponent<AudioSource>();
 			bgsSource = gameObject.AddComponent<AudioSource>();
@@ -140,7 +149,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			AudioClip clip = Resources.Load<AudioClip>(filename);
 			if (clip == null)
 			{
-				GameDebug.LogError("Audio file not found: " + filename);
+				Core.Logger?.LogError("Audio file not found: " + filename);
 				return;
 			}
 

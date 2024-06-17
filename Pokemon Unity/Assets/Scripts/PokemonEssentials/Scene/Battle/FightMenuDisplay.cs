@@ -19,17 +19,22 @@ namespace PokemonUnity.Interface.UnityEngine
 	[RequireComponent(typeof(FightMenuButtons))]
 	public partial class FightMenuDisplay : MonoBehaviour, IFightMenuDisplay, IViewport, IGameObject
 	{
-		[SerializeField] private FightMenuButtons buttons;
-		[SerializeField] private int _index;
-		[SerializeField] private int _megaButton;
-		[SerializeField] private IBattler _battler;
-		private IWindow_CommandPokemon window;
-		private IWindow_AdvancedTextPokemon info;
-		private IIconSprite display;
-		private bool disposedValue;
-		private string ctag;
+		#region Unity Inspector
+		[SerializeField] protected FightMenuButtons buttons;
+		[SerializeField] protected int _index;
+		[SerializeField] protected int _megaButton;
+		[SerializeField] protected IBattler _battler;
+		[SerializeField] protected CommandWindowText Window;
+		[SerializeField] protected WindowText Info;
+		protected IIconSprite display;
+		protected bool disposedValue;
+		protected string ctag;
+		protected IRect _rect;
+		public IWindow_CommandPokemon window { get { return Window; } set { Window = value as CommandWindowText; } }
+		public IWindow_UnformattedTextPokemon info { get { return Info; } set { Info = value as WindowText; } }
+		#endregion
 
-		#region
+		#region Interface Properties
 		public IBattler battler
 		{
 			get { return _battler; }
@@ -137,7 +142,16 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 		}
 
-		IRect IViewport.rect { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
+		IRect IViewport.rect
+		{
+			get { return _rect; }
+			set
+			{
+				//rect = ((object)value as global::UnityEngine.GameObject).GetComponent<global::UnityEngine.RectTransform>();
+				//rect.rect.Set(value.x, value.y, value.width, value.height);
+				_rect = value;
+			}
+		}
 		#endregion
 
 		void Awake()
@@ -206,16 +220,16 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			if (@window != null) @window.commands = commands.ToArray();
 			IBattleMove selmove = @battler.moves[@index];
-			//string movetype = selmove.Type.ToString(TextScripts.Name);
-			//if (selmove.TotalPP == 0)
-			//{
-			//	@info.text = string.Format("{0}PP: ---<br>TYPE/{1}", @ctag, movetype);
-			//}
-			//else
-			//{
-			//	@info.text = string.Format("{0}PP: {1}/{2}<br>TYPE/{3}",
-			//	   @ctag, selmove.PP, selmove.TotalPP, movetype);
-			//}
+			string movetype = selmove.Type.ToString(TextScripts.Name);
+			if (selmove.TotalPP == 0)
+			{
+				@info.text = string.Format("{0}PP: ---<br>TYPE/{1}", @ctag, movetype);
+			}
+			else
+			{
+				@info.text = string.Format("{0}PP: {1}/{2}<br>TYPE/{3}",
+				   @ctag, selmove.PP, selmove.TotalPP, movetype);
+			}
 			if (@buttons != null) @buttons.refresh(this.index, @battler != null ? @battler.moves : null, @megaButton);
 		}
 

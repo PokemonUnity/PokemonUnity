@@ -36,7 +36,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			else
 			{
-				GameDebug.LogError("No recorded audio clip available.");
+				Core.Logger?.LogError("No recorded audio clip available.");
 			}
 		}
 		#region Microphone Recording Logic
@@ -55,7 +55,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			else
 			{
 				// Microphone not available - handle error or request permission
-				GameDebug.LogError("Failed to start recording: Microphone not available");
+				Core.Logger?.LogError("Failed to start recording: Microphone not available");
 			}
 		}
 

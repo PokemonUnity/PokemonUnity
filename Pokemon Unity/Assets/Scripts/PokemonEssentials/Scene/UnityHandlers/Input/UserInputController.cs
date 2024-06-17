@@ -12,6 +12,7 @@ namespace PokemonUnity.Interface.UnityEngine
 	/// https://sites.google.com/a/unity3d.com/unity-input-advisory-board/design-overview
 	public class UserInputController : global::UnityEngine.MonoBehaviour, IInput
 	{
+		private int playerIndex;
 		//ToDo: Add a table map for runtime custom key binding
 		private Dictionary<int, bool>	currentKeyState;
 		private Dictionary<int, bool>	previousKeyState;
@@ -19,6 +20,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		public Dictionary<int, bool>	CurrentKeyState		{ get { return currentKeyState; } }
 		public Dictionary<int, bool>	PreviousKeyState	{ get { return previousKeyState; } }
 		public Dictionary<int, float>	KeyHoldTime			{ get { return keyHoldTime; } }
+		public int PlayerIndex								{ get { return playerIndex; } set { playerIndex = value; } }
 
 		public event Action<object, PokemonEssentials.Interface.EventArg.IButtonEventArgs> OnKeyPress;
 
