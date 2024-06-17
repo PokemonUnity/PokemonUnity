@@ -16,23 +16,27 @@ namespace PokemonUnity.Interface.UnityEngine
 	/// <summary>
 	/// Command menu (Fight/Pokémon/Bag/Run)
 	/// </summary>
-	//[RequireComponent(typeof())]
+	[RequireComponent(typeof(RectTransform))]
 	public partial class CommandMenuDisplay : MonoBehaviour, ICommandMenuDisplay, IViewport, IGameObject
 	{
-		[SerializeField] private CommandMenuButtons buttons;
-		private bool disposedValue;
+		[SerializeField] protected global::UnityEngine.RectTransform rect = null;
+		[SerializeField] protected CommandMenuButtons buttons;
+		[SerializeField] protected CommandWindowText Window;
+		[SerializeField] protected WindowText messageBox;
+		protected bool disposedValue;
+		protected IRect _rect;
 		public int Index;
 		public int Mode;
 		public IIconSprite display;
-		//ToDo: a prefab of child button for the parent panel to instantiate custom/dynamic commands in game scene
-		public IWindow_CommandPokemon window;
-		public IWindow_UnformattedTextPokemon msgbox;
 		/// <summary>
 		/// Collection of sprites, used to contain the background/text for unity button image
 		/// that represents the command issued to pokemon during player's turn
 		/// </summary>
 		/// Should represent master collection of sprites, is assigned to UI using functions
 		public global::UnityEngine.Sprite[] commandSpriteArray;
+		//ToDo: a prefab of child button for the parent panel to instantiate custom/dynamic commands in game scene
+		public IWindow_CommandPokemon window { get { return Window; } set { Window = value as CommandWindowText; } }
+		public IWindow_UnformattedTextPokemon msgbox { get { return messageBox; } set { messageBox = value as WindowText; } }
 
 		#region Property
 		public int mode { get { return Mode; } set { Mode = value; } }
@@ -138,7 +142,16 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 		}
 
-		IRect IViewport.rect { get { return null; } set { return; } } //ToDo: Implement IRect
+		IRect IViewport.rect
+		{
+			get { return _rect; }
+			set
+			{
+				//rect = ((object)value as global::UnityEngine.GameObject).GetComponent<global::UnityEngine.RectTransform>();
+				rect.rect.Set(value.x, value.y, value.width, value.height);
+				_rect = value;
+			}
+		}
 		#endregion
 
 		public ICommandMenuDisplay initialize(IViewport viewport = null)

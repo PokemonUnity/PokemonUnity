@@ -211,8 +211,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			//Destroy scene and load next scene
 			//IPokemonLoadScene sscene = new PokemonLoadScene();
 			//IPokemonLoad sscreen = new PokemonLoad(sscene);
-			ILoadScene sscene = GameManager.game.Scenes.Load;
-			ILoadScreen sscreen = GameManager.game.Screens.Load.initialize(sscene);
+			ILoadScene sscene = GameManager.current.game.Scenes.Load;
+			ILoadScreen sscreen = GameManager.current.game.Screens.Load.initialize(sscene);
 			sscreen.StartLoadScreen();
 		}
 
@@ -242,8 +242,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			//Destroy scene and load next scene
 			//IPokemonLoadScene sscene = new PokemonLoadScene();
 			//IPokemonLoad sscreen = new PokemonLoad(sscene);
-			ILoadScene sscene = GameManager.game.Scenes.Load;
-			ILoadScreen sscreen = GameManager.game.Screens.Load.initialize(sscene);
+			ILoadScene sscene = GameManager.current.game.Scenes.Load;
+			ILoadScreen sscreen = GameManager.current.game.Screens.Load.initialize(sscene);
 			sscreen.StartDeleteScreen();
 		}
 

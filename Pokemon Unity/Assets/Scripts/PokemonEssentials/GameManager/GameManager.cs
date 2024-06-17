@@ -29,7 +29,9 @@ namespace PokemonUnity.Interface.UnityEngine
 	{
 		#region Variables
 		public static GameManager current;
+		public static InputManager InputManager;
 		public IGame game; //game scope used for temp actions, without affecting original copy?
+		public event Action onUpdate;
 		public event Action onLevelLoaded;
 		//public event Action<int> onLoadLevel;
 		public event Action<IScene> onLoadLevel;

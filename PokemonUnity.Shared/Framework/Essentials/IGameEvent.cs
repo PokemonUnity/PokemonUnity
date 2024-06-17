@@ -19,7 +19,7 @@ namespace PokemonEssentials.Interface
 		bool need_refresh { get; set; }
 
 		//IGameEvent(int map_id, IEntity ev, Game_Map map = null);
-		//IGameEvent initialize(int map_id, IEntity ev, Game_Map map = null);
+		IGameEvent initialize(int map_id, int ev, IGameMap map = null);
 
 		int map_id { get; }
 

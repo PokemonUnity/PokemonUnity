@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections;
 using System.Collections.Generic;
-using UnityEngine;
 using PokemonUnity.Utility;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Field;

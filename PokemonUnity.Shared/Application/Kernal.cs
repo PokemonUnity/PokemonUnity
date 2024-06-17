@@ -20,6 +20,7 @@ using PokemonUnity.Character;
 using Newtonsoft.Json;
 using PokemonEssentials.Interface.Battle;
 using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.Field;
 
 namespace PokemonUnity
 {
@@ -178,6 +179,7 @@ namespace PokemonUnity
 
 		#region Write to and Read from Methods
 		public static void load_data(string filepath = null) { }
+		public static void load_data(IMapData map, string filepath = null) { }
 		public static void load_data(IList<IPokemon> party, string filepath = null) { }
 		public static void load_data(IList<ITrainerData> trainers, string filepath = null) { }
 		public static void load_data(IList<ITrainerChallengeData> trainers, string filepath = null) { }

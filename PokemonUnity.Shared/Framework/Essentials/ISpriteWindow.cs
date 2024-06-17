@@ -869,29 +869,29 @@ namespace PokemonEssentials.Interface
 	// SpriteWrapper is a class based on Sprite which wraps Sprite's properties.
 	// ###############################################################################
 	public interface ISpriteWrapper : ISprite, IDisposable {
-		float angle { get; set; }
+		//float angle { get; set; }
 		IBitmap bitmap { get; set; }
-		int blend_type { get; set; }
-		int bush_depth { get; set; }
-		IColor color { get; set; }
-		bool disposed { get; }
-		bool mirror { get; set; }
-		float opacity { get; set; }
-		float ox { get; set; }
-		float oy { get; set; }
-		IRect src_rect { get; set; }
-		ITone tone { get; set; }
-		IViewport viewport { get; set; }
-		bool visible { get; set; }
-		float x { get; set; }
-		float y { get; set; }
-		float z { get; set; }
-		float zoom_x { get; set; }
-		float zoom_y { get; set; }
+		//int blend_type { get; set; }
+		//int bush_depth { get; set; }
+		//IColor color { get; set; }
+		//bool disposed { get; }
+		//bool mirror { get; set; }
+		//float opacity { get; set; }
+		//float ox { get; set; }
+		//float oy { get; set; }
+		//IRect src_rect { get; set; }
+		//ITone tone { get; set; }
+		//IViewport viewport { get; set; }
+		//bool visible { get; set; }
+		//float x { get; set; }
+		//float y { get; set; }
+		//float z { get; set; }
+		//float zoom_x { get; set; }
+		//float zoom_y { get; set; }
 
-		ISpriteWrapper initialize(IViewport viewport= null);
+		//ISpriteWrapper initialize(IViewport viewport= null);
 		//void Dispose();
-		void flash(IColor color, int duration);
+		//void flash(IColor color, int duration);
 		//void update();
 	}
 
@@ -1002,10 +1002,10 @@ namespace PokemonEssentials.Interface
 	public interface ISpriteWindowCursorRect : IRect {
 		ISpriteWindowCursorRect initialize(IWindow window);
 
-		int x				{ get; set; }
-		int y				{ get; set; }
-		int width			{ get; set; }
-		int height		{ get; set; }
+		//int x				{ get; set; }
+		//int y				{ get; set; }
+		//int width			{ get; set; }
+		//int height		{ get; set; }
 
 		void empty();
 
@@ -1015,17 +1015,17 @@ namespace PokemonEssentials.Interface
 	}
 
 	public interface ISpriteWindow : IWindow {
-		ITone tone				{ get; set; }
+		ITone tone					{ get; set; }
 		//IColor color				{ get; set; }
 		//IViewport viewport		{ get; set; }
-		IBitmap contents				{ get; set; }
+		IBitmap contents			{ get; set; }
 		//int ox					{ get; set; }
 		//int oy					{ get; set; }
 		//int x						{ get; set; }
 		//int y						{ get; set; }
 		//int z						{ get; set; }
-		int zoom_x				{ get; set; }
-		int zoom_y				{ get; set; }
+		int zoom_x					{ get; set; }
+		int zoom_y					{ get; set; }
 		int offset_x				{ get; set; }
 		int offset_y				{ get; set; }
 		//int width					{ get; set; }
@@ -1036,9 +1036,9 @@ namespace PokemonEssentials.Interface
 		//int back_opacity			{ get; set; }
 		//int contents_opacity		{ get; set; }
 		//bool visible				{ get; set; }
-		int cursor_rect			{ get; set; }
-		int contents_blend_type	{ get; set; }
-		int blend_type			{ get; set; }
+		IRect cursor_rect			{ get; set; }
+		int contents_blend_type		{ get; set; }
+		int blend_type				{ get; set; }
 		//int openness				{ get; set; }
 
 		//int windowskin { get; } //();
@@ -1592,10 +1592,16 @@ namespace PokemonEssentials.Interface
 
 		void setTextToFit(string text, int maxwidth = -1);
 
-		// maxwidth is maximum acceptable window width
+		/// <summary>
+		/// </summary>
+		/// <param name="text"></param>
+		/// <param name="maxwidth"><maxwidth is maximum acceptable window width/param>
 		void resizeToFit(string text, int maxwidth = -1);
 
-		// width is current window width
+		/// <summary>
+		/// </summary>
+		/// <param name="text"></param>
+		/// <param name="width">width is current window width</param>
 		void resizeHeightToFit(string text, int width = -1);
 
 		void refresh();
@@ -1641,6 +1647,11 @@ namespace PokemonEssentials.Interface
 
 		//void dispose();
 
+		/// <summary>
+		/// 0 = Pause cursor is displayed at end of text<para>
+		/// 1 = Pause cursor is displayed at bottom right</para>
+		/// 2 = Pause cursor is displayed at lower middle side
+		/// </summary>
 		int cursorMode				{ get; set; }
 
 		//void cursorMode=(value) {

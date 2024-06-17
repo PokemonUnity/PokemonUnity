@@ -45,39 +45,41 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// Pokémon sprite (used in battle)
 	/// </summary>
-	public interface IPokemonBattlerSprite : IRPGSprite //IGameObject
+	public interface IPokemonBattlerSprite : ISpriteWrapper, IRPGSprite //IGameObject
 	{
-		IBitmap bitmap				{ get; set; }
+		//IBitmap bitmap				{ get; set; }
 		int selected				{ get; set; }
 
 		IPokemonBattlerSprite initialize(bool doublebattle, int index, IViewport viewport = null);
 
-		float x { get; set; }
-		float y { get; set; }
+		//float x { get; set; }
+		//float y { get; set; }
+		/// <summary>
+		/// Z controls whether the layer is in forefront or back
+		/// </summary>
+		//float z { get; set; }
 		/// <summary>
 		/// not sure what this is used for...
 		/// </summary>
-		float z { get; set; }
+		//ITone tone { get; set; }
+
+		//float width { get; }
+		//float height { get; }
+
 		/// <summary>
-		/// not sure what this is used for...
 		/// </summary>
-		ITone tone { get; set; }
-
-		float width { get; }
-		float height { get; }
-
 		void dispose();
 
 		//int selected { set; }
 
-		bool visible { get; set; }
+		//bool visible { get; set; }
 
 		void setPokemonBitmap(IPokemon pokemon, bool back = false);
 		void setPokemonBitmap(PokemonUnity.Monster.Forms pokemon, bool back = false);
 
 		void setPokemonBitmapSpecies(IPokemon pokemon, Pokemons species, bool back = false);
 
-		void update();
+		//void update();
 	}
 
 	/// <summary>

@@ -610,7 +610,7 @@ namespace PokemonUnity
 		public int map_id				{ get; set; }
 	}
 
-	public partial class Game_Player : PokemonEssentials.Interface.Battle.IGamePlayerOrgBattle {
+	public partial class GamePlayer : PokemonEssentials.Interface.Battle.IGamePlayerOrgBattle {
 		public int direction							{ get; protected set; }
 		protected int @prelock_direction;//				{ get; protected set; }
 		protected float x;//							{ get; protected set; }
@@ -1023,7 +1023,7 @@ namespace PokemonUnity
 		}
 	}
 
-	public partial class Game_Event : PokemonEssentials.Interface.Battle.IGameEventOrgBattle {
+	public partial class GameEvent : PokemonEssentials.Interface.Battle.IGameEventOrgBattle {
 		public bool InChallenge { get {
 			if (Game.GameData is IGameOrgBattle gob) return gob.BattleChallenge.InChallenge;
 			return false;//BattleChallenge.InChallenge;

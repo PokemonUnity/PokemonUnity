@@ -20,28 +20,28 @@ namespace PokemonUnity
 		#region Variables
 		public IMapData map								{ get; set; }
 		//public int map_id								{ get; set; }
-		public string tileset_name						{ get; set; }     // tileset file name
-		public string[] autotile_names					{ get; set; }     // autotile file name
-		public string panorama_name						{ get; set; }     // panorama file name
-		public int panorama_hue							{ get; set; }     // panorama hue
-		public string fog_name							{ get; set; }     // fog file name
-		public int fog_hue								{ get; set; }     // fog hue
-		public float fog_opacity						{ get; set; }     // fog opacity level
-		public int fog_blend_type						{ get; set; }     // fog blending method
-		public int fog_zoom								{ get; set; }     // fog zoom rate
-		public float fog_sx								{ get; set; }     // fog sx
-		public float fog_sy								{ get; set; }     // fog sy
-		public string battleback_name					{ get; set; }     // battleback file name
-		//public int display_x							{ get; set; }     // display x-coordinate * 128
-		//public int display_y							{ get; set; }     // display y-coordinate * 128
-		public bool need_refresh						{ get; set; }     // refresh request flag
-		public int[] passages							{ get; set; }     // passage table
-		public int[] priorities							{ get; set; }     // prioroty table
-		public Terrains[] terrain_tags					{ get; set; }     // terrain tag table
-		public IDictionary<int,IGameCharacter> events	{ get; set; }     // events
-		public float fog_ox								{ get; set; }     // fog x-coordinate starting point
-		public float fog_oy								{ get; set; }     // fog y-coordinate starting point
-		public ITone fog_tone							{ get; set; }     // fog color tone
+		public string tileset_name						{ get; set; }		// tileset file name
+		public string[] autotile_names					{ get; set; }		// autotile file name
+		public string panorama_name						{ get; set; }		// panorama file name
+		public int panorama_hue							{ get; set; }		// panorama hue
+		public string fog_name							{ get; set; }		// fog file name
+		public int fog_hue								{ get; set; }		// fog hue
+		public float fog_opacity						{ get; set; }		// fog opacity level
+		public int fog_blend_type						{ get; set; }		// fog blending method
+		public int fog_zoom								{ get; set; }		// fog zoom rate
+		public float fog_sx								{ get; set; }		// fog sx
+		public float fog_sy								{ get; set; }		// fog sy
+		public string battleback_name					{ get; set; }		// battleback file name
+		//public int display_x							{ get; set; }		// display x-coordinate * 128
+		//public int display_y							{ get; set; }		// display y-coordinate * 128
+		public bool need_refresh						{ get; set; }		// refresh request flag
+		public int[] passages							{ get; set; }		// passage table
+		public int[] priorities							{ get; set; }		// prioroty table
+		public Terrains[] terrain_tags					{ get; set; }		// terrain tag table
+		public IDictionary<int,IGameCharacter> events	{ get; set; }		// events
+		public float fog_ox								{ get; set; }		// fog x-coordinate starting point
+		public float fog_oy								{ get; set; }		// fog y-coordinate starting point
+		public ITone fog_tone							{ get; set; }		// fog color tone
 		public int mapsInRange							{ get; set; }
 		private ITone @fog_tone_target;
 		private int fog_tone_duration;
@@ -50,7 +50,7 @@ namespace PokemonUnity
 		private int scroll_direction;
 		private float scroll_rest;
 		private float scroll_speed;
-		private Dictionary<int, IGameCommonEvent> common_events;
+		private IDictionary<int, IGameCommonEvent> common_events;
 		#endregion
 
 		#region Constructor
@@ -69,6 +69,7 @@ namespace PokemonUnity
 		public void setup(int map_id) {
 			this.map_id = map_id;
 			@map=new MapData();//load_data(string.Format("Data/Map%03d.%s", map_id,Core.RPGVX != null ? "rvdata" : "rxdata"));
+			Kernal.load_data(@map, string.Format("Data/Map{0:3}.{1}", map_id,"txt"));
 			ITileset tileset = Game.GameData.DataTilesets[@map.tileset_id];
 			@tileset_name = tileset.tileset_name;
 			@autotile_names = tileset.autotile_names;
@@ -94,12 +95,12 @@ namespace PokemonUnity
 			@events = new Dictionary<int, IGameCharacter>();
 			foreach (int i in @map.events.Keys) {
 				//@events[i] = new Game_Event(@map_id, @map.events[i],this);
-				//@events.Add(i, new Game_Event(@map_id, @map.events[i],this));
+				//@events.Add(i, new GameEvent(@map_id, @map.events[i],this)); //ToDo: Create MonoBehavior and instantiate
 			}
 			@common_events = new Dictionary<int,IGameCommonEvent>();
 			for (int i = 1; i < Game.GameData.DataCommonEvents.Length; i++) {
 				//@common_events[i] = new Game_CommonEvent(i);
-				//@common_events.Add(i, new Game_CommonEvent(i));
+				//@common_events.Add(i, new CommonEvent(i)); //ToDo: Create class and uncomment
 			}
 			//@fog_tone = new Tone(0, 0, 0, 0);
 			//@fog_tone_target = new Tone(0, 0, 0, 0);
@@ -211,11 +212,11 @@ namespace PokemonUnity
 			foreach (IGameCharacter @event in events.Values) {
 				if (@event.tile_id >= 0 && @event != self_event &&
 					@event.x == x && @event.y == y && !@event.through) {
-//						if @terrain_tags[@event.tile_id]!=Terrains.Neutral
+//					if @terrain_tags[@event.tile_id]!=Terrains.Neutral
 						if ((@passages[@event.tile_id] & bit) != 0) return false;
 						if ((@passages[@event.tile_id] & 0x0f) == 0x0f) return false;
 						if (@priorities[@event.tile_id] == 0) return true;
-//						}
+//					}
 				}
 			}
 			if (self_event==Game.GameData.GamePlayer) {
@@ -347,26 +348,26 @@ namespace PokemonUnity
 			foreach (IGameCharacter @event in events.Values) {
 				if (@event.tile_id >= 0 && @event != self_event &&
 					@event.x == x && @event.y == y && !@event.through) {
-//						if @terrain_tags[@event.tile_id]!=Terrains.Neutral
+//					if @terrain_tags[@event.tile_id]!=Terrains.Neutral
 						if ((@passages[@event.tile_id] & 0x0f) != 0) return false;
 						if (@priorities[@event.tile_id] == 0) return true;
-//						}
+//					}
 				}
 			}
 			foreach (int i in new int[] { 2, 1, 0 }) { //foreach z axis in map
 				int? tile_id = data[(int)System.Math.Floor(x), (int)System.Math.Floor(y), i];
 				if (tile_id == null) return false;
-//					if (@terrain_tags[tile_id]!=Terrains.Neutral) {
+//				if (@terrain_tags[tile_id]!=Terrains.Neutral) {
 					if ((@passages[tile_id.Value] & 0x0f) != 0) return false;
 					if (@priorities[tile_id.Value] == 0) return true;
-//					}
+//				}
 			}
 			return true;
 		}
 
 		public bool deepBush (float x,float y) {
 			if (@map_id != 0) {
-				foreach (var i in new int[] { 2, 1, 0 }) { //foreach z axis in map
+				foreach (int i in new int[] { 2, 1, 0 }) { //foreach z axis in map
 					int? tile_id = data[(int)System.Math.Floor(x), (int)System.Math.Floor(y), i];
 					if (tile_id == null) {
 						return false;
@@ -384,7 +385,7 @@ namespace PokemonUnity
 
 		public bool bush (float x,float y) {
 			if (@map_id != 0) {
-				foreach (var i in new int[] { 2, 1, 0 }) { //foreach z axis in map
+				foreach (int i in new int[] { 2, 1, 0 }) { //foreach z axis in map
 					int? tile_id = data[(int)System.Math.Floor(x), (int)System.Math.Floor(y), i];
 					if (tile_id == null) {
 						return false;
@@ -532,10 +533,12 @@ namespace PokemonUnity
 	//}
 	//public partial class Game_Map {
 		public string name { get {
-			string ret=""; //Game.GameData.GetMessage(MessageTypes.MapNames,this.map_id); //Dictionary of Static Strings
+			string ret=""; //ret = gm.GetMessage(MessageTypes.MapNames,this.map_id); //Dictionary of Static Strings
+			//if (Game.GameData is IGameMessage gm) ret = gm.GetMessage(TextLocalization.MapNames,this.map_id);
 			if (Game.GameData.Trainer != null) {
 				// Replace "\PN" with the Trainer.Name
 				//ret.gsub!(/\\PN/,Game.GameData.Trainer.name);
+				ret.Replace("\\PN",Game.GameData.Trainer.name);
 			}
 			return ret;
 		} }

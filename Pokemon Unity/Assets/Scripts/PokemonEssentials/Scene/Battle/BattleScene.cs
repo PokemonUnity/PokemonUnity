@@ -53,120 +53,120 @@ namespace PokemonUnity.Interface.UnityEngine
 		//public PokemonEssentials.Interface.PokeBattle.IBattle			battle	{ get { return _battle; } set { _battle = value; } }
 		//public PokemonUnity.Combat.Battle			battle	{ get { return _battle; } set { _battle = value; } }
 		public PokemonUnity.Interface.UnityEngine.IBattleIE			battle	{ get { return _battle; } set { _battle = value; } }
-		public ITrainerFadeAnimation				fadeanim	{ get { return _fadeanim; } set { _fadeanim = value; } }
-		public IPokeballSendOutAnimation			sendout	{ get { return _sendout; } set { _sendout = value; } }
-		public IWindow_CommandPokemon				commandPokemon	{ get { return _commandPokemon; } set { _commandPokemon = value; } }
+		public ITrainerFadeAnimation				fadeanim		{ get { return _fadeanim; } set { _fadeanim = value; } }
+		public IPokeballSendOutAnimation			sendout			{ get { return _sendout; } set { _sendout = value; } }
+		public IWindow_CommandPokemon				commandpokemon	{ get { return _commandPokemon; } set { _commandPokemon = value as CommandWindowText; } }
 		/// <summary>
-		/// public turn			action	{ get { return _action; } set { _action = value; } } Fight, Bag, Item, Run...
+		/// Select turn action; Fight, Bag, Item, Run...
 		/// </summary>
-		public ICommandMenuDisplay					commandWindow	{ get { return _commandWindow; } set { _commandWindow = value as CommandMenuDisplay; } }
+		public ICommandMenuDisplay					commandwindow	{ get { return _commandWindow; } set { _commandWindow = value as CommandMenuDisplay; } }
 		/// <summary>
 		/// Select Pokemon's attack move for given turn
 		/// </summary>
-		public IFightMenuDisplay					fightWindow	{ get { return _fightWindow; } set { _fightWindow = value as FightMenuDisplay; } }
-		public IWindow_UnformattedTextPokemon		helpWindow	{ get { return _helpWindow; } set { _helpWindow = value; } }
+		public IFightMenuDisplay					fightwindow		{ get { return _fightWindow; } set { _fightWindow = value as FightMenuDisplay; } }
+		public IWindow_UnformattedTextPokemon		helpwindow		{ get { return _helpWindow; } set { _helpWindow = value as WindowText; } }
 		/// <summary>
 		/// Display text and system responses to player
 		/// </summary>
-		public IWindow_AdvancedTextPokemon			messageWindow	{ get { return _messageWindow; } set { _messageWindow = value; } }
+		public IWindow_AdvancedTextPokemon			messagewindow	{ get { return _messageWindow; } set { _messageWindow = value as WindowTextAdvance; } }
 		/// <summary>
 		/// The container canvas frame with custom UI border
 		/// </summary>
-		public IWindow_AdvancedTextPokemon			messageBox	{ get { return _messageBox; } set { _messageBox = value; } }
+		public IWindow_AdvancedTextPokemon			messagebox		{ get { return _messageBox; } set { _messageBox = value as WindowTextAdvance; } }
 		public IPartyDisplayScreen					@switchscreen	{ get { return _switchscreen; } set { _switchscreen = value; } }
-		public IGameObject							player	{ get { return _player; } set { _player = value; } }
-		public IGameObject							playerB	{ get { return _playerB; } set { _playerB = value; } }
-		public IGameObject							trainer	{ get { return _trainer; } set { _trainer = value; } }
-		public IGameObject							trainer2	{ get { return _trainer2; } set { _trainer2 = value; } }
-		public IGameObject							battlebg	{ get { return _battlebg; } set { _battlebg = value; } }
-		public IGameObject							enemybase	{ get { return _enemybase; } set { _enemybase = value; } }
-		public IGameObject							playerbase	{ get { return _playerbase; } set { _playerbase = value; } }
-		public IGameObject							partybarfoe	{ get { return _partybarfoe; } set { _partybarfoe = value; } }
-		public IGameObject							partybarplayer	{ get { return _partybarplayer; } set { _partybarplayer = value; } }
+		public IPokemonBattlerSprite				player			{ get { return _player; } set { _player = value; } }
+		public IPokemonBattlerSprite				playerB			{ get { return _playerB; } set { _playerB = value; } }
+		public IPokemonBattlerSprite				trainer			{ get { return _trainer; } set { _trainer = value; } }
+		public IPokemonBattlerSprite				trainer2		{ get { return _trainer2; } set { _trainer2 = value; } }
+		public ISpriteWrapper						battlebg		{ get { return _battlebg; } set { _battlebg = value as SpriteWrapper; } }
+		public ISpriteWrapper						enemybase		{ get { return _enemybase; } set { _enemybase = value as SpriteWrapper; } }
+		public ISpriteWrapper						playerbase		{ get { return _playerbase; } set { _playerbase = value as SpriteWrapper; } }
+		public ISpriteWrapper						partybarfoe		{ get { return _partybarfoe; } set { _partybarfoe = value as SpriteWrapper; } }
+		public ISpriteWrapper						partybarplayer	{ get { return _partybarplayer; } set { _partybarplayer = value as SpriteWrapper; } }
 		/// <summary>
-		/// HP, Exp, public other status of battling			pokemon	{ get { return _pokemon; } set { _pokemon = value; } } Player side slot 1
+		/// HP, Exp, and other status of battling pokemon; Player side slot 1
 		/// </summary>
 		public IPokemonDataBox						battlebox0	{ get { return _battlebox0; } set { _battlebox0 = value as PokemonDataBox; } }
 		/// <summary>
-		/// HP, Exp, public other status of battling			pokemon	{ get { return _pokemon; } set { _pokemon = value; } } Enemy side slot 1
+		/// HP, Exp, and other status of battling pokemon; Enemy side slot 1
 		/// </summary>
 		public IPokemonDataBox						battlebox1	{ get { return _battlebox1; } set { _battlebox1 = value as PokemonDataBox; } }
 		/// <summary>
-		/// HP, Exp, public other status of battling			pokemon	{ get { return _pokemon; } set { _pokemon = value; } } Player side slot 2
+		/// HP, Exp, and other status of battling pokemon; Player side slot 2
 		/// </summary>
 		public IPokemonDataBox						battlebox2	{ get { return _battlebox2; } set { _battlebox2 = value as PokemonDataBox; } }
 		/// <summary>
-		/// HP, Exp, public other status of battling			pokemon	{ get { return _pokemon; } set { _pokemon = value; } } Enemy side slot 2
+		/// HP, Exp, and other status of battling pokemon; Enemy side slot 2
 		/// </summary>
 		public IPokemonDataBox						battlebox3	{ get { return _battlebox3; } set { _battlebox3 = value as PokemonDataBox; } }
 		/// <summary>
-		/// public side primary battle			pokemon	{ get { return _pokemon; } set { _pokemon = value; } } slot one
+		/// Your side primary battle pokemon; slot one
 		/// </summary>
 		public IPokemonBattlerSprite				pokemon0	{ get { return _pokemon0; } set { _pokemon0 = value; } }
 		/// <summary>
-		/// public side ally battle			pokemon	{ get { return _pokemon; } set { _pokemon = value; } } slot two (only appears in double battles)
+		/// Your side ally battle pokemon; slot two (only appears in double battles)
 		/// </summary>
 		public IPokemonBattlerSprite				pokemon2	{ get { return _pokemon2; } set { _pokemon2 = value; } }
 		/// <summary>
-		/// public side primary battle			pokemon	{ get { return _pokemon; } set { _pokemon = value; } } slot one
+		/// Enemy side primary battle pokemon; slot one
 		/// </summary>
 		public IPokemonBattlerSprite				pokemon1	{ get { return _pokemon1; } set { _pokemon1 = value; } }
 		/// <summary>
-		/// public side ally battle			pokemon	{ get { return _pokemon; } set { _pokemon = value; } } slot two (only appears in double battles)
+		/// Enemy side ally battle pokemon; slot two (only appears in double battles)
 		/// </summary>
 		public IPokemonBattlerSprite				pokemon3	{ get { return _pokemon3; } set { _pokemon3 = value; } }
-		public IIconSprite			shadow0	{ get { return _shadow0; } set { _shadow0 = value; } }
-		public IIconSprite			shadow1	{ get { return _shadow1; } set { _shadow1 = value; } }
-		public IIconSprite			shadow2	{ get { return _shadow2; } set { _shadow2 = value; } }
-		public IIconSprite			shadow3	{ get { return _shadow3; } set { _shadow3 = value; } }
+		public IIconSprite							shadow0	{ get { return _shadow0; } set { _shadow0 = value; } }
+		public IIconSprite							shadow1	{ get { return _shadow1; } set { _shadow1 = value; } }
+		public IIconSprite							shadow2	{ get { return _shadow2; } set { _shadow2 = value; } }
+		public IIconSprite							shadow3	{ get { return _shadow3; } set { _shadow3 = value; } }
 		/// <summary>
 		/// pokeball thrown at pokemons for capture animation
 		/// </summary>
-		public IIconSprite			spriteBall	{ get { return _spriteBall; } set { _spriteBall = value; } }
-		public IList<IWindow>			pkmnwindows	{ get { return _pkmnwindows; } set { _pkmnwindows = value; } }
+		public IIconSprite							capture	{ get { return _spriteBall; } set { _spriteBall = value; } }
+		public IList<IWindow>						pkmnwindows	{ get { return _pkmnwindows; } set { _pkmnwindows = value; } }
 		public IDictionary<string, object>			sprites	{ get { return _sprites; } set { _sprites = value; } }
 		//public Dictionary<string, UnityEngine.GameObject>			sprites	{ get { return _sprites; } set { _sprites = value; } }
-		public IViewport			viewport	{ get { return _viewport; } set { _viewport = value; } }
-		public bool					aborted	{ get { return _aborted; } set { _aborted = value; } }
-		public bool					abortable	{ get { return _abortable; } set { _abortable = value; } }
-		public bool					battlestart	{ get { return _battlestart; } set { _battlestart = value; } }
-		public bool					messagemode	{ get { return _messagemode; } set { _messagemode = value; } }
-		public bool					briefmessage	{ get { return _briefmessage; } set { _briefmessage = value; } }
-		public bool					showingplayer	{ get { return _showingplayer; } set { _showingplayer = value; } }
-		public bool					showingenemy	{ get { return _showingenemy; } set { _showingenemy = value; } }
-		public bool					enablePartyAnim	{ get { return _enablePartyAnim; } set { _enablePartyAnim = value; } }
-		public int					partyAnimPhase	{ get { return _partyAnimPhase; } set { _partyAnimPhase = value; } }
-		public float				xposplayer	{ get { return _xposplayer; } set { _xposplayer = value; } }
-		public float				xposenemy	{ get { return _xposenemy; } set { _xposenemy = value; } }
-		public float				foeyoffset	{ get { return _foeyoffset; } set { _foeyoffset = value; } }
-		public float				traineryoffset	{ get { return _traineryoffset; } set { _traineryoffset = value; } }
+		public IViewport							viewport	{ get { return _viewport; } set { _viewport = value; } }
+		public bool									aborted	{ get { return _aborted; } set { _aborted = value; } }
+		public bool									abortable	{ get { return _abortable; } set { _abortable = value; } }
+		public bool									battlestart	{ get { return _battlestart; } set { _battlestart = value; } }
+		public bool									messagemode	{ get { return _messagemode; } set { _messagemode = value; } }
+		public bool									briefmessage	{ get { return _briefmessage; } set { _briefmessage = value; } }
+		public bool									showingplayer	{ get { return _showingplayer; } set { _showingplayer = value; } }
+		public bool									showingenemy	{ get { return _showingenemy; } set { _showingenemy = value; } }
+		public bool									enablePartyAnim	{ get { return _enablePartyAnim; } set { _enablePartyAnim = value; } }
+		public int									partyAnimPhase	{ get { return _partyAnimPhase; } set { _partyAnimPhase = value; } }
+		public float								xposplayer	{ get { return _xposplayer; } set { _xposplayer = value; } }
+		public float								xposenemy	{ get { return _xposenemy; } set { _xposenemy = value; } }
+		public float								foeyoffset	{ get { return _foeyoffset; } set { _foeyoffset = value; } }
+		public float								traineryoffset	{ get { return _traineryoffset; } set { _traineryoffset = value; } }
 		#endregion
 
 		#region Unity's MonoBehavior Inspector Properties
 		[SerializeField] private IDictionary<string, object>		_sprites;
 		[Header("Scene Canvas Panel Layers")]
 		[SerializeField] private IViewport							_viewport;
-		[SerializeField] private IWindow_CommandPokemon				_commandPokemon;
+		[SerializeField] private CommandWindowText					_commandPokemon;
 		[SerializeField] private CommandMenuDisplay					_commandWindow;
 		[SerializeField] private FightMenuDisplay					_fightWindow;
-		[SerializeField] private IWindow_UnformattedTextPokemon		_helpWindow;
-		[SerializeField] private IWindow_AdvancedTextPokemon		_messageWindow;
-		[SerializeField] private IWindow_AdvancedTextPokemon		_messageBox;
+		[SerializeField] private WindowText							_helpWindow;
+		[SerializeField] private WindowTextAdvance					_messageWindow;
+		[SerializeField] private WindowTextAdvance					_messageBox;
 		[SerializeField] private IPartyDisplayScreen				_switchscreen;
 		[SerializeField] private IList<IWindow>						_pkmnwindows;
 		[Space()]
 		[Header("Scene Battle GameObjects")]
 		[Space()]
 		[Header("Trainer Avatars")]
-		[SerializeField] private IGameObject						_player;
-		[SerializeField] private IGameObject						_playerB;
-		[SerializeField] private IGameObject						_trainer;
-		[SerializeField] private IGameObject						_trainer2;
-		[SerializeField] private IGameObject						_battlebg;
-		[SerializeField] private IGameObject						_enemybase;
-		[SerializeField] private IGameObject						_playerbase;
-		[SerializeField] private IGameObject						_partybarfoe;
-		[SerializeField] private IGameObject						_partybarplayer;
+		[SerializeField] private IPokemonBattlerSprite				_player;
+		[SerializeField] private IPokemonBattlerSprite				_playerB;
+		[SerializeField] private IPokemonBattlerSprite				_trainer;
+		[SerializeField] private IPokemonBattlerSprite				_trainer2;
+		[SerializeField] private SpriteWrapper						_battlebg;
+		[SerializeField] private SpriteWrapper						_enemybase;
+		[SerializeField] private SpriteWrapper						_playerbase;
+		[SerializeField] private SpriteWrapper						_partybarfoe;
+		[SerializeField] private SpriteWrapper						_partybarplayer;
 		[SerializeField] private IIconSprite						_spriteBall;
 		[SerializeField] private ITrainerFadeAnimation				_fadeanim;
 		[SerializeField] private IPokeballSendOutAnimation			_sendout;
@@ -235,7 +235,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			//shadow3 = _shadow3.GetComponent<>() as IGameObject;
 
 			//ToDo: Remove scene assign from here, and move to a consolidated monobehaviour game object
-			//GameEvents.game.Scenes.BattleScene = this;
+			//GameManager.game.Scenes.BattleScene = this;
 		}
 
 		private void Start()
@@ -297,11 +297,11 @@ namespace PokemonUnity.Interface.UnityEngine
 			lastmove = new int[] { 0, 0, 0, 0 };
 			pkmnwindows = new IWindow[] { null, null, null, null };
 			sprites = new Dictionary<string, object>() {
-				{ "messagebox",		messageBox			as IGameObject },
-				{ "fightwindow",	fightWindow			as IGameObject },
-				{ "commandwindow",	commandWindow		as IGameObject },
-				{ "messagewindow",	messageWindow		as IGameObject },
-				{ "helpwindow",		helpWindow			as IGameObject },
+				{ "messagebox",		messagebox			as IGameObject },
+				{ "fightwindow",	fightwindow			as IGameObject },
+				{ "commandwindow",	commandwindow		as IGameObject },
+				{ "messagewindow",	messagewindow		as IGameObject },
+				{ "helpwindow",		helpwindow			as IGameObject },
 				{ "battlebg",		battlebg			as IGameObject },
 				{ "player",			player				as IGameObject },
 				{ "playerB",		playerB				as IGameObject },
@@ -311,7 +311,8 @@ namespace PokemonUnity.Interface.UnityEngine
 				{ "enemybase",		enemybase			as IGameObject },
 				{ "partybarplayer",	partybarplayer		as IGameObject },
 				{ "partybarfoe",	partybarfoe			as IGameObject },
-				{ "capture",		spriteBall			as IGameObject },
+				//{ "capture",		spriteBall			as IGameObject },
+				{ "capture",		capture				as IGameObject },
 				{ "battlebox0",		battlebox0			as IGameObject },
 				{ "battlebox1",		battlebox1			as IGameObject },
 				{ "battlebox2",		battlebox2			as IGameObject },
@@ -323,7 +324,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{ "shadow0",		shadow0				as IGameObject },
 				{ "shadow1",		shadow1				as IGameObject },
 				{ "shadow2",		shadow2				as IGameObject },
-				{ "shadow3",		shadow3             as IGameObject }
+				{ "shadow3",		shadow3				as IGameObject }
 			};
 			battlestart = true;
 			messagemode = false;
@@ -361,7 +362,6 @@ namespace PokemonUnity.Interface.UnityEngine
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			PokemonUnity.Input.update();
-			//ToDo: Use GameFramework Input manager instead of Unity
 			if (global::UnityEngine.Input.GetButtonDown("Select") && abortable && !aborted)
 			{
 				aborted = true;
@@ -377,22 +377,22 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			//ToDo: Uncomment below after debugging...
-			//@sprites["messagebox"].visible = (windowtype == MESSAGEBOX ||
-			//								  windowtype == COMMANDBOX ||
-			//								  windowtype == FIGHTBOX ||
-			//								  windowtype == BLANK);
-			//(@sprites["messagewindow"] as IWindow_AdvancedTextPokemon).visible = (windowtype == MESSAGEBOX);
-			(@sprites["commandwindow"] as ICommandMenuDisplay).visible = (windowtype == COMMANDBOX);
-			(@sprites["fightwindow"] as IFightMenuDisplay).visible = (windowtype == FIGHTBOX);
+			messagebox.visible = (windowtype == MESSAGEBOX ||
+								  windowtype == COMMANDBOX ||
+								  windowtype == FIGHTBOX ||
+								  windowtype == BLANK);
+			(messagewindow).visible = (windowtype == MESSAGEBOX);
+			(commandwindow).visible = (windowtype == COMMANDBOX);
+			(fightwindow).visible = (windowtype == FIGHTBOX);
 		}
 
 		public void SetMessageMode(bool mode)
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
-			/*
+
 			@messagemode = mode;
-			IWindow_AdvancedTextPokemon msgwindow = @sprites["messagewindow"] as IWindow_AdvancedTextPokemon;
+			if (messagewindow == null) return;
+			IWindow_AdvancedTextPokemon msgwindow = messagewindow;
 			if (mode)       // Within Pokémon command
 			{
 				msgwindow.baseColor = PokeBattle_SceneConstants.MENUBASECOLOR;
@@ -413,7 +413,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				msgwindow.width = (Game.GameData as Game).Graphics.width - 32;
 				msgwindow.height = 96;
 				msgwindow.y = (Game.GameData as Game).Graphics.height - msgwindow.height + 2;
-			}*/
+			}
 		}
 
 		public IEnumerator WaitMessage()
@@ -423,8 +423,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (@briefmessage)
 			{
 				ShowWindow(MESSAGEBOX);
-				//IWindow_AdvancedTextPokemon cw = @sprites["messagewindow"].GetComponent<IWindow_AdvancedTextPokemon>();
-				IWindow_AdvancedTextPokemon cw = @sprites["messagewindow"] as IWindow_AdvancedTextPokemon;
+				IWindow_AdvancedTextPokemon cw = messagewindow;
 				int i = 0;
 				do
 				{
@@ -469,11 +468,11 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			Core.Logger.Log(message: "Display Message: \"{0}\"", msg);
-			/*WaitMessage();
+			Core.Logger.Log(message: "Display Message: `{0}`", msg);
+			WaitMessage();
 			Refresh();
 			ShowWindow(MESSAGEBOX);
-			IWindow_AdvancedTextPokemon cw = @sprites["messagewindow"] as IWindow_AdvancedTextPokemon;
+			IWindow_AdvancedTextPokemon cw = messagewindow;
 			cw.text = msg;
 			int i = 0;
 			//All of this below should be a coroutine that returns the value selected in UI
@@ -481,18 +480,18 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				GraphicsUpdate();
 				InputUpdate();
-				FrameUpdate(cw);
+				FrameUpdate(cw as IGameObject);
 				if (i == 40)
 				{
 					//end dialog window, after 40 ticks.
-					//MessageWindow.Text = "";
-					//MessageWindow.IsActive(false);
+					//messagewindow.text = "";
+					//messagewindow.visible = false;
 					cw.text = "";
 					cw.visible = false;
-					return; //yield return null;
+					yield break;
 				}
-				//ToDo: Use GameFramework Input manager instead of Unity
-				if (UnityEngine.Input.GetButtonDown("Start") || abortable)
+				//if (global::UnityEngine.Input.GetButtonDown("Start") || abortable)
+				if (PokemonUnity.Input.trigger(PokemonUnity.Input.CTRL) || abortable)
 				{
 					if (cw.pause)
 					{
@@ -505,12 +504,11 @@ namespace PokemonUnity.Interface.UnityEngine
 					if (brief)
 					{
 						briefmessage = true;
-						return; //yield return null;
+						yield break;
 					}
 					i++;
 				}
-			} while (true);*/
-			yield break;
+			} while (true);
 		}
 
 		void IPokeBattle_DebugSceneNoGraphics.DisplayMessage(string msg, bool brief)
@@ -523,22 +521,22 @@ namespace PokemonUnity.Interface.UnityEngine
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			Core.Logger.Log(message: "Display Message: \"{0}\"", msg);
-			/*WaitMessage();
+			WaitMessage();
 			Refresh();
 			ShowWindow(MESSAGEBOX);
 			if (@messagemode)
 			{
 				@switchscreen.Display(msg);
-				return;
+				yield break;
 			}
-			IWindow_AdvancedTextPokemon cw = @sprites["messagewindow"] as IWindow_AdvancedTextPokemon;
+			IWindow_AdvancedTextPokemon cw = messagewindow;
 			cw.text = string.Format("{1:s}\\1", msg);
 			//All of this below should be a coroutine that returns the value selected in UI
 			do //;loop
 			{
 				GraphicsUpdate();
 				InputUpdate();
-				FrameUpdate(cw);
+				FrameUpdate(cw as IGameObject);
 				if (PokemonUnity.Input.trigger(PokemonUnity.Input.B) || @abortable)
 				{
 					if (cw.busy)
@@ -551,12 +549,11 @@ namespace PokemonUnity.Interface.UnityEngine
 						cw.text = "";
 						(AudioHandler as IGameAudioPlay).PlayDecisionSE();
 						if (@messagemode) cw.visible = false;
-						return;
+						yield break;
 					}
 				}
 				cw.update();
-			} while (true);*/
-			yield break;
+			} while (true);
 		}
 
 		void IPokeBattle_DebugSceneNoGraphics.DisplayPausedMessage(string msg)
@@ -604,10 +601,10 @@ namespace PokemonUnity.Interface.UnityEngine
 			WaitMessage();
 			Refresh();
 			ShowWindow(MESSAGEBOX);
-			IWindow_AdvancedTextPokemon dw = @sprites["messagewindow"] as IWindow_AdvancedTextPokemon;
+			IWindow_AdvancedTextPokemon dw = messagewindow;
 			dw.text = msg;
 			//IWindow_CommandPokemon cw = new Window_CommandPokemon(commands);
-			IWindow_CommandPokemon cw = commandPokemon.initialize(commands);
+			IWindow_CommandPokemon cw = commandpokemon.initialize(commands);
 			//cw.x = (Game.GameData as Game).Graphics.width - cw.width;
 			//cw.y = (Game.GameData as Game).Graphics.height - cw.height - dw.height;
 			cw.index = 0;
@@ -704,7 +701,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			FrameUpdate();
 		}
 
-		public void FrameUpdate()
+		private void FrameUpdate()
 		{
 			//Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
@@ -794,17 +791,17 @@ namespace PokemonUnity.Interface.UnityEngine
 		public IEnumerator ShowOpponent(int index)
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
-			/*
+
 			string trainerfile = string.Empty;
 			if (@battle.opponent != null)
 			{
 				if (@battle.opponent.Length > 1) //(@battle.opponent is Array)
 				{
-					trainerfile = TrainerSpriteFile(@battle.opponent[index].trainertype);
+					trainerfile = FileTest.TrainerSpriteFile(@battle.opponent[index].trainertype);
 				}
 				else
 				{
-					trainerfile = TrainerSpriteFile(@battle.opponent[0].trainertype);
+					trainerfile = FileTest.TrainerSpriteFile(@battle.opponent[0].trainertype);
 				}
 			}
 			else
@@ -813,18 +810,18 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			AddSprite("trainer", (Game.GameData as Game).Graphics.width, PokeBattle_SceneConstants.FOETRAINER_Y,
 			   trainerfile, @viewport);
-			if (@sprites["trainer"].bitmap != null)
+			if (trainer.bitmap != null)
 			{
-				@sprites["trainer"].y -= @sprites["trainer"].bitmap.height;
-				@sprites["trainer"].z = 8;
-			}*/
+				trainer.y -= trainer.bitmap.height;
+				trainer.z = 8;
+			}
 			int i = 0;
 			do //20.times ;
 			{
 				GraphicsUpdate();
 				InputUpdate();
 				FrameUpdate();
-				(@sprites["trainer"] as IGameObject).x -= 6;
+				(trainer).x -= 6;
 				i++;
 				yield return null;
 			} while (i < 20);
@@ -845,7 +842,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				GraphicsUpdate();
 				InputUpdate();
 				FrameUpdate();
-				(@sprites["trainer"] as IGameObject).x += 6;
+				(trainer).x += 6;
 				i++;
 				yield return null;
 			} while (i < 20);
@@ -857,24 +854,24 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			//(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).resizeToFit(text, (Game.GameData as Game).Graphics.width);
-			(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).y = 0;
-			(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).x = 0;
-			(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).text = text;
-			(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).visible = true;
+			//(helpwindow).resizeToFit(text, (Game.GameData as Game).Graphics.width);
+			(helpwindow).y = 0;
+			(helpwindow).x = 0;
+			(helpwindow).text = text;
+			(helpwindow).visible = true;
 		}
 
 		public void HideHelp()
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).visible = false;
+			(helpwindow).visible = false;
 		}
 
 		public void Backdrop()
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
-			/*
+
 			PokemonUnity.Overworld.Environments environ = @battle.environment;
 			//  Choose backdrop
 			string backdrop = "Field";
@@ -928,7 +925,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				trialname = "Water";
 			}
-			if (ResolveBitmap(string.Format("Graphics/Battlebacks/playerbase" + backdrop + trialname)))
+			if (FileTest.ResolveBitmap(string.Format("Graphics/Battlebacks/playerbase" + backdrop + trialname)))
 			{
 				_base = trialname;
 			}
@@ -937,7 +934,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (Core.ENABLESHADING)
 			{
 				trialname = "";
-				DateTime timenow = GetTimeNow();
+				DateTime timenow = Game.GetTimeNow;
 				if (Game.DayNight.isNight(timenow))
 				{
 					trialname = "Night";
@@ -946,29 +943,29 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					trialname = "Eve";
 				}
-				if (ResolveBitmap(string.Format("Graphics/Battlebacks/battlebg" + backdrop + trialname)))
+				if (FileTest.ResolveBitmap(string.Format("Graphics/Battlebacks/battlebg" + backdrop + trialname)))
 				{
 					time = trialname;
 				}
 			}
 			//  Apply graphics
-			string battlebg = "Graphics/Battlebacks/battlebg" + backdrop + time;
-			string enemybase = "Graphics/Battlebacks/enemybase" + backdrop + _base + time;
-			string playerbase = "Graphics/Battlebacks/playerbase" + backdrop + _base + time;
-			AddPlane("battlebg", battlebg, @viewport);
+			//string battlebg = "Graphics/Battlebacks/battlebg" + backdrop + time;
+			//string enemybase = "Graphics/Battlebacks/enemybase" + backdrop + _base + time;
+			//string playerbase = "Graphics/Battlebacks/playerbase" + backdrop + _base + time;
+			/*AddPlane("battlebg", battlebg, @viewport);
 			AddSprite("playerbase",
 			   PokeBattle_SceneConstants.PLAYERBASEX,
 			   PokeBattle_SceneConstants.PLAYERBASEY, playerbase, @viewport);
-			if (@sprites["playerbase"].bitmap != null) @sprites["playerbase"].x -= @sprites["playerbase"].bitmap.width / 2;
-			if (@sprites["playerbase"].bitmap != null) @sprites["playerbase"].y -= @sprites["playerbase"].bitmap.height;
+			if (playerbase.bitmap != null) playerbase.x -= playerbase.bitmap.width / 2;
+			if (playerbase.bitmap != null) playerbase.y -= playerbase.bitmap.height;
 			AddSprite("enemybase",
 			   PokeBattle_SceneConstants.FOEBASEX,
 			   PokeBattle_SceneConstants.FOEBASEY, enemybase, @viewport);
-			if (@sprites["enemybase"].bitmap != null) @sprites["enemybase"].x -= @sprites["enemybase"].bitmap.width / 2;
-			if (@sprites["enemybase"].bitmap != null) @sprites["enemybase"].y -= @sprites["enemybase"].bitmap.height / 2;
-			@sprites["battlebg"].z = 0;
-			@sprites["playerbase"].z = 1;
-			@sprites["enemybase"].z = 1;*/
+			if (enemybase.bitmap != null) enemybase.x -= enemybase.bitmap.width / 2;
+			if (enemybase.bitmap != null) enemybase.y -= enemybase.bitmap.height / 2;*/
+			battlebg.z = 0;
+			playerbase.z = 1;
+			enemybase.z = 1;
 		}
 
 		/// <summary>
@@ -985,12 +982,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			//  Bar slides on
 			if (@partyAnimPhase == 0)
 			{
-				@sprites["partybarfoe"].x += 16;
-				@sprites["partybarplayer"].x -= 16;
-				if (@sprites["partybarfoe"].x + @sprites["partybarfoe"].bitmap.width >= PokeBattle_SceneConstants.FOEPARTYBAR_X)
+				partybarfoe.x += 16;
+				partybarplayer.x -= 16;
+				if (partybarfoe.x + partybarfoe.bitmap.width >= PokeBattle_SceneConstants.FOEPARTYBAR_X)
 				{
-					@sprites["partybarfoe"].x = PokeBattle_SceneConstants.FOEPARTYBAR_X - @sprites["partybarfoe"].bitmap.width;
-					@sprites["partybarplayer"].x = PokeBattle_SceneConstants.PLAYERPARTYBAR_X;
+					partybarfoe.x = PokeBattle_SceneConstants.FOEPARTYBAR_X - partybarfoe.bitmap.width;
+					partybarplayer.x = PokeBattle_SceneConstants.PLAYERPARTYBAR_X;
 					@partyAnimPhase = 1;
 				}
 				yield break;
@@ -1101,9 +1098,9 @@ namespace PokemonUnity.Interface.UnityEngine
 			@showingenemy = true;
 			//@sprites.Clear(); //ToDo: make a reset without deleting the entire dictionary?...
 			//@viewport = new Viewport(0, (Game.GameData as Game).Graphics.height / 2, (Game.GameData as Game).Graphics.width, 0);
-			//@viewport.initialize(0, (Game.GameData as Game).Graphics.height / 2, (Game.GameData as Game).Graphics.width, 0);
+			@viewport.initialize(0, (Game.GameData as Game).Graphics.height / 2, (Game.GameData as Game).Graphics.width, 0);
 			//@viewport.z = 99999;
-			/* ToDo: Create coroutine animation for the below sprite changes
+			// ToDo: Create coroutine animation for the below sprite changes
 			@traineryoffset = ((Game.GameData as Game).Graphics.height - 320); // Adjust player's side for screen size
 			@foeyoffset = (float)Math.Floor(@traineryoffset * 3f / 4f);  // Adjust foe's side for screen size
 			Backdrop();
@@ -1115,80 +1112,80 @@ namespace PokemonUnity.Interface.UnityEngine
 				PokeBattle_SceneConstants.PLAYERPARTYBAR_X,
 				PokeBattle_SceneConstants.PLAYERPARTYBAR_Y,
 				"Graphics/Pictures/battleLineup", @viewport);
-			@sprites["partybarfoe"].x -= @sprites["partybarfoe"].bitmap.width;
-			@sprites["partybarplayer"].mirror = true;
-			@sprites["partybarfoe"].z = 40;
-			@sprites["partybarplayer"].z = 40;
-			@sprites["partybarfoe"].visible = false;
-			@sprites["partybarplayer"].visible = false;
+			partybarfoe.x -= partybarfoe.bitmap.width;
+			partybarplayer.mirror = true;
+			partybarfoe.z = 40;
+			partybarplayer.z = 40;
+			partybarfoe.visible = false;
+			partybarplayer.visible = false;
 			string trainerfile = string.Empty;
 			if (@battle.player.Length > 1) //(@battle.player is Array)
 			{
-				trainerfile = PlayerSpriteBackFile(@battle.player[0].trainertype);
+				trainerfile = FileTest.PlayerSpriteBackFile(@battle.player[0].trainertype);
 				AddSprite("player",
 					 PokeBattle_SceneConstants.PLAYERTRAINERD1_X,
 					 PokeBattle_SceneConstants.PLAYERTRAINERD1_Y, trainerfile, @viewport);
-				trainerfile = TrainerSpriteBackFile(@battle.player[1].trainertype);
+				trainerfile = FileTest.TrainerSpriteBackFile(@battle.player[1].trainertype);
 				AddSprite("playerB",
 					 PokeBattle_SceneConstants.PLAYERTRAINERD2_X,
 					 PokeBattle_SceneConstants.PLAYERTRAINERD2_Y, trainerfile, @viewport);
-				if (@sprites["player"].bitmap != null)
+				if (player.bitmap != null)
 				{
-					if (@sprites["player"].bitmap.width > @sprites["player"].bitmap.height)
+					if (player.bitmap.width > player.bitmap.height)
 					{
-						@sprites["player"].src_rect.x = 0;
-						@sprites["player"].src_rect.width = @sprites["player"].bitmap.width / 5;
+						player.src_rect.x = 0;
+						player.src_rect.width = player.bitmap.width / 5;
 					}
-					@sprites["player"].x -= (@sprites["player"].src_rect.width / 2);
-					@sprites["player"].y -= @sprites["player"].bitmap.height;
-					@sprites["player"].z = 30;
+					player.x -= (player.src_rect.width / 2);
+					player.y -= player.bitmap.height;
+					player.z = 30;
 				}
-				if (@sprites["playerB"].bitmap != null)
+				if (playerB.bitmap != null)
 				{
-					if (@sprites["playerB"].bitmap.width > @sprites["playerB"].bitmap.height)
+					if (playerB.bitmap.width > playerB.bitmap.height)
 					{
-						@sprites["playerB"].src_rect.x = 0;
-						@sprites["playerB"].src_rect.width = @sprites["playerB"].bitmap.width / 5;
+						playerB.src_rect.x = 0;
+						playerB.src_rect.width = playerB.bitmap.width / 5;
 					}
-					@sprites["playerB"].x -= (@sprites["playerB"].src_rect.width / 2);
-					@sprites["playerB"].y -= @sprites["playerB"].bitmap.height;
-					@sprites["playerB"].z = 31;
+					playerB.x -= (playerB.src_rect.width / 2);
+					playerB.y -= playerB.bitmap.height;
+					playerB.z = 31;
 				}
 			}
 			else
 			{
-				trainerfile = PlayerSpriteBackFile(@battle.player[0].trainertype);
+				trainerfile = FileTest.PlayerSpriteBackFile(@battle.player[0].trainertype);
 				AddSprite("player",
 					 PokeBattle_SceneConstants.PLAYERTRAINER_X,
 					 PokeBattle_SceneConstants.PLAYERTRAINER_Y, trainerfile, @viewport);
-				if (@sprites["player"].bitmap != null)
+				if (player.bitmap != null)
 				{
-					if (@sprites["player"].bitmap.width > @sprites["player"].bitmap.height)
+					if (player.bitmap.width > player.bitmap.height)
 					{
-						@sprites["player"].src_rect.x = 0;
-						@sprites["player"].src_rect.width = @sprites["player"].bitmap.width / 5;
+						player.src_rect.x = 0;
+						player.src_rect.width = player.bitmap.width / 5;
 					}
-					@sprites["player"].x -= (@sprites["player"].src_rect.width / 2);
-					@sprites["player"].y -= @sprites["player"].bitmap.height;
-					@sprites["player"].z = 30;
+					player.x -= (player.src_rect.width / 2);
+					player.y -= player.bitmap.height;
+					player.z = 30;
 				}
 			}
 			if (@battle.opponent != null)
 			{
 				if (@battle.opponent.Length > 1) //(@battle.opponent is Array)
 				{
-					trainerfile = TrainerSpriteFile(@battle.opponent[1].trainertype);
+					trainerfile = FileTest.TrainerSpriteFile(@battle.opponent[1].trainertype);
 					AddSprite("trainer2",
 						PokeBattle_SceneConstants.FOETRAINERD2_X,
 						PokeBattle_SceneConstants.FOETRAINERD2_Y, trainerfile, @viewport);
-					trainerfile = TrainerSpriteFile(@battle.opponent[0].trainertype);
+					trainerfile = FileTest.TrainerSpriteFile(@battle.opponent[0].trainertype);
 					AddSprite("trainer",
 						PokeBattle_SceneConstants.FOETRAINERD1_X,
 						PokeBattle_SceneConstants.FOETRAINERD1_Y, trainerfile, @viewport);
 				}
 				else
 				{
-					trainerfile = TrainerSpriteFile(@battle.opponent.trainertype);
+					trainerfile = FileTest.TrainerSpriteFile(@battle.opponent[0].trainertype);
 					AddSprite("trainer",
 						PokeBattle_SceneConstants.FOETRAINER_X,
 						PokeBattle_SceneConstants.FOETRAINER_Y, trainerfile, @viewport);
@@ -1201,155 +1198,155 @@ namespace PokemonUnity.Interface.UnityEngine
 					PokeBattle_SceneConstants.FOETRAINER_X,
 					PokeBattle_SceneConstants.FOETRAINER_Y, trainerfile, @viewport);
 			}
-			if (@sprites["trainer"].bitmap != null)
+			if (trainer.bitmap != null)
 			{
-				@sprites["trainer"].x -= (@sprites["trainer"].bitmap.width / 2);
-				@sprites["trainer"].y -= @sprites["trainer"].bitmap.height;
-				@sprites["trainer"].z = 8;
+				trainer.x -= (trainer.bitmap.width / 2);
+				trainer.y -= trainer.bitmap.height;
+				trainer.z = 8;
 			}
-			if (@sprites["trainer2"] != null && @sprites["trainer2"].bitmap != null)
+			if (trainer2 != null && trainer2.bitmap != null)
 			{
-				@sprites["trainer2"].x -= (@sprites["trainer2"].bitmap.width / 2);
-				@sprites["trainer2"].y -= @sprites["trainer2"].bitmap.height;
-				@sprites["trainer2"].z = 7;
+				trainer2.x -= (trainer2.bitmap.width / 2);
+				trainer2.y -= trainer2.bitmap.height;
+				trainer2.z = 7;
 			}
-			//@sprites["shadow0"] = new IconSprite(0, 0, @viewport);
-			(@sprites["shadow0"] as IIconSprite).initialize(0, 0, @viewport);
-			(@sprites["shadow0"] as IIconSprite).z = 3;
+			//shadow0 = new IconSprite(0, 0, @viewport);
+			(shadow0).initialize(0, 0, @viewport);
+			(shadow0).z = 3;
 			AddSprite("shadow1", 0, 0, "Graphics/Pictures/battleShadow", @viewport);
-			(@sprites["shadow1"] as IIconSprite).z = 3;
-			(@sprites["shadow1"] as IIconSprite).visible = false;
-			//@sprites["pokemon0"] = new PokemonBattlerSprite(battle.doublebattle, 0, @viewport);
-			(@sprites["pokemon0"] as IPokemonBattlerSprite).initialize(battle.doublebattle, 0, @viewport);
-			(@sprites["pokemon0"] as IPokemonBattlerSprite).z = 21;
-			//@sprites["pokemon1"] = new PokemonBattlerSprite(battle.doublebattle, 1, @viewport);
-			(@sprites["pokemon1"] as IPokemonBattlerSprite).initialize(battle.doublebattle, 1, @viewport);
-			(@sprites["pokemon1"] as IPokemonBattlerSprite).z = 16;
+			(shadow1).z = 3;
+			(shadow1).visible = false;
+			//pokemon0 = new PokemonBattlerSprite(battle.doublebattle, 0, @viewport);
+			(pokemon0).initialize(battle.doublebattle, 0, @viewport);
+			(pokemon0).z = 21;
+			//pokemon1 = new PokemonBattlerSprite(battle.doublebattle, 1, @viewport);
+			(pokemon1).initialize(battle.doublebattle, 1, @viewport);
+			(pokemon1).z = 16;
 			if (battle.doublebattle)
 			{
-				//@sprites["shadow2"] = new IconSprite(0, 0, @viewport);
-				(@sprites["shadow2"] as IIconSprite).initialize(0, 0, @viewport);
-				(@sprites["shadow2"] as IIconSprite).z = 3;
+				//shadow2 = new IconSprite(0, 0, @viewport);
+				(shadow2).initialize(0, 0, @viewport);
+				(shadow2).z = 3;
 				AddSprite("shadow3", 0, 0, "Graphics/Pictures/battleShadow", @viewport);
-				(@sprites["shadow3"] as IIconSprite).z = 3;
-				(@sprites["shadow3"] as IIconSprite).visible = false;
-				//@sprites["pokemon2"] = new PokemonBattlerSprite(battle.doublebattle, 2, @viewport);
-				(@sprites["pokemon2"] as IPokemonBattlerSprite).initialize(battle.doublebattle, 2, @viewport);
-				(@sprites["pokemon2"] as IPokemonBattlerSprite).z = 26;
-				//@sprites["pokemon3"] = new PokemonBattlerSprite(battle.doublebattle, 3, @viewport);
-				(@sprites["pokemon3"] as IPokemonBattlerSprite).initialize(battle.doublebattle, 3, @viewport);
-				(@sprites["pokemon3"] as IPokemonBattlerSprite).z = 11;
-			}*/
-			//@sprites["battlebox0"] = new PokemonDataBox(battle.battlers[0], battle.doublebattle, @viewport);
-			//@sprites["battlebox1"] = new PokemonDataBox(battle.battlers[1], battle.doublebattle, @viewport);
-			(@sprites["battlebox0"] as IPokemonDataBox).initialize(battle.battlers[0], battle.doublebattle, @viewport);
-			(@sprites["battlebox1"] as IPokemonDataBox).initialize(battle.battlers[1], battle.doublebattle, @viewport);
+				(shadow3).z = 3;
+				(shadow3).visible = false;
+				//pokemon2 = new PokemonBattlerSprite(battle.doublebattle, 2, @viewport);
+				(pokemon2).initialize(battle.doublebattle, 2, @viewport);
+				(pokemon2).z = 26;
+				//pokemon3 = new PokemonBattlerSprite(battle.doublebattle, 3, @viewport);
+				(pokemon3).initialize(battle.doublebattle, 3, @viewport);
+				(pokemon3).z = 11;
+			}
+			//battlebox0 = new PokemonDataBox(battle.battlers[0], battle.doublebattle, @viewport);
+			//battlebox1 = new PokemonDataBox(battle.battlers[1], battle.doublebattle, @viewport);
+			(battlebox0).initialize(battle.battlers[0], battle.doublebattle, @viewport);
+			(battlebox1).initialize(battle.battlers[1], battle.doublebattle, @viewport);
 			if (battle.doublebattle)
 			{
-				//@sprites["battlebox2"] = new PokemonDataBox(battle.battlers[2], battle.doublebattle, @viewport);
-				//@sprites["battlebox3"] = new PokemonDataBox(battle.battlers[3], battle.doublebattle, @viewport);
-				(@sprites["battlebox2"] as IPokemonDataBox).initialize(battle.battlers[2], battle.doublebattle, @viewport);
-				(@sprites["battlebox3"] as IPokemonDataBox).initialize(battle.battlers[3], battle.doublebattle, @viewport);
+				//battlebox2 = new PokemonDataBox(battle.battlers[2], battle.doublebattle, @viewport);
+				//battlebox3 = new PokemonDataBox(battle.battlers[3], battle.doublebattle, @viewport);
+				(battlebox2).initialize(battle.battlers[2], battle.doublebattle, @viewport);
+				(battlebox3).initialize(battle.battlers[3], battle.doublebattle, @viewport);
 			}
-			/*AddSprite("messagebox", 0, (Game.GameData as Game).Graphics.height - 96, "Graphics/Pictures/battleMessage", @viewport);
-			@sprites["messagebox"].z = 90;
-			//@sprites["helpwindow"] = new Window_UnformattedTextPokemon().WithSize("", 0, 0, 32, 32, @viewport);
-			(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).initialize().WithSize("", 0, 0, 32, 32, @viewport);
-			(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).visible = false;
-			(@sprites["helpwindow"] as IWindow_UnformattedTextPokemon).z = 90;
-			//@sprites["messagewindow"] = new Window_AdvancedTextPokemon("");
-			(@sprites["messagewindow"] as IWindow_AdvancedTextPokemon).initialize("");
-			(@sprites["messagewindow"] as IWindow_AdvancedTextPokemon).letterbyletter = true;
-			(@sprites["messagewindow"] as IWindow_AdvancedTextPokemon).viewport = @viewport;
-			(@sprites["messagewindow"] as IWindow_AdvancedTextPokemon).z = 100;
-			//@sprites["commandwindow"] = new CommandMenuDisplay(@viewport);
-			(@sprites["commandwindow"] as ICommandMenuDisplay).initialize(@viewport);
-			(@sprites["commandwindow"] as ICommandMenuDisplay).z = 100;
-			//@sprites["fightwindow"] = new FightMenuDisplay(null, @viewport);
-			(@sprites["fightwindow"] as IFightMenuDisplay).initialize(null, @viewport);
-			(@sprites["fightwindow"] as IFightMenuDisplay).z = 100;
+			AddSprite("messagebox", 0, (Game.GameData as Game).Graphics.height - 96, "Graphics/Pictures/battleMessage", @viewport);
+			messagebox.z = 90;
+			//helpwindow = new Window_UnformattedTextPokemon().WithSize("", 0, 0, 32, 32, @viewport);
+			(helpwindow).initialize().WithSize("", 0, 0, 32, 32, @viewport);
+			(helpwindow).visible = false;
+			(helpwindow).z = 90;
+			//messagewindow = new Window_AdvancedTextPokemon("");
+			(messagewindow).initialize("");
+			(messagewindow).letterbyletter = true;
+			(messagewindow).viewport = @viewport;
+			(messagewindow).z = 100;
+			//commandwindow = new CommandMenuDisplay(@viewport);
+			(commandwindow).initialize(@viewport);
+			(commandwindow).z = 100;
+			//fightwindow = new FightMenuDisplay(null, @viewport);
+			(fightwindow).initialize(null, @viewport);
+			(fightwindow).z = 100;
 			ShowWindow(MESSAGEBOX);
 			SetMessageMode(false);
-			IPokemonBattlerSprite trainersprite1 = @sprites["trainer"] as IPokemonBattlerSprite;
-			IPokemonBattlerSprite trainersprite2 = @sprites["trainer2"] as IPokemonBattlerSprite;
+			IPokemonBattlerSprite trainersprite1 = trainer;
+			IPokemonBattlerSprite trainersprite2 = trainer2;
 			if (@battle.opponent == null)
 			{
-				@sprites["trainer"].visible = false;
-				if (@battle.party2.Length >= 1)
+				trainer.visible = false;
+				if (@battle.party2.Length >= 1 && Game.GameData is IGameSprite gs)
 				{
 					Pokemons species = Pokemons.NONE;
 					if (@battle.party2.Length == 1) //Single Battle
 					{
 						species = @battle.party2[0].Species;
-						(@sprites["pokemon1"] as IPokemonBattlerSprite).setPokemonBitmap(@battle.party2[0], false);
-						(@sprites["pokemon1"] as IPokemonBattlerSprite).tone = new Tone(-128, -128, -128, -128);
-						(@sprites["pokemon1"] as IPokemonBattlerSprite).x = PokeBattle_SceneConstants.FOEBATTLER_X;
-						(@sprites["pokemon1"] as IPokemonBattlerSprite).x -= (@sprites["pokemon1"] as IPokemonBattlerSprite).width / 2;
-						(@sprites["pokemon1"] as IPokemonBattlerSprite).y = PokeBattle_SceneConstants.FOEBATTLER_Y;
-						(@sprites["pokemon1"] as IPokemonBattlerSprite).y += adjustBattleSpriteY(@sprites["pokemon1"], species, 1);
-						(@sprites["pokemon1"] as IPokemonBattlerSprite).visible = true;
-						(@sprites["shadow1"] as IIconSprite).x = PokeBattle_SceneConstants.FOEBATTLER_X;
-						(@sprites["shadow1"] as IIconSprite).y = PokeBattle_SceneConstants.FOEBATTLER_Y;
-						if ((@sprites["shadow1"] as IIconSprite).bitmap != null) (@sprites["shadow1"] as IIconSprite).x -= (@sprites["shadow1"] as IIconSprite).bitmap.width / 2;
-						if ((@sprites["shadow1"] as IIconSprite).bitmap != null) (@sprites["shadow1"] as IIconSprite).y -= (@sprites["shadow1"] as IIconSprite).bitmap.height / 2;
-						(@sprites["shadow1"] as IIconSprite).visible = showShadow(species);
-						trainersprite1 = @sprites["pokemon1"] as IPokemonBattlerSprite;
+						(pokemon1).setPokemonBitmap(@battle.party2[0], false);
+						//(pokemon1).tone = new Tone(-128, -128, -128, -128);
+						(pokemon1).x = PokeBattle_SceneConstants.FOEBATTLER_X;
+						(pokemon1).x -= (pokemon1).width / 2;
+						(pokemon1).y = PokeBattle_SceneConstants.FOEBATTLER_Y;
+						(pokemon1).y += gs.adjustBattleSpriteY(pokemon1, species, 1);
+						(pokemon1).visible = true;
+						(shadow1).x = PokeBattle_SceneConstants.FOEBATTLER_X;
+						(shadow1).y = PokeBattle_SceneConstants.FOEBATTLER_Y;
+						if ((shadow1).bitmap != null) (shadow1).x -= (shadow1).bitmap.width / 2;
+						if ((shadow1).bitmap != null) (shadow1).y -= (shadow1).bitmap.height / 2;
+						(shadow1).visible = gs.showShadow(species);
+						trainersprite1 = pokemon1;
 					}
 					else if (@battle.party2.Length == 2) //Double Battle
 					{
 						species = @battle.party2[0].Species;
-						(@sprites["pokemon1"] as IPokemonBattlerSprite).setPokemonBitmap(@battle.party2[0], false);
-						(@sprites["pokemon1"] as IPokemonBattlerSprite).tone = new Tone(-128, -128, -128, -128);
-						(@sprites["pokemon1"] as IPokemonBattlerSprite).x = PokeBattle_SceneConstants.FOEBATTLERD1_X;
-						(@sprites["pokemon1"] as IPokemonBattlerSprite).x -= (@sprites["pokemon1"] as IPokemonBattlerSprite).width / 2;
-						(@sprites["pokemon1"] as IPokemonBattlerSprite).y = PokeBattle_SceneConstants.FOEBATTLERD1_Y;
-						(@sprites["pokemon1"] as IPokemonBattlerSprite).y += adjustBattleSpriteY(@sprites["pokemon1"] as IPokemonBattlerSprite, species, 1);
-						(@sprites["pokemon1"] as IPokemonBattlerSprite).visible = true;
-						(@sprites["shadow1"] as IIconSprite).x = PokeBattle_SceneConstants.FOEBATTLERD1_X;
-						(@sprites["shadow1"] as IIconSprite).y = PokeBattle_SceneConstants.FOEBATTLERD1_Y;
-						if ((@sprites["shadow1"] as IIconSprite).bitmap != null) (@sprites["shadow1"] as IIconSprite).x -= (@sprites["shadow1"] as IIconSprite).bitmap.width / 2;
-						if ((@sprites["shadow1"] as IIconSprite).bitmap != null) (@sprites["shadow1"] as IIconSprite).y -= (@sprites["shadow1"] as IIconSprite).bitmap.height / 2;
-						(@sprites["shadow1"] as IIconSprite).visible = showShadow(species);
-						trainersprite1 = @sprites["pokemon1"] as IPokemonBattlerSprite;
+						(pokemon1).setPokemonBitmap(@battle.party2[0], false);
+						//(pokemon1).tone = new Tone(-128, -128, -128, -128);
+						(pokemon1).x = PokeBattle_SceneConstants.FOEBATTLERD1_X;
+						(pokemon1).x -= (pokemon1).width / 2;
+						(pokemon1).y = PokeBattle_SceneConstants.FOEBATTLERD1_Y;
+						(pokemon1).y += gs.adjustBattleSpriteY(pokemon1, species, 1);
+						(pokemon1).visible = true;
+						(shadow1).x = PokeBattle_SceneConstants.FOEBATTLERD1_X;
+						(shadow1).y = PokeBattle_SceneConstants.FOEBATTLERD1_Y;
+						if ((shadow1).bitmap != null) (shadow1).x -= (shadow1).bitmap.width / 2;
+						if ((shadow1).bitmap != null) (shadow1).y -= (shadow1).bitmap.height / 2;
+						(shadow1).visible = gs.showShadow(species);
+						trainersprite1 = pokemon1;
 						species = @battle.party2[1].Species;
-						(@sprites["pokemon3"] as IPokemonBattlerSprite).setPokemonBitmap(@battle.party2[1], false);
-						(@sprites["pokemon3"] as IPokemonBattlerSprite).tone = new Tone(-128, -128, -128, -128);
-						(@sprites["pokemon3"] as IPokemonBattlerSprite).x = PokeBattle_SceneConstants.FOEBATTLERD2_X;
-						(@sprites["pokemon3"] as IPokemonBattlerSprite).x -= (@sprites["pokemon3"] as IPokemonBattlerSprite).width / 2;
-						(@sprites["pokemon3"] as IPokemonBattlerSprite).y = PokeBattle_SceneConstants.FOEBATTLERD2_Y;
-						(@sprites["pokemon3"] as IPokemonBattlerSprite).y += adjustBattleSpriteY(@sprites["pokemon3"] as IPokemonBattlerSprite, species, 3);
-						(@sprites["pokemon3"] as IPokemonBattlerSprite).visible = true;
-						(@sprites["shadow3"] as IIconSprite).x = PokeBattle_SceneConstants.FOEBATTLERD2_X;
-						(@sprites["shadow3"] as IIconSprite).y = PokeBattle_SceneConstants.FOEBATTLERD2_Y;
-						if ((@sprites["shadow3"] as IIconSprite).bitmap != null) (@sprites["shadow3"] as IIconSprite).x -= (@sprites["shadow3"] as IIconSprite).bitmap.width / 2;
-						if ((@sprites["shadow3"] as IIconSprite).bitmap != null) (@sprites["shadow3"] as IIconSprite).y -= (@sprites["shadow3"] as IIconSprite).bitmap.height / 2;
-						(@sprites["shadow3"] as IIconSprite).visible = showShadow(species);
-						trainersprite2 = @sprites["pokemon3"] as IPokemonBattlerSprite;
+						(pokemon3).setPokemonBitmap(@battle.party2[1], false);
+						//(pokemon3).tone = new Tone(-128, -128, -128, -128);
+						(pokemon3).x = PokeBattle_SceneConstants.FOEBATTLERD2_X;
+						(pokemon3).x -= (pokemon3).width / 2;
+						(pokemon3).y = PokeBattle_SceneConstants.FOEBATTLERD2_Y;
+						(pokemon3).y += gs.adjustBattleSpriteY(pokemon3, species, 3);
+						(pokemon3).visible = true;
+						(shadow3).x = PokeBattle_SceneConstants.FOEBATTLERD2_X;
+						(shadow3).y = PokeBattle_SceneConstants.FOEBATTLERD2_Y;
+						if ((shadow3).bitmap != null) (shadow3).x -= (shadow3).bitmap.width / 2;
+						if ((shadow3).bitmap != null) (shadow3).y -= (shadow3).bitmap.height / 2;
+						(shadow3).visible = gs.showShadow(species);
+						trainersprite2 = pokemon3;
 					}
 				}
 			}
 			// ################
 			//  Move trainers/bases/etc. off-screen
 			float[] oldx = new float[8];
-			oldx[0] = @sprites["playerbase"].x; @sprites["playerbase"].x += (Game.GameData as Game).Graphics.width;
-			oldx[1] = @sprites["player"].x; @sprites["player"].x += (Game.GameData as Game).Graphics.width;
-			if (@sprites["playerB"] != null)
+			oldx[0] = playerbase.x; playerbase.x += (Game.GameData as Game).Graphics.width;
+			oldx[1] = player.x; player.x += (Game.GameData as Game).Graphics.width;
+			if (playerB != null)
 			{
-				oldx[2] = @sprites["playerB"].x; @sprites["playerB"].x += (Game.GameData as Game).Graphics.width;
+				oldx[2] = playerB.x; playerB.x += (Game.GameData as Game).Graphics.width;
 			}
-			oldx[3] = @sprites["enemybase"].x; @sprites["enemybase"].x -= (Game.GameData as Game).Graphics.width;
+			oldx[3] = enemybase.x; enemybase.x -= (Game.GameData as Game).Graphics.width;
 			oldx[4] = trainersprite1.x; trainersprite1.x -= (Game.GameData as Game).Graphics.width;
 			if (trainersprite2 != null)
 			{
 				oldx[5] = trainersprite2.x; trainersprite2.x -= (Game.GameData as Game).Graphics.width;
 			}
-			oldx[6] = (@sprites["shadow1"] as IIconSprite).x; (@sprites["shadow1"] as IIconSprite).x -= (Game.GameData as Game).Graphics.width;
-			if (@sprites["shadow3"] != null)
+			oldx[6] = (shadow1).x; (shadow1).x -= (Game.GameData as Game).Graphics.width;
+			if (shadow3 != null)
 			{
-				oldx[7] = (@sprites["shadow3"] as IIconSprite).x; (@sprites["shadow3"] as IIconSprite).x -= (Game.GameData as Game).Graphics.width;
+				oldx[7] = (shadow3).x; (shadow3).x -= (Game.GameData as Game).Graphics.width;
 			}
-			@sprites["partybarfoe"].x -= PokeBattle_SceneConstants.FOEPARTYBAR_X;
-			@sprites["partybarplayer"].x += (Game.GameData as Game).Graphics.width - PokeBattle_SceneConstants.PLAYERPARTYBAR_X;
+			partybarfoe.x -= PokeBattle_SceneConstants.FOEPARTYBAR_X;
+			partybarplayer.x += (Game.GameData as Game).Graphics.width - PokeBattle_SceneConstants.PLAYERPARTYBAR_X;
 			// ################
 			int appearspeed = 12;
 			int n = 0;
@@ -1366,33 +1363,33 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 				if (!tobreak)
 				{
-					foreach (var i in @sprites)
-					{
-						//i[1].ox = @viewport.rect.x;
-						//i[1].oy = @viewport.rect.y;
-						i.Value.ox = @viewport.rect.x;
-						i.Value.oy = @viewport.rect.y;
-					}
+					//foreach (var i in @sprites)
+					//{
+					//	//i[1].ox = @viewport.rect.x;
+					//	//i[1].oy = @viewport.rect.y;
+					//	i.Value.ox = @viewport.rect.x;
+					//	i.Value.oy = @viewport.rect.y;
+					//}
 				}
-				if (@sprites["playerbase"].x > oldx[0])
+				if (playerbase.x > oldx[0])
 				{
-					@sprites["playerbase"].x -= appearspeed; tobreak = false;
-					if (@sprites["playerbase"].x < oldx[0]) @sprites["playerbase"].x = oldx[0];
+					playerbase.x -= appearspeed; tobreak = false;
+					if (playerbase.x < oldx[0]) playerbase.x = oldx[0];
 				}
-				if (@sprites["player"].x > oldx[1])
+				if (player.x > oldx[1])
 				{
-					@sprites["player"].x -= appearspeed; tobreak = false;
-					if (@sprites["player"].x < oldx[1]) @sprites["player"].x = oldx[1];
+					player.x -= appearspeed; tobreak = false;
+					if (player.x < oldx[1]) player.x = oldx[1];
 				}
-				if (@sprites["playerB"] != null && @sprites["playerB"].x > oldx[2])
+				if (playerB != null && playerB.x > oldx[2])
 				{
-					@sprites["playerB"].x -= appearspeed; tobreak = false;
-					if (@sprites["playerB"].x < oldx[2]) @sprites["playerB"].x = oldx[2];
+					playerB.x -= appearspeed; tobreak = false;
+					if (playerB.x < oldx[2]) playerB.x = oldx[2];
 				}
-				if (@sprites["enemybase"].x < oldx[3])
+				if (enemybase.x < oldx[3])
 				{
-					@sprites["enemybase"].x += appearspeed; tobreak = false;
-					if (@sprites["enemybase"].x > oldx[3]) @sprites["enemybase"].x = oldx[3];
+					enemybase.x += appearspeed; tobreak = false;
+					if (enemybase.x > oldx[3]) enemybase.x = oldx[3];
 				}
 				if (trainersprite1.x < oldx[4])
 				{
@@ -1404,50 +1401,52 @@ namespace PokemonUnity.Interface.UnityEngine
 					trainersprite2.x += appearspeed; tobreak = false;
 					if (trainersprite2.x > oldx[5]) trainersprite2.x = oldx[5];
 				}
-				if ((@sprites["shadow1"] as IIconSprite).x < oldx[6])
+				if ((shadow1).x < oldx[6])
 				{
-					(@sprites["shadow1"] as IIconSprite).x += appearspeed; tobreak = false;
-					if ((@sprites["shadow1"] as IIconSprite).x > oldx[6]) (@sprites["shadow1"] as IIconSprite).x = oldx[6];
+					(shadow1).x += appearspeed; tobreak = false;
+					if ((shadow1).x > oldx[6]) (shadow1).x = oldx[6];
 				}
-				if (@sprites["shadow3"] != null && (@sprites["shadow3"] as IIconSprite).x < oldx[7])
+				if (shadow3 != null && (shadow3).x < oldx[7])
 				{
-					(@sprites["shadow3"] as IIconSprite).x += appearspeed; tobreak = false;
-					if ((@sprites["shadow3"] as IIconSprite).x > oldx[7]) (@sprites["shadow3"] as IIconSprite).x = oldx[7];
+					(shadow3).x += appearspeed; tobreak = false;
+					if ((shadow3).x > oldx[7]) (shadow3).x = oldx[7];
 				}
 				GraphicsUpdate();
 				InputUpdate();
 				FrameUpdate();
 				if (tobreak) break; n++;
+				yield return null;
 			} while (n < (1 + (Game.GameData as Game).Graphics.width / appearspeed));
 			// ################
 			if (@battle.opponent != null) {
 				@enablePartyAnim=true;
 				@partyAnimPhase=0;
-				@sprites["partybarfoe"].visible=true;
-				@sprites["partybarplayer"].visible=true;
+				partybarfoe.visible=true;
+				partybarplayer.visible=true;
 			} else
 			{
-				PlayCry(@battle.party2[0]);   // Play cry for wild Pokémon
-				(@sprites["battlebox1"] as IPokemonDataBox).appear();
-				if (@battle.party2.Length == 2) (@sprites["battlebox3"] as IPokemonDataBox).appear();
+				if (Game.GameData is IGameUtility gu) gu.PlayCry(@battle.party2[0]);   // Play cry for wild Pokémon
+				(battlebox1).appear();
+				if (@battle.party2.Length == 2) (battlebox3).appear();
 				bool appearing = true;
 				do { //begin;
 					GraphicsUpdate();
 					InputUpdate();
 					FrameUpdate();
-					if ((@sprites["pokemon1"] as IPokemonBattlerSprite).tone.red < 0)		(@sprites["pokemon1"] as IPokemonBattlerSprite).tone.red += 8;
-					if ((@sprites["pokemon1"] as IPokemonBattlerSprite).tone.blue < 0)		(@sprites["pokemon1"] as IPokemonBattlerSprite).tone.blue += 8;
-					if ((@sprites["pokemon1"] as IPokemonBattlerSprite).tone.green < 0)		(@sprites["pokemon1"] as IPokemonBattlerSprite).tone.green += 8;
-					if ((@sprites["pokemon1"] as IPokemonBattlerSprite).tone.gray < 0)		(@sprites["pokemon1"] as IPokemonBattlerSprite).tone.gray += 8;
-					appearing = (@sprites["battlebox1"] as IPokemonDataBox).appearing;
+					if ((pokemon1).tone.red < 0)		(pokemon1).tone.red += 8;
+					if ((pokemon1).tone.blue < 0)		(pokemon1).tone.blue += 8;
+					if ((pokemon1).tone.green < 0)		(pokemon1).tone.green += 8;
+					if ((pokemon1).tone.gray < 0)		(pokemon1).tone.gray += 8;
+					appearing = (battlebox1).appearing;
 					if (@battle.party2.Length == 2)
 					{
-						if ((@sprites["pokemon3"] as IPokemonBattlerSprite).tone.red < 0)		(@sprites["pokemon3"] as IPokemonBattlerSprite).tone.red += 8;
-						if ((@sprites["pokemon3"] as IPokemonBattlerSprite).tone.blue < 0)		(@sprites["pokemon3"] as IPokemonBattlerSprite).tone.blue += 8;
-						if ((@sprites["pokemon3"] as IPokemonBattlerSprite).tone.green < 0)		(@sprites["pokemon3"] as IPokemonBattlerSprite).tone.green += 8;
-						if ((@sprites["pokemon3"] as IPokemonBattlerSprite).tone.gray < 0)		(@sprites["pokemon3"] as IPokemonBattlerSprite).tone.gray += 8;
-						appearing = (appearing || (@sprites["battlebox3"] as IPokemonDataBox).appearing);
+						if ((pokemon3).tone.red < 0)		(pokemon3).tone.red += 8;
+						if ((pokemon3).tone.blue < 0)		(pokemon3).tone.blue += 8;
+						if ((pokemon3).tone.green < 0)		(pokemon3).tone.green += 8;
+						if ((pokemon3).tone.gray < 0)		(pokemon3).tone.gray += 8;
+						appearing = (appearing || (battlebox3).appearing);
 					}
+					yield return null;
 				} while (appearing);
 				//  Show shiny animation for wild Pokémon
 				if (@battle.battlers[1].IsShiny && @battle.battlescene)
@@ -1461,8 +1460,8 @@ namespace PokemonUnity.Interface.UnityEngine
 						CommonAnimation("Shiny", @battle.battlers[3], null);
 					}
 				}
-			}*/
-			yield return null;
+			}
+			//yield return null;
 		}
 
 		void IPokeBattle_DebugSceneNoGraphics.StartBattle(IBattle battle) { }
@@ -1491,7 +1490,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			/*@briefmessage = false;
+			@briefmessage = false;
 			float origin = 0;
 			if (@battle.IsOpposing(battlerindex))
 			{
@@ -1513,7 +1512,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				}
 			}
 			IPokemonBattlerSprite spritePoke = @sprites[$"pokemon{battlerindex}"] as IPokemonBattlerSprite;
-			IPictureEx picturePoke = new PictureEx(spritePoke.z);
+			/*IPictureEx picturePoke = new PictureEx(spritePoke.z);
 			float[] dims = new float[] { spritePoke.x, spritePoke.y };
 			float[] center = getSpriteCenter(spritePoke);
 			//  starting positions
@@ -1549,11 +1548,11 @@ namespace PokemonUnity.Interface.UnityEngine
 		public IEnumerator TrainerSendOut(int battlerindex, IPokemon pkmn)
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
-			/*TODO show opponent's pokemon
+			//TODO show opponent's pokemon
 			IPokemon illusionpoke=@battle.battlers[battlerindex].effects.Illusion;
 			@briefmessage=false;
 			//ITrainerFadeAnimation fadeanim=null;
-			while (inPartyAnimation) { } //i guess, delay action until trigger criteria is met
+			while (inPartyAnimation) { yield return null; } //i guess, delay action until trigger criteria is met
 			if (@showingenemy) {
 				//fadeanim=new TrainerFadeAnimation(@sprites);
 				fadeanim.initialize(@sprites);
@@ -1581,6 +1580,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				FrameUpdate();
 				if ((fadeanim == null || fadeanim.animdone) && sendout.animdone &&
 					!(@sprites[$"battlebox{battlerindex}"] as IPokemonDataBox).appearing) break;
+				yield return null;
 			} while (true);
 			if (@battle.battlers[battlerindex].IsShiny && @battle.battlescene) {
 				CommonAnimation("Shiny",@battle.battlers[battlerindex],null);
@@ -1588,14 +1588,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			sendout.Dispose();
 			if (@showingenemy) {
 				@showingenemy=false;
-				DisposeSprite(@sprites,"trainer");
-				DisposeSprite(@sprites,"partybarfoe");
+				trainer.visible=false;			//DisposeSprite(@sprites,"trainer");
+				this.partybarfoe.visible=false;	//DisposeSprite(@sprites,"partybarfoe");
 				for (int i = 0; i < 6; i++) {
-					DisposeSprite(@sprites,$"enemy{i}");
+					//DisposeSprite(@sprites,$"enemy{i}");
+					(@sprites[$"enemy{i}"] as IGameObject).visible=false;
 				}
 			}
-			Refresh();*/
-			yield break;
+			Refresh();
 		}
 
 		void IPokeBattle_Scene.TrainerSendOut(int battlerindex, IPokemon pkmn)
@@ -1612,12 +1612,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			//TODO show player's pokemon
-			/*while (inPartyAnimation){ } //ToDo: Uncomment, and ensure that logic has an exit
+			/*while (inPartyAnimation){ yield return null; } //ToDo: Uncomment, and ensure that logic has an exit
 			IPokemon illusionpoke=@battle.battlers[battlerindex].effects.Illusion;
 			Items balltype=pkmn.ballUsed;
 			if (illusionpoke != null) balltype=illusionpoke.ballUsed;
 			string ballbitmap=string.Format("Graphics/Pictures/ball%02d",balltype);
-			pictureBall=new PictureEx(32);
+			//pictureBall=new PictureEx(32);
+			IPictureEx pictureBall=new PictureEx(32);
 			int delay=1;
 			pictureBall.moveVisible(delay,true);
 			pictureBall.moveName(delay,ballbitmap);
@@ -1628,7 +1629,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					new int[] {68,   93}, new int[] {75,   96}, new int[] {82,  102}, new int[] {89,  111},
 					new int[] {94,  121}, new int[] {100, 134}, new int[] {106, 150}, new int[] {111, 166},
 					new int[] {116, 183}, new int[] {120, 199}, new int[] {124, 216}, new int[] {127, 238} };
-			IIconSprite spriteBall=new IconSprite(0,0,@viewport);
+			//IIconSprite spriteBall=new IconSprite(0,0,@viewport);
 			spriteBall.visible=false;
 			float angle=0;
 			decimal multiplier=1.0m;
@@ -1658,7 +1659,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			//sendout=new PokeballPlayerSendOutAnimation(@sprites[$"pokemon{battlerindex}"],
 			sendout.initialize(@sprites[$"pokemon{battlerindex}"] as IPokemonBattlerSprite,
-				(IDictionary<string,ISprite>)@sprites,@battle.battlers[battlerindex],illusionpoke,@battle.doublebattle);
+				@sprites,@battle.battlers[battlerindex],illusionpoke,@battle.doublebattle);
 			do  //;loop
 			{
 				if (fadeanim != null) fadeanim.update();
@@ -1678,6 +1679,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				FrameUpdate();
 				if ((fadeanim == null || fadeanim.animdone) && sendout.animdone &&
 					!(@sprites[$"battlebox{battlerindex}"] as IPokemonDataBox).appearing) break;
+				yield return null;
 			} while (true);
 			spriteBall.Dispose();
 			sendout.Dispose();
@@ -1686,10 +1688,11 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			if (@showingplayer) {
 				@showingplayer=false;
-				DisposeSprite(@sprites,"player");
-				DisposeSprite(@sprites,"partybarplayer");
+				player.visible=false;				//DisposeSprite(@sprites,"player");
+				this.partybarplayer.visible=false;	//DisposeSprite(@sprites,"partybarplayer");
 				for (int i = 0; i < 6; i++) {
-					DisposeSprite(@sprites,$"player{i}");
+					//DisposeSprite(@sprites,$"player{i}");
+					(@sprites[$"player{i}"] as IGameObject).visible = false;
 				}
 			}*/
 			Refresh();
@@ -1724,7 +1727,6 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		void IPokeBattle_DebugSceneNoGraphics.Withdraw(IBattle battle, IBattler pkmn)
 		{
-			throw new NotImplementedException();
 		}
 
 		public string MoveString(IBattleMove move)
@@ -1756,16 +1758,16 @@ namespace PokemonUnity.Interface.UnityEngine
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			@briefmessage = false;
-			//@sprites["battlebox0"] = new SafariDataBox(@battle, @viewport);
-			(@sprites["battlebox0"] as ISafariDataBox).initialize(@battle, @viewport);
-			(@sprites["battlebox0"] as ISafariDataBox).appear();
+			//battlebox0 = new SafariDataBox(@battle, @viewport);
+			(battlebox0 as ISafariDataBox).initialize(@battle, @viewport);
+			(battlebox0).appear();
 			do //;loop
 			{
-				(@sprites["battlebox0"] as ISafariDataBox).update();
+				(battlebox0).update();
 				GraphicsUpdate();
 				InputUpdate();
 				FrameUpdate();
-				if (!(@sprites["battlebox0"] as ISafariDataBox).appearing) break;
+				if (!(battlebox0).appearing) break;
 				yield return null;
 			} while (true);
 			Refresh();
@@ -1807,13 +1809,16 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			return CommandMenuEx(index,new string[] {
-				Game._INTL("What will\n{1} throw?", @battle.Player().name),
-				Game._INTL("Ball"),
-				Game._INTL("Bait"),
-				Game._INTL("Rock"),
-				Game._INTL("Run")
-			},2);
+			//return CommandMenuEx(index,new string[] {
+			//	Game._INTL("What will\n{1} throw?", @battle.Player().name),
+			//	Game._INTL("Ball"),
+			//	Game._INTL("Bait"),
+			//	Game._INTL("Rock"),
+			//	Game._INTL("Run")
+			//},2);
+			int ret = -1;
+			StartCoroutine(SafariCommandMenu(index,result:value=>ret=value));
+			return ret;
 		}
 
 		/// <summary>
@@ -1862,16 +1867,18 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			bool shadowTrainer = (@battle.opponent != null); //hasConst(Types,:SHADOW) &&
-			int ret = CommandMenuEx(index,new string[] {
-				Game._INTL("What will\n{1} do?", @battle.battlers[index].Name),
-				Game._INTL("Fight"),
-				Game._INTL("Bag"),
-				Game._INTL("Pokémon"),
-				shadowTrainer ? Game._INTL("Call") : Game._INTL("Run")
-			},shadowTrainer ? 1 : 0);
-			if (ret == 3 && shadowTrainer) ret = 4; // Convert "Run" to "Call"
-			Core.Logger.Log($"Action Selected: {ret}");
+			//bool shadowTrainer = (@battle.opponent != null); //hasConst(Types,:SHADOW) &&
+			//int ret = CommandMenuEx(index,new string[] {
+			//	Game._INTL("What will\n{1} do?", @battle.battlers[index].Name),
+			//	Game._INTL("Fight"),
+			//	Game._INTL("Bag"),
+			//	Game._INTL("Pokémon"),
+			//	shadowTrainer ? Game._INTL("Call") : Game._INTL("Run")
+			//},shadowTrainer ? 1 : 0);
+			//if (ret == 3 && shadowTrainer) ret = 4; // Convert "Run" to "Call"
+			//Core.Logger.Log($"Action Selected: {ret}");
+			int ret = -1;
+			StartCoroutine(CommandMenu(index,result:value=>ret=(int)value));
 			return ret;
 		}
 
@@ -1890,7 +1897,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			ShowWindow(COMMANDBOX);
-			ICommandMenuDisplay cw = @sprites["commandwindow"] as ICommandMenuDisplay;
+			ICommandMenuDisplay cw = commandwindow;
 			cw.setTexts(texts);
 			cw.index = (int)@lastcmd[index];
 			cw.mode = mode;
@@ -1957,7 +1964,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			ShowWindow(COMMANDBOX);
-			ICommandMenuDisplay cw = @sprites["commandwindow"] as ICommandMenuDisplay;
+			ICommandMenuDisplay cw = commandwindow;
 			cw.setTexts(texts);
 			cw.index = (int)@lastcmd[index];
 			cw.mode = mode;
@@ -2077,7 +2084,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			ShowWindow(FIGHTBOX);
-			IFightMenuDisplay cw = @sprites["fightwindow"] as IFightMenuDisplay;
+			IFightMenuDisplay cw = fightwindow;
 			IBattlerIE battler = @battle.battlers[index];
 			cw.battler = battler;
 			int lastIndex = @lastmove[index];
@@ -2150,7 +2157,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			ShowWindow(FIGHTBOX);
-			IFightMenuDisplay cw = @sprites["fightwindow"] as IFightMenuDisplay;
+			IFightMenuDisplay cw = fightwindow;
 			IBattlerIE battler = @battle.battlers[index];
 			cw.battler = battler;
 			int lastIndex = @lastmove[index];
@@ -2731,7 +2738,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			ShowWindow(FIGHTBOX);
-			IFightMenuDisplay cw = @sprites["fightwindow"] as IFightMenuDisplay;
+			IFightMenuDisplay cw = fightwindow;
 			IBattlerIE battler = @battle.battlers[index];
 			cw.battler = battler;
 			int lastIndex = @lastmove[index];
@@ -2847,7 +2854,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			ShowWindow(FIGHTBOX);
-			IFightMenuDisplay cw = @sprites["fightwindow"] as IFightMenuDisplay;
+			IFightMenuDisplay cw = fightwindow;
 			IBattlerIE battler = @battle.battlers[index];
 			cw.battler = battler;
 			int lastIndex = @lastmove[index];
@@ -2963,7 +2970,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			ShowWindow(FIGHTBOX);
-			IFightMenuDisplay cw = @sprites["fightwindow"] as IFightMenuDisplay;
+			IFightMenuDisplay cw = fightwindow;
 			IBattlerIE battler = @battle.battlers[index];
 			cw.battler = battler;
 			int lastIndex = @lastmove[index];
@@ -3964,12 +3971,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			if (@sprites["capture"] != null)
+			if (capture != null)
 			{
 				do //;loop
 				{
-					if ((@sprites["capture"] as IIconSprite).opacity <= 0) break;
-					(@sprites["capture"] as IIconSprite).opacity -= 12;
+					if ((capture).opacity <= 0) break;
+					(capture).opacity -= 12;
 					GraphicsUpdate();
 					InputUpdate();
 					FrameUpdate();
@@ -3987,13 +3994,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			/*@briefmessage = false;
 			string ball = string.Format("Graphics/Pictures/battleBait");
 			bool armanim = false;
-			if (@sprites["player"].bitmap.width > @sprites["player"].bitmap.height)
+			if (player.bitmap.width > player.bitmap.height)
 			{
 				armanim = true;
 			}
 			//  sprites
-			spritePoke = @sprites["pokemon1"];
-			spritePlayer = @sprites["player"];
+			spritePoke = pokemon1;
+			spritePlayer = player;
 			IIconSprite spriteBall = new IconSprite(0, 0, @viewport);
 			spriteBall.visible = false;
 			//  pictures
@@ -4001,8 +4008,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			picturePoke = new PictureEx(spritePoke.z);
 			picturePlayer = new PictureEx(spritePoke.z + 2);
 			IPoint dims =[spritePoke.x, spritePoke.y];
-			IPoint pokecenter = getSpriteCenter(@sprites["pokemon1"]);
-			IPoint playerpos = [@sprites["player"].x, @sprites["player"].y];
+			IPoint pokecenter = getSpriteCenter(pokemon1);
+			IPoint playerpos = [player.x, player.y];
 			float ballendy = PokeBattle_SceneConstants.FOEBATTLER_Y - 4;
 			//  starting positions
 			pictureBall.moveVisible(1, true);
@@ -4013,7 +4020,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			picturePoke.moveOrigin(1, PictureOrigin.center);
 			picturePoke.moveXY(0, 1, pokecenter[0], pokecenter[1]);
 			picturePlayer.moveVisible(1, true);
-			picturePlayer.moveName(1, @sprites["player"].name);
+			picturePlayer.moveName(1, player.name);
 			picturePlayer.moveOrigin(1, PictureOrigin.TopLeft);
 			picturePlayer.moveXY(0, 1, playerpos[0], playerpos[1]);
 			//  directives
@@ -4025,13 +4032,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			pictureBall.moveAngle(0, pictureBall.totalDuration, 0);
 			if (armanim)
 			{
-				picturePlayer.moveSrc(1, @sprites["player"].bitmap.height, 0);
+				picturePlayer.moveSrc(1, player.bitmap.height, 0);
 				picturePlayer.moveXY(0, 1, playerpos[0] - 14, playerpos[1]);
-				picturePlayer.moveSrc(4, @sprites["player"].bitmap.height * 2, 0);
+				picturePlayer.moveSrc(4, player.bitmap.height * 2, 0);
 				picturePlayer.moveXY(0, 4, playerpos[0] - 12, playerpos[1]);
-				picturePlayer.moveSrc(8, @sprites["player"].bitmap.height * 3, 0);
+				picturePlayer.moveSrc(8, player.bitmap.height * 3, 0);
 				picturePlayer.moveXY(0, 8, playerpos[0] + 20, playerpos[1]);
-				picturePlayer.moveSrc(16, @sprites["player"].bitmap.height * 4, 0);
+				picturePlayer.moveSrc(16, player.bitmap.height * 4, 0);
 				picturePlayer.moveXY(0, 16, playerpos[0] + 16, playerpos[1]);
 				picturePlayer.moveSrc(40, 0, 0);
 				picturePlayer.moveXY(0, 40, playerpos[0], playerpos[1]);
@@ -4076,12 +4083,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			ball=string.Format("Graphics/Pictures/battleRock");
 			anger=string.Format("Graphics/Pictures/battleAnger");
 			armanim=false;
-			if (@sprites["player"].bitmap.width>@sprites["player"].bitmap.height) {
+			if (player.bitmap.width>player.bitmap.height) {
 				armanim=true;
 			}
 			//  sprites
-			spritePoke=@sprites["pokemon1"];
-			spritePlayer=@sprites["player"];
+			spritePoke=pokemon1;
+			spritePlayer=player;
 			spriteBall=new IconSprite(0,0,@viewport);
 			spriteBall.visible=false;
 			spriteAnger=new IconSprite(0,0,@viewport);
@@ -4092,8 +4099,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			picturePlayer=new PictureEx(spritePoke.z+2);
 			pictureAnger=new PictureEx(spritePoke.z+1);
 			dims=[spritePoke.x,spritePoke.y];
-			pokecenter=getSpriteCenter(@sprites["pokemon1"]);
-			playerpos=[@sprites["player"].x,@sprites["player"].y];
+			pokecenter=getSpriteCenter(pokemon1);
+			playerpos=[player.x,player.y];
 			ballendy=PokeBattle_SceneConstants.FOEBATTLER_Y-4;
 			//  starting positions
 			pictureBall.moveVisible(1,true);
@@ -4104,7 +4111,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			picturePoke.moveOrigin(1,PictureOrigin.nenter);
 			picturePoke.moveXY(0,1,pokecenter[0],pokecenter[1]);
 			picturePlayer.moveVisible(1,true);
-			picturePlayer.moveName(1,@sprites["player"].name);
+			picturePlayer.moveName(1,player.name);
 			picturePlayer.moveOrigin(1,PictureOrigin.nopLeft);
 			picturePlayer.moveXY(0,1,playerpos[0],playerpos[1]);
 			pictureAnger.moveVisible(1,false);
@@ -4119,13 +4126,13 @@ namespace PokemonUnity.Interface.UnityEngine
 			pictureBall.moveAngle(0,pictureBall.totalDuration,0);
 			pictureBall.moveSE(30,"AudioManager/SE/notverydamage");
 			if (armanim) {
-				picturePlayer.moveSrc(1,@sprites["player"].bitmap.height,0);
+				picturePlayer.moveSrc(1,player.bitmap.height,0);
 				picturePlayer.moveXY(0,1,playerpos[0]-14,playerpos[1]);
-				picturePlayer.moveSrc(4,@sprites["player"].bitmap.height*2,0);
+				picturePlayer.moveSrc(4,player.bitmap.height*2,0);
 				picturePlayer.moveXY(0,4,playerpos[0]-12,playerpos[1]);
-				picturePlayer.moveSrc(8,@sprites["player"].bitmap.height*3,0);
+				picturePlayer.moveSrc(8,player.bitmap.height*3,0);
 				picturePlayer.moveXY(0,8,playerpos[0]+20,playerpos[1]);
-				picturePlayer.moveSrc(16,@sprites["player"].bitmap.height*4,0);
+				picturePlayer.moveSrc(16,player.bitmap.height*4,0);
 				picturePlayer.moveXY(0,16,playerpos[0]+16,playerpos[1]);
 				picturePlayer.moveSrc(40,0,0);
 				picturePlayer.moveXY(0,40,playerpos[0],playerpos[1]);
