@@ -418,6 +418,8 @@ namespace PokemonUnity.Application
 		/// </summary>
 		public bool MachineIsInfiniteUse { get; private set; }
 		#endregion
+
+		/// ToDo: Move these switches to <see cref="PokemonEssentials.Interface.IGlobalMetadata"/>
 		#region Game Event Switches
 		/// <summary>
 		/// Used to track whether or not player has whited out,

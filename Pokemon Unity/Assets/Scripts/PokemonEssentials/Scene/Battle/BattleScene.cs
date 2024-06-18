@@ -20,7 +20,6 @@ using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
-using PokemonUnity.Legacy;
 using UnityEngine;
 //using UnityEngine;
 //using UnityEngine.UI;
@@ -206,6 +205,9 @@ namespace PokemonUnity.Interface.UnityEngine
 		#region Unity MonoBehavior Functions
 		private void Awake()
 		{
+			if (commandwindow == null) commandwindow = GetComponentInChildren<ICommandMenuDisplay>();
+			if (fightwindow == null) fightwindow = GetComponentInChildren<IFightMenuDisplay>();
+
 			//messageBox = _messageBox.GetComponent<>() as IGameObject;
 			//fightWindow = _fightWindow.GetComponent<FightMenuDisplay>() as IGameObject;
 			//commandWindow = _commandWindow.GetComponent<>() as IGameObject;

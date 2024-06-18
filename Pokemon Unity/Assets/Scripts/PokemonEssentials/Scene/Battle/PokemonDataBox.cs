@@ -290,15 +290,15 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (@battler.displayGender == 1) //	case 0: // Male
 				{
 					//textpos.Add(new TextPosition(Game._INTL("♂"), genderX, 6, false, new Color(48, 96, 216), shadow));
-					gender.sprite = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/genderMale.png");
-					//gender.sprite = BattleInterface.main.genderMale; // Male
+					//gender.sprite = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/genderMale.png");
+					gender.sprite = GameManager.current.FileTest.genderMale; // Male
 					//break;
 				}
 				else //	case 1: // Female
 				{
 					//textpos.Add(new TextPosition(Game._INTL("♀"), genderX, 6, false, new Color(248, 88, 40), shadow));
-					gender.sprite = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/genderFemale.png");
-					//gender.sprite = BattleInterface.main.genderFemale; // Female
+					//gender.sprite = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/genderFemale.png");
+					gender.sprite = GameManager.current.FileTest.genderFemale; // Female
 					//break;
 				}
 			}
@@ -345,12 +345,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (@battler.pokemon.Species == Pokemons.KYOGRE)
 			{
 				//imagepos.Add(new TextPosition("Graphics/Pictures/battlePrimalKyogreBox.png", @spritebaseX + 140, 4, 0, 0, -1, -1));
-				primal.sprite = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/battlePrimalKyogreBox.png");
+				//primal.sprite = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/battlePrimalKyogreBox.png");
+				primal.sprite = GameManager.current.FileTest.battlePrimalKyogre;
 			}
 			else if (@battler.pokemon.Species == Pokemons.GROUDON)
 			{
 				//imagepos.Add(new TextPosition("Graphics/Pictures/battlePrimalGroudonBox.png", @spritebaseX + 140, 4, 0, 0, -1, -1));
-				primal.sprite = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/battlePrimalGroudonBox.png");
+				//primal.sprite = Resources.Load<global::UnityEngine.Sprite>("Graphics/Pictures/battlePrimalGroudonBox.png");
+				primal.sprite = GameManager.current.FileTest.battlePrimalGroudon;
 			}
 			//}
 			primal?.gameObject.SetActive(battler.isPrimal);

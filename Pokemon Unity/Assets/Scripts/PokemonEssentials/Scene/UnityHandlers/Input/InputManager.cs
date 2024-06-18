@@ -14,8 +14,6 @@ using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.EventArg;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.PokeBattle.Effects;
-using UnityEngine;
-using PokemonUnity.Legacy;
 //using PokemonEssentials.Interface.PokeBattle.Rules;
 
 namespace PokemonUnity.Interface.UnityEngine
@@ -24,7 +22,7 @@ namespace PokemonUnity.Interface.UnityEngine
 	/// This class acts as a bridge between the Unity Input class and the PokemonUnity Input class.
 	/// </summary>
 	//public class InputManager : PokemonUnity.Input, IInput
-	public class InputManager : MonoBehaviour, IInput
+	public class InputManager : global::UnityEngine.MonoBehaviour, IInput
 	{
 		#region Variables
 		public event Action<object, IButtonEventArgs> OnKeyPress; //{ add { foreach (UserInputController controller in userInputControllers) controller.OnKeyPress += value; } remove { foreach (UserInputController controller in userInputControllers) controller.OnKeyPress -= value; } }
@@ -33,7 +31,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		//public event Action<object, IButtonEventArgs> OnKeyDown;
 		//public event Action<object, IButtonEventArgs> OnKeyUp;
 		public event EventHandler UpdateInput;
-		private static InputManager instance;
+		private static InputManager instance; //Maybe use GameManager as Singleton?
 
 		//private readonly Hashtable m_KeyTable = new Hashtable();
 		[global::UnityEngine.SerializeField] private IList<UserInputController> userInputControllers = new List<UserInputController>();

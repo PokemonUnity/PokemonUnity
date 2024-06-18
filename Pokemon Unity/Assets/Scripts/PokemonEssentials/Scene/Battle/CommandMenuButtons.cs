@@ -32,9 +32,13 @@ namespace PokemonUnity.Interface.UnityEngine
 		[SerializeField] private global::UnityEngine.Sprite buttonDefault;
 		[SerializeField] private global::UnityEngine.Sprite buttonSelected;
 		//ToDo: Create a prefab/class for button entities below...
+		/// <summary>Fight</summary>
 		[SerializeField] private CommandMenuButton button1;
+		/// <summary>Party</summary>
 		[SerializeField] private CommandMenuButton button2;
+		/// <summary>Bag</summary>
 		[SerializeField] private CommandMenuButton button3;
+		/// <summary>Run</summary>
 		[SerializeField] private CommandMenuButton button4;
 		/// <summary>
 		/// Sprite images for each menu option

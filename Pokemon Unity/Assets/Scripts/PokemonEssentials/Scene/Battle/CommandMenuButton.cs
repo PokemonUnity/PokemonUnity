@@ -26,6 +26,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			rect = GetComponent<RectTransform>();
 			background = GetComponent<global::UnityEngine.UI.Image>();
+			if (Logo == null) Logo = GetComponentInChildren<global::UnityEngine.UI.Image>();
+			if (Text == null) Text = GetComponentInChildren<global::TMPro.TextMeshProUGUI>();
 		}
 	}
 }

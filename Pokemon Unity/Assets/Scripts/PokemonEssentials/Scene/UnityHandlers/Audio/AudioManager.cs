@@ -3,7 +3,6 @@ using System.Collections;
 using System.Collections.Generic;
 using PokemonEssentials.Interface;
 using PokemonUnity;
-using PokemonUnity.Legacy;
 using UnityEngine;
 
 namespace PokemonUnity.Interface.UnityEngine

@@ -76,7 +76,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		void Update()
 		{
 			//if (global::UnityEngine.Input.GetKey(fastSpeedKey))
-			if (GameManager.InputManager.repeat(PokemonUnity.Input.B)) //if held down
+			if (GameManager.current.InputManager.repeat(PokemonUnity.Input.B)) //if held down
 			{
 				isFastSpeed = true;
 			}
@@ -86,7 +86,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 
 			//if (global::UnityEngine.Input.GetKeyUp(skipKey) && displayCoroutine != null)
-			if (GameManager.InputManager.press(PokemonUnity.Input.B) && displayCoroutine != null)
+			if (GameManager.current.InputManager.press(PokemonUnity.Input.B) && displayCoroutine != null)
 			{
 				StopCoroutine(displayCoroutine);
 				text.text = textDisplay.ToString();

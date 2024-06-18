@@ -38,7 +38,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		[SerializeField] private FightMoveButton button4;
 		[SerializeField] private global::UnityEngine.GameObject selected;
 		[SerializeField] private global::UnityEngine.UI.Toggle buttonMega;
-		private static readonly global::UnityEngine.Sprite spriteNull = Resources.Load<global::UnityEngine.Sprite>("null");
+		private static global::UnityEngine.Sprite spriteNull; //= Resources.Load<global::UnityEngine.Sprite>("null");
+
+		private void Awake()
+		{
+			spriteNull = Resources.Load<global::UnityEngine.Sprite>("null");
+		}
 
 		public IFightMenuButtons initialize(int index= 0, IBattleMove[] moves = null, IViewport viewport= null)
 		{

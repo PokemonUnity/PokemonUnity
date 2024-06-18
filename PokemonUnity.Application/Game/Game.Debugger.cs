@@ -2,7 +2,7 @@
 using System.Diagnostics;
 using System.Text;
 
-namespace PokemonUnity
+namespace PokemonUnity.Application
 {
 	/// <summary>
 	/// Logging of messages

@@ -39,7 +39,7 @@ namespace PokemonUnity.ConsoleApp
 	///    Only used for things that should not be logged. Typically responses to user commands. Only shown on Console.
 	/// </para>
 	/// </summary>
-	public class Debugger : PokemonUnity.Debugger, IDebugger
+	public class Debugger : PokemonUnity.Application.Debugger, IDebugger
 	{
 		//public event EventHandler<OnDebugEventArgs> OnLog;
 		//public static Debugger Instance { get { return instance; } }

@@ -133,7 +133,7 @@ namespace PokemonEssentials.Interface
 	{
 		float getBattleSpriteMetricOffset(Pokemons species, int index, int[] metrics = null);
 
-		int adjustBattleSpriteY(ISprite sprite, Pokemons species, int index, int[] metrics = null);
+		int adjustBattleSpriteY(IPokemonBattlerSprite sprite, Pokemons species, int index, int[] metrics = null);
 
 		void PositionPokemonSprite(ISprite sprite, float left, float top);
 
