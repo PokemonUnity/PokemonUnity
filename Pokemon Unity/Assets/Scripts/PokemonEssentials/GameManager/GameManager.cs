@@ -29,7 +29,9 @@ namespace PokemonUnity.Interface.UnityEngine
 	{
 		#region Variables
 		public static GameManager current;
-		public static InputManager InputManager;
+		public InputManager InputManager;
+		public AudioManager AudioManager;
+		public FileTest FileTest;
 		public IGame game; //game scope used for temp actions, without affecting original copy?
 		public event Action onUpdate;
 		public event Action onLevelLoaded;
@@ -49,7 +51,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		#region Unity Monobehavior
 		void Awake()
 		{
-			Debug.Log("Game Events is Awake!");
+			Debug.Log("Game Manager is Awake!");
 			//current = this;
 			if (current == null)
 			{
@@ -60,8 +62,21 @@ namespace PokemonUnity.Interface.UnityEngine
 				Destroy(gameObject);
 			}
 			//UnityEngine.EventSystems.EventSystem.current.currentSelectedGameObject
+			LogManager.Logger.OnLog += (object sender, OnDebugEventArgs e) => {
+				if (e != null || e != System.EventArgs.Empty)
+					if (e.Error == true)
+						//System.Console.WriteLine("[ERR]: " + e.Message);
+						global::UnityEngine.Debug.LogError(string.Format("[ERR] " + global::UnityEngine.Time.frameCount + ": " + e.Message, e.MessageParameters));
+					else if (e.Error == false)
+						//System.Console.WriteLine("[WARN]: " + e.Message);
+						global::UnityEngine.Debug.LogWarning(string.Format("[WARN] " + global::UnityEngine.Time.frameCount + ": " + e.Message, e.MessageParameters));
+					else
+						//System.Console.WriteLine("[LOG]: " + e.Message);
+						global::UnityEngine.Debug.Log(string.Format("[LOG] " + global::UnityEngine.Time.frameCount + ": " + e.Message, e.MessageParameters));
+			};
 
-			Core.Logger?.Init("\\Logs", "GameLog"); //Path = "Logs\GameLog.txt"
+			//Debugger.Instance.Init("\\Logs", "GameLog"); //Path = "Logs\GameLog.txt"
+			//Core.Logger?.Init("\\Logs", "GameLog"); //Path = "Logs\GameLog.txt"
 			Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 			try
 			{
@@ -142,7 +157,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			Game.LocalizationDictionary = new XmlStringRes(null); //new Debugger());
 			Game.LocalizationDictionary.Initialize(englishLocalization, (int)Languages.English);
 
-			((object)game.Scenes?.BattleScene as GameObject)?.SetActive(true); //Enable "OnStart" to trigger battle scene...
+			//Enable "OnStart" to trigger battle scene...
+			//((object)game.Scenes?.BattleScene as GameObject)?.SetActive(true); //Scene is already active... Sort later.
 		}
 		#endregion
 

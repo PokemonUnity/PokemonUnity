@@ -19,7 +19,7 @@ namespace PokemonUnity.Interface.UnityEngine
 	[RequireComponent(typeof(RectTransform))]
 	public partial class CommandMenuDisplay : MonoBehaviour, ICommandMenuDisplay, IViewport, IGameObject
 	{
-		[SerializeField] protected global::UnityEngine.RectTransform rect = null;
+		protected global::UnityEngine.RectTransform rect;
 		[SerializeField] protected CommandMenuButtons buttons;
 		[SerializeField] protected CommandWindowText Window;
 		[SerializeField] protected WindowText messageBox;
@@ -153,6 +153,10 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 		}
 		#endregion
+		private void Awake()
+		{
+			rect = GetComponent<RectTransform>();
+		}
 
 		public ICommandMenuDisplay initialize(IViewport viewport = null)
 		{

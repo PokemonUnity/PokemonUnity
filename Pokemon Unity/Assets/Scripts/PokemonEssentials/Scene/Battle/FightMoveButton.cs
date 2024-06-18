@@ -8,8 +8,11 @@ namespace PokemonUnity.Interface.UnityEngine
 	/// <remarks>
 	/// See <see cref="FightMenuDisplay"/> for the menu class
 	/// </remarks>
+	[RequireComponent(typeof(global::UnityEngine.RectTransform),
+		typeof(global::UnityEngine.UI.Image))]
 	public class FightMoveButton : MonoBehaviour
 	{
+		private RectTransform rect;
 		/// <summary>
 		/// Name of the move
 		/// </summary>
@@ -19,5 +22,11 @@ namespace PokemonUnity.Interface.UnityEngine
 		public TMPro.TextMeshProUGUI PP;
 		public global::UnityEngine.UI.Image Type;
 		public global::UnityEngine.UI.Image ButtonBG;
+
+		private void Awake()
+		{
+			if (rect == null) rect = GetComponent<RectTransform>();
+			if (ButtonBG == null) ButtonBG = GetComponent<global::UnityEngine.UI.Image>();
+		}
 	}
 }

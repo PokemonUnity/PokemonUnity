@@ -205,6 +205,9 @@ namespace PokemonUnity.Interface.UnityEngine
 		#region Unity MonoBehavior Functions
 		private void Awake()
 		{
+			if (commandwindow == null) commandwindow = GetComponentInChildren<ICommandMenuDisplay>();
+			if (fightwindow == null) fightwindow = GetComponentInChildren<IFightMenuDisplay>();
+
 			//messageBox = _messageBox.GetComponent<>() as IGameObject;
 			//fightWindow = _fightWindow.GetComponent<FightMenuDisplay>() as IGameObject;
 			//commandWindow = _commandWindow.GetComponent<>() as IGameObject;

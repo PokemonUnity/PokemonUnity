@@ -1,0 +1,39 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1091e257482b076438a07555dba124d5, type: 3}
+  m_Name: AudioData
+  m_EditorClassIdentifier: 
+  Pokemon: 0
+  _soundEffectMenu: {fileID: 0}
+  _soundEffectBump: {fileID: 0}
+  _soundEffectChoose: {fileID: 0}
+  _soundEffectBuzzer: {fileID: 0}
+  _soundEffectExpFull: {fileID: 0}
+  _soundEffectThrow: {fileID: 0}
+  _soundEffectRecall: {fileID: 0}
+  _soundEffectBallShake: {fileID: 0}
+  _soundEffectBallDrop: {fileID: 0}
+  _soundEffectJumpToBall: {fileID: 0}
+  _soundEffectJump: {fileID: 0}
+  _soundEffectComputerClose: {fileID: 0}
+  _soundEffectNormalDamage: {fileID: 0}
+  _soundEffectNotVeryDamage: {fileID: 0}
+  _soundEffectSuperDamage: {fileID: 0}
+  _soundEffectFaint: {fileID: 0}
+  _soundEffectFlash: {fileID: 0}
+  _soundEffectSword: {fileID: 0}
+  _backgroundMusicWildBattleDefault: {fileID: 0}
+  _musicEffectTitle: {fileID: 0}
+  BackgroundMusic: []
+  BackgroundSound: []
+  MusicEffect: []
+  SoundEffect: []

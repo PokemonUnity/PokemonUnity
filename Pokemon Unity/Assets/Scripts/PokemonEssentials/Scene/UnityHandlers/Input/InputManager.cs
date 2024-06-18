@@ -31,7 +31,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		//public event Action<object, IButtonEventArgs> OnKeyDown;
 		//public event Action<object, IButtonEventArgs> OnKeyUp;
 		public event EventHandler UpdateInput;
-		private static InputManager instance;
+		private static InputManager instance; //Maybe use GameManager as Singleton?
 
 		//private readonly Hashtable m_KeyTable = new Hashtable();
 		[global::UnityEngine.SerializeField] private IList<UserInputController> userInputControllers = new List<UserInputController>();
