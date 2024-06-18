@@ -78,7 +78,7 @@
     <Compile Include="Assets\Scripts\Legacy\ActivateTimeBased.cs" />
     <Compile Include="Assets\Scripts\Legacy\AudioHandler.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\GameManager\GameManager.cs" />
-    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\UnityHandlers\AudioData.cs" />
+    <Compile Include="Assets\Scripts\PokemonEssentials\Scene\UnityHandlers\Audio\AudioData.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\UnityHandlers\Common\Window.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\Battle\CommandWindowText.cs" />
     <Compile Include="Assets\Scripts\PokemonEssentials\Scene\UnityHandlers\Common\WindowTextAdvance.cs" />
