@@ -284,7 +284,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			//Set gender toggle on/off; change color based on gender
 			//float genderX = this.bitmap.text_size(pokename).width;
 			//genderX += @spritebaseX + 14;
-			if (@battler.displayGender > 0) //switch (@battler.displayGender)
+			if (@battler.displayGender > -1) //switch (@battler.displayGender)
 			{
 				gender.gameObject.SetActive(true);
 				if (@battler.displayGender == 1) //	case 0: // Male
