@@ -183,9 +183,9 @@ namespace PokemonUnity.Interface.UnityEngine
 					//button2.GetComponent<global::UnityEngine.UI.Image>().sprite = buttonSelected;
 					//button2.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextSelectedColor;
 					//cursor.position = button2.GetComponent<RectTransform>().position;
-					button1.Background.sprite = buttonSelected;
-					button1.Text.color = buttonTextSelectedColor;
-					cursor.position = button1.Rect.position;
+					button2.Background.sprite = buttonSelected;
+					button2.Text.color = buttonTextSelectedColor;
+					cursor.position = button2.Rect.position;
 				}
 				else if (i == 2)
 				{
@@ -193,9 +193,9 @@ namespace PokemonUnity.Interface.UnityEngine
 					//button3.GetComponent<global::UnityEngine.UI.Image>().sprite = buttonSelected;
 					//button3.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextSelectedColor;
 					//cursor.position = button3.GetComponent<RectTransform>().position;
-					button1.Background.sprite = buttonSelected;
-					button1.Text.color = buttonTextSelectedColor;
-					cursor.position = button1.Rect.position;
+					button3.Background.sprite = buttonSelected;
+					button3.Text.color = buttonTextSelectedColor;
+					cursor.position = button3.Rect.position;
 				}
 				else if (i == 3)
 				{
@@ -203,9 +203,9 @@ namespace PokemonUnity.Interface.UnityEngine
 					//button4.GetComponent<global::UnityEngine.UI.Image>().sprite = buttonSelected;
 					//button4.GetComponentInChildren<TMPro.TextMeshProUGUI>().color = buttonTextSelectedColor;
 					//cursor.position = button4.GetComponent<RectTransform>().position;
-					button1.Background.sprite = buttonSelected;
-					button1.Text.color = buttonTextSelectedColor;
-					cursor.position = button1.Rect.position;
+					button4.Background.sprite = buttonSelected;
+					button4.Text.color = buttonTextSelectedColor;
+					cursor.position = button4.Rect.position;
 				}
 			}
 		}

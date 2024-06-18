@@ -221,15 +221,15 @@ namespace PokemonUnity.Interface.UnityEngine
 			if (@window != null) @window.commands = commands.ToArray();
 			IBattleMove selmove = @battler.moves[@index];
 			string movetype = selmove.Type.ToString(TextScripts.Name);
-			if (selmove.TotalPP == 0)
-			{
-				@info.text = string.Format("{0}PP: ---<br>TYPE/{1}", @ctag, movetype);
-			}
-			else
-			{
-				@info.text = string.Format("{0}PP: {1}/{2}<br>TYPE/{3}",
-				   @ctag, selmove.PP, selmove.TotalPP, movetype);
-			}
+			//if (selmove.TotalPP == 0)
+			//{
+			//	@info.text = string.Format("{0}PP: ---<br>TYPE/{1}", @ctag, movetype);
+			//}
+			//else
+			//{
+			//	@info.text = string.Format("{0}PP: {1}/{2}<br>TYPE/{3}",
+			//	   @ctag, selmove.PP, selmove.TotalPP, movetype);
+			//}
 			if (@buttons != null) @buttons.refresh(this.index, @battler != null ? @battler.moves : null, @megaButton);
 		}
 

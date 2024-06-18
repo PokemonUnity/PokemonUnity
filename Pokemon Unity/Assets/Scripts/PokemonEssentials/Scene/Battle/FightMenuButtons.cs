@@ -26,8 +26,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		public IAnimatedBitmap typebitmap;
 		public IAnimatedBitmap megaevobitmap;
 		private FightMenuDisplay FightMenuDisplay;
-		private global::UnityEngine.Color buttonTextDefaultColor = global::UnityEngine.Color.white;
-		private global::UnityEngine.Color buttonTextSelectedColor = new global::UnityEngine.Color(0.04313726f, 0.07058824f, 0.1843137f); //HEX=>0B122F
+		//private global::UnityEngine.Color buttonTextDefaultColor = global::UnityEngine.Color.white;
+		//private global::UnityEngine.Color buttonTextSelectedColor = new global::UnityEngine.Color(0.04313726f, 0.07058824f, 0.1843137f); //HEX=>0B122F
 		[SerializeField] private global::UnityEngine.RectTransform cursor;
 		[SerializeField] private global::UnityEngine.Sprite[] spriteTypes;
 		[SerializeField] private global::UnityEngine.Sprite[] spriteButtons;
@@ -36,7 +36,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		[SerializeField] private FightMoveButton button2;
 		[SerializeField] private FightMoveButton button3;
 		[SerializeField] private FightMoveButton button4;
-		[SerializeField] private global::UnityEngine.GameObject selected;
+		//[SerializeField] private FightMoveButton selected;
 		[SerializeField] private global::UnityEngine.UI.Toggle buttonMega;
 		private static global::UnityEngine.Sprite spriteNull; //= Resources.Load<global::UnityEngine.Sprite>("null");
 
@@ -77,8 +77,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			//this.bitmap.clear();
 			//IList<ITextPosition> textpos = new List<ITextPosition>();
 			global::UnityEngine.Color[] ppcolors = new global::UnityEngine.Color[] { //IColor[] ppcolors=new IColor[] {
-				global::UnityEngine.Color.black,		//PokeBattle_SceneConstants.PPTEXTBASECOLOR, PokeBattle_SceneConstants.PPTEXTSHADOWCOLOR,
-				global::UnityEngine.Color.black,		//PokeBattle_SceneConstants.PPTEXTBASECOLOR, PokeBattle_SceneConstants.PPTEXTSHADOWCOLOR,
+				global::UnityEngine.Color.white,		//PokeBattle_SceneConstants.PPTEXTBASECOLOR, PokeBattle_SceneConstants.PPTEXTSHADOWCOLOR,
+				global::UnityEngine.Color.white,		//PokeBattle_SceneConstants.PPTEXTBASECOLOR, PokeBattle_SceneConstants.PPTEXTSHADOWCOLOR,
 				global::UnityEngine.Color.yellow,		//PokeBattle_SceneConstants.PPTEXTBASECOLORYELLOW, PokeBattle_SceneConstants.PPTEXTSHADOWCOLORYELLOW,
 				global::UnityEngine.Color.magenta,		//PokeBattle_SceneConstants.PPTEXTBASECOLORORANGE, PokeBattle_SceneConstants.PPTEXTSHADOWCOLORORANGE,
 				global::UnityEngine.Color.red			//PokeBattle_SceneConstants.PPTEXTBASECOLORRED, PokeBattle_SceneConstants.PPTEXTSHADOWCOLORRED
@@ -100,8 +100,8 @@ namespace PokemonUnity.Interface.UnityEngine
 					{
 						button1.Type.sprite = spriteNull;
 						//button1.Background.sprite = spriteNull;
-						button1.Move.SetText(Game._INTL("------"));
-						button1.PP.SetText(Game._INTL("PP: --/--"));
+						button1.Move.SetText("------");
+						button1.PP.SetText("--/--");
 						continue;
 					}
 					//button1.GetComponent<global::UnityEngine.UI.Image>().sprite = spriteTypes[i];		//Assign Move-Type Sprite
@@ -111,14 +111,14 @@ namespace PokemonUnity.Interface.UnityEngine
 					//button1.Background.sprite = spriteButtons[(int)moves[i].Type];		//Assign Move-Type Color to Button BG?
 					//button1.Move.text = Game._INTL("{1}", moves[i].Name);
 					//button1.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
-					button1.Move.color = buttonTextDefaultColor;
+					//button1.Move.color = buttonTextDefaultColor;
 					button1.Move.SetText(Game._INTL("{1}", moves[i].Name));
-					button1.PP.SetText(Game._INTL("PP: --/--"));
+					button1.PP.SetText("--/--");
 					if (moves[i].TotalPP > 0)
 					{
 						int ppfraction = (int)Math.Ceiling(4.0 * moves[i].PP / moves[i].TotalPP);
 						button1.PP.color = ppcolors[(4 - ppfraction) * 2];
-						button1.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
+						button1.PP.SetText(Game._INTL("{1}/{2}", moves[i].PP, moves[i].TotalPP));
 					}
 				}
 				else if (i == 1)
@@ -127,8 +127,8 @@ namespace PokemonUnity.Interface.UnityEngine
 					{
 						button2.Type.sprite = spriteNull;
 						//button2.Background.sprite = spriteNull;
-						button2.Move.SetText(Game._INTL("------"));
-						button2.PP.SetText(Game._INTL("PP: --/--"));
+						button2.Move.SetText("------");
+						button2.PP.SetText("--/--");
 						continue;
 					}
 					//button2.GetComponent<global::UnityEngine.UI.Image>().sprite = spriteTypes[i];		//Assign Move-Type Sprite
@@ -138,14 +138,14 @@ namespace PokemonUnity.Interface.UnityEngine
 					//button2.Background.sprite = spriteButtons[i];		//Assign Move-Type Color to Button BG?
 					//button2.Move.text = Game._INTL("{1}", moves[i].Name);
 					//button2.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
-					button2.Move.color = buttonTextDefaultColor;
+					//button2.Move.color = buttonTextDefaultColor;
 					button2.Move.SetText(Game._INTL("{1}", moves[i].Name));
-					button2.PP.SetText(Game._INTL("PP: --/--"));
+					button2.PP.SetText("--/--");
 					if (moves[i].TotalPP > 0)
 					{
 						int ppfraction = (int)Math.Ceiling(4.0 * moves[i].PP / moves[i].TotalPP);
 						button2.PP.color = ppcolors[(4 - ppfraction) * 2];
-						button2.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
+						button2.PP.SetText(Game._INTL("{1}/{2}", moves[i].PP, moves[i].TotalPP));
 					}
 				}
 				else if (i == 2)
@@ -154,8 +154,8 @@ namespace PokemonUnity.Interface.UnityEngine
 					{
 						button3.Type.sprite = spriteNull;
 						//button3.Background.sprite = spriteNull;
-						button3.Move.SetText(Game._INTL("------"));
-						button3.PP.SetText(Game._INTL("PP: --/--"));
+						button3.Move.SetText("------");
+						button3.PP.SetText("--/--");
 						continue;
 					}
 					//button3.GetComponent<global::UnityEngine.UI.Image>().sprite = spriteTypes[i];		//Assign Move-Type Sprite
@@ -165,14 +165,14 @@ namespace PokemonUnity.Interface.UnityEngine
 					//button3.Background.sprite = spriteButtons[i];		//Assign Move-Type Color to Button BG?
 					//button3.Move.text = Game._INTL("{1}", moves[i].Name);
 					//button3.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
-					button3.Move.color = buttonTextDefaultColor;
+					//button3.Move.color = buttonTextDefaultColor;
 					button3.Move.SetText(Game._INTL("{1}", moves[i].Name));
-					button3.PP.SetText(Game._INTL("PP: --/--"));
+					button3.PP.SetText("--/--");
 					if (moves[i].TotalPP > 0)
 					{
 						int ppfraction = (int)Math.Ceiling(4.0 * moves[i].PP / moves[i].TotalPP);
 						button3.PP.color = ppcolors[(4 - ppfraction) * 2];
-						button3.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
+						button3.PP.SetText(Game._INTL("{1}/{2}", moves[i].PP, moves[i].TotalPP));
 					}
 				}
 				else if (i == 3)
@@ -181,8 +181,8 @@ namespace PokemonUnity.Interface.UnityEngine
 					{
 						button4.Type.sprite = spriteNull;
 						//button4.Background.sprite = spriteNull;
-						button4.Move.SetText(Game._INTL("------"));
-						button4.PP.SetText(Game._INTL("PP: --/--"));
+						button4.Move.SetText("------");
+						button4.PP.SetText("--/--");
 						continue;
 					}
 					//button4.GetComponent<global::UnityEngine.UI.Image>().sprite = spriteTypes[i];		//Assign Move-Type Sprite
@@ -192,14 +192,14 @@ namespace PokemonUnity.Interface.UnityEngine
 					//button4.Background.sprite = spriteButtons[i];		//Assign Move-Type Color to Button BG?
 					//button4.Move.text = Game._INTL("{1}", moves[i].Name);
 					//button4.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
-					button4.Move.color = buttonTextDefaultColor;
+					//button4.Move.color = buttonTextDefaultColor;
 					button4.Move.SetText(Game._INTL("{1}", moves[i].Name));
-					button4.PP.SetText(Game._INTL("PP: --/--"));
+					button4.PP.SetText("--/--");
 					if (moves[i].TotalPP > 0)
 					{
 						int ppfraction = (int)Math.Ceiling(4.0 * moves[i].PP / moves[i].TotalPP);
 						button4.PP.color = ppcolors[(4 - ppfraction) * 2];
-						button4.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
+						button4.PP.SetText(Game._INTL("{1}/{2}", moves[i].PP, moves[i].TotalPP));
 					}
 				}
 			}
@@ -225,13 +225,13 @@ namespace PokemonUnity.Interface.UnityEngine
 					//button1.Background.sprite = spriteButtons[i];		//Assign Move-Type Color to Button BG?
 					//button1.Move.text = Game._INTL("{1}", moves[i].Name);
 					//button1.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
-					button1.Move.color = buttonTextSelectedColor;
+					//button1.Move.color = buttonTextSelectedColor;
 					button1.Move.SetText(Game._INTL("{1}", moves[i].Name));
 					if (moves[i].TotalPP > 0)
 					{
 						int ppfraction = (int)Math.Ceiling(4.0 * moves[i].PP / moves[i].TotalPP);
 						button1.PP.color = ppcolors[(4 - ppfraction) * 2];
-						button1.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
+						button1.PP.SetText(Game._INTL("{1}/{2}", moves[i].PP, moves[i].TotalPP));
 					}
 				}
 				else if (i == 1)
@@ -245,13 +245,13 @@ namespace PokemonUnity.Interface.UnityEngine
 					//button2.Background.sprite = spriteButtons[i];		//Assign Move-Type Color to Button BG?
 					//button2.Move.text = Game._INTL("{1}", moves[i].Name);
 					//button2.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
-					button2.Move.color = buttonTextSelectedColor;
+					//button2.Move.color = buttonTextSelectedColor;
 					button2.Move.SetText(Game._INTL("{1}", moves[i].Name));
 					if (moves[i].TotalPP > 0)
 					{
 						int ppfraction = (int)Math.Ceiling(4.0 * moves[i].PP / moves[i].TotalPP);
 						button2.PP.color = ppcolors[(4 - ppfraction) * 2];
-						button2.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
+						button2.PP.SetText(Game._INTL("{1}/{2}", moves[i].PP, moves[i].TotalPP));
 					}
 				}
 				else if (i == 2)
@@ -265,13 +265,13 @@ namespace PokemonUnity.Interface.UnityEngine
 					//button3.Background.sprite = spriteButtons[i];		//Assign Move-Type Color to Button BG?
 					//button3.Move.text = Game._INTL("{1}", moves[i].Name);
 					//button3.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
-					button3.Move.color = buttonTextSelectedColor;
+					//button3.Move.color = buttonTextSelectedColor;
 					button3.Move.SetText(Game._INTL("{1}", moves[i].Name));
 					if (moves[i].TotalPP > 0)
 					{
 						int ppfraction = (int)Math.Ceiling(4.0 * moves[i].PP / moves[i].TotalPP);
 						button3.PP.color = ppcolors[(4 - ppfraction) * 2];
-						button3.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
+						button3.PP.SetText(Game._INTL("{1}/{2}", moves[i].PP, moves[i].TotalPP));
 					}
 				}
 				else if (i == 3)
@@ -285,12 +285,12 @@ namespace PokemonUnity.Interface.UnityEngine
 					//button4.Background.sprite = spriteButtons[i];		//Assign Move-Type Color to Button BG?
 					//button4.Move.text = Game._INTL("{1}", moves[i].Name);
 					//button4.PP.text = Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP);
-					button4.Move.color = buttonTextSelectedColor;
+					//button4.Move.color = buttonTextSelectedColor;
 					button4.Move.SetText(Game._INTL("{1}", moves[i].Name));
 					if (moves[i].TotalPP>0) {
 						int ppfraction=(int)Math.Ceiling(4.0*moves[i].PP/moves[i].TotalPP);
 						button4.PP.color = ppcolors[(4 - ppfraction) * 2];
-						button4.PP.SetText(Game._INTL("PP: {1}/{2}", moves[i].PP, moves[i].TotalPP));
+						button4.PP.SetText(Game._INTL("{1}/{2}", moves[i].PP, moves[i].TotalPP));
 					}
 				}
 				//if (moves[i].TotalPP>0) {

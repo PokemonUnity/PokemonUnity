@@ -270,7 +270,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			//Core.Logger?.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			//this.bitmap.clear();
-			if (battler == null || @battler.pokemon == null) return; //If pokemon is none, clear and reset the HUD
+			if (battler == null || @battler.pokemon == null)
+			{
+				visible = false; //If pokemon is none, clear and reset the HUD
+				return;
+			}
+			else visible = true;
 			//this.bitmap.blt(0,0,@databox.bitmap,new Rect(0,0,@databox.width,@databox.height));
 			//IColor base_ = PokeBattle_SceneConstants.BOXTEXTBASECOLOR;
 			//IColor shadow = PokeBattle_SceneConstants.BOXTEXTSHADOWCOLOR;
@@ -284,7 +289,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			//Set gender toggle on/off; change color based on gender
 			//float genderX = this.bitmap.text_size(pokename).width;
 			//genderX += @spritebaseX + 14;
-			if (@battler.displayGender > 0) //switch (@battler.displayGender)
+			if (@battler.displayGender > -1) //switch (@battler.displayGender)
 			{
 				gender.gameObject.SetActive(true);
 				if (@battler.displayGender == 1) //	case 0: // Male
