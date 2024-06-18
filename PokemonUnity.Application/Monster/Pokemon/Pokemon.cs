@@ -1574,7 +1574,7 @@ namespace PokemonUnity.Monster
 			resetMoves();
 			int numMove = Core.Rand.Next(4) + 1; //number of moves pokemon will have, between 0 and 3
 			List<Moves> movelist = new List<Moves>();
-			if (isEgg || egg || (Game.GameData as Game).Global.Features.CatchPokemonsWithEggMoves)
+			if (isEgg || egg || (Game.GameData.Global?.Features.CatchPokemonsWithEggMoves??false))
 				movelist.AddRange(Kernal.PokemonMovesData[pokemons].Egg);
 			IList<int?> rejected = new int?[movelist.Count]; //default null, to exclude `0`
 			switch (level)
@@ -1594,25 +1594,21 @@ namespace PokemonUnity.Monster
 						}
 						i -= 1;
 					}
-					if (i >= 0)
-					{ //if i is at least 0 still, then you can grab the next move down.
-					  //moves[2] = movesetMovesStrings[i];
+					if (i >= 0) { //if i is at least 0 still, then you can grab the next move down.
+						//moves[2] = movesetMovesStrings[i];
 						i -= 1;
-						if (i >= 0)
-						{ //if i is at least 0 still, then you can grab the next move down.
-						  //moves[1] = movesetMovesStrings[i];
+						if (i >= 0) { //if i is at least 0 still, then you can grab the next move down.
+							//moves[1] = movesetMovesStrings[i];
 							i -= 1;
-							if (i >= 0)
-							{ //if i is at least 0 still, then you can grab the last move down.
-							  //moves[0] = movesetMovesStrings[i];
+							if (i >= 0) { //if i is at least 0 still, then you can grab the last move down.
+								//moves[0] = movesetMovesStrings[i];
 								i -= 1;
 							}
 						}
 					}
 					i = 0;
-					int i2 = 0;         //if the first move is null, then the array will need to be packed down
-					if (moves[0] == null)
-					{       //(nulls moved to the end of the array)
+					int i2 = 0;				//if the first move is null, then the array will need to be packed down
+					if (moves[0] == null) {	//(nulls moved to the end of the array)
 						while (i < 4)
 						{
 							while (moves[i] == null)

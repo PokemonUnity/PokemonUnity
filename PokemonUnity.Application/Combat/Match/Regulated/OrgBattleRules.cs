@@ -1333,7 +1333,7 @@ namespace PokemonUnity
 			@teamRules = new List<IBattleTeamRestriction>();
 			@subsetRules = new List<IBattleTeamRestriction>();
 			_minLength = 1;
-			_maxLength = number <= 0 ? (Game.GameData as Game).Global.Features.LimitPokemonPartySize : number;
+			_maxLength = number <= 0 ? (Game.GameData.Global?.Features.LimitPokemonPartySize ?? Core.MAXPARTYSIZE) : number;
 		}
 
 		public IPokemonRuleSet copy()
