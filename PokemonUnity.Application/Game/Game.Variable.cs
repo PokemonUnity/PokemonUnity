@@ -42,7 +42,7 @@ namespace PokemonUnity
 		public PokemonEssentials.Interface.IGamePlayer GamePlayer { get; set; }
 		public PokemonEssentials.Interface.IGameMap GameMap { get; set; }
 		public PokemonEssentials.Interface.IGameMessage GameMessage { get; set; }
-		public PokemonEssentials.Interface.IGameAudioPlay Audio { get; set; }
+		//public PokemonEssentials.Interface.IGameAudioPlay Audio { get; set; }
 
 		//public static PokemonUnity.Interface.IFrontEnd UI { get; private set; }
 		public PokemonEssentials.Interface.IChooseNumberParams ChooseNumberParams { get; set; }
@@ -52,7 +52,7 @@ namespace PokemonUnity
 		/// Singleton Instance of Game class to store current/active play state.
 		/// </summary>
 		public static PokemonEssentials.Interface.IGame GameData { get; set; }
-		//public PokemonEssentials.Interface.IAudio Audio { get; set; }
+		public PokemonEssentials.Interface.IAudio Audio { get; set; }
 		public PokemonEssentials.Interface.IGraphics Graphics { get; set; }
 		public PokemonEssentials.Interface.IInput Input { get; set; }
 		public PokemonEssentials.Interface.IInterpreter Interpreter { get; set; }

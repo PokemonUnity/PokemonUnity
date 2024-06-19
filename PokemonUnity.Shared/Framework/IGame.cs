@@ -49,8 +49,8 @@ namespace PokemonEssentials.Interface
 		PokemonEssentials.Interface.IGameScreen GameScreen					{ get; set; }		//ToDo: Rename to `Screen`, maybe include `Component` or `Element` in name?
 		PokemonEssentials.Interface.IGameMessage GameMessage				{ get; set; }
 		PokemonEssentials.Interface.IChooseNumberParams ChooseNumberParams	{ get; set; }
-		//PokemonEssentials.Interface.IAudio Audio							{ get; set; }
-		PokemonEssentials.Interface.IGameAudioPlay Audio					{ get; set; }
+		//PokemonEssentials.Interface.IGameAudioPlay Audio					{ get; set; }
+		PokemonEssentials.Interface.IAudio Audio							{ get; set; }
 		PokemonEssentials.Interface.IGraphics Graphics						{ get; set; }
 		PokemonEssentials.Interface.IInput Input							{ get; set; }
 		PokemonEssentials.Interface.IInterpreter Interpreter				{ get; set; }

@@ -1,9 +1,9 @@
 ﻿using System;
 using PokemonEssentials.Interface;
 
-namespace PokemonUnity.Interface.UnityEngine
+namespace PokemonUnity
 {
-	public class GameAudioPlay : PokemonEssentials.Interface.IGameAudioPlay
+	public partial class Game : PokemonEssentials.Interface.IGameAudioPlay
 	{
 		public IAudioObject StringToAudioFile(string name)
 		{
@@ -22,6 +22,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				int volume = int.Parse(m1.Captures[2].Value); //$2.to_i;
 				int pitch = int.Parse(m1.Captures[3].Value); //$3.to_i;
 				return new AudioTrack().initialize(file,volume,pitch);
+				//return Audio.ResolveAudioFile(file,volume,pitch);
 			} else if (m2.Success) {//str[/^(.*)\:\s*(\d+)\s*$/]
 				string file = m2.Captures[1].Value; //$1;
 				int volume = int.Parse(m2.Captures[2].Value); //$2.to_i;
@@ -77,9 +78,9 @@ namespace PokemonUnity.Interface.UnityEngine
 			BGMPlay(param, volume, pitch);
 			//if (param.name != null && param.name != "")
 			//{
-			//	if (Game.GameData.GameSystem != null) //&& Game.GameData.GameSystem.respond_to("bgm_play"))
+			//	if (GameData.GameSystem != null) //&& GameData.GameSystem.respond_to("bgm_play"))
 			//	{
-			//		Game.GameData.GameSystem.bgm_play(param);
+			//		GameData.GameSystem.bgm_play(param);
 			//		return;
 			//	}
 			//	//else if (RPG.const_defined(:BGM)) { //rescue false
@@ -89,7 +90,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			//	//		b.play(); return;
 			//	//	}
 			//	//}
-			//	AudioManager.AudioHandler.bgm_play("AudioManager/BGM/" + param.name, param.volume, param.pitch);
+			//	if (GameData.Audio is IAudio audio) audio.bgm_play("AudioManager/BGM/" + param.name, param.volume, param.pitch);
 			//}
 		}
 
@@ -101,19 +102,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			IAudioBGM param = name as IAudioBGM;
 			if (param.name != null && param.name != "")
 			{
-				if (Game.GameData.GameSystem != null) //&& Game.GameData.GameSystem.respond_to("bgm_play"))
-				{
-					Game.GameData.GameSystem.bgm_play(param);
-					return;
-				}
-				//else if ((RPG.const_defined(:BGM))) { //rescue false
-				//	b = new RPG.BGM(param.name, param.volume, param.pitch);
-				//	if (b && b.respond_to("play"))
-				//	{
-				//		b.play; return;
-				//	}
+				//if (GameData.GameSystem != null) //&& GameData.GameSystem.respond_to("bgm_play"))
+				//{
+				//	GameData.GameSystem.bgm_play(param);
+				//	return;
 				//}
-				AudioManager.AudioHandler.bgm_play("Audio/BGM/" + param.name, param.volume, param.pitch);
+				if (GameData.Audio is IAudio audio) audio.bgm_play("Audio/BGM/" + param.name, param.volume, param.pitch);
 			}
 		}
 
@@ -128,28 +122,20 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			if (Game.GameData.GameSystem != null && timeInSeconds>0.0) //&& Game.GameData.GameSystem.respond_to("bgm_fade"))
-			{
-				Game.GameData.GameSystem.bgm_fade(timeInSeconds);
-				return;
-			} else if (Game.GameData.GameSystem != null) //&& Game.GameData.GameSystem.respond_to("bgm_stop"))
-			{
-				Game.GameData.GameSystem.bgm_stop();
-				return;
-			}
-			//else if (RPG.const_defined(:BGM)) { //rescue false
-			//	try{ //begin;
-			//		//(timeInSeconds > 0.0) ? RPG.BGM.fade((timeInSeconds * 1000).floor) : RPG.BGM.stop();
-			//		if (timeInSeconds > 0.0)
-			//			RPG.BGM.fade((timeInSeconds * 1000).floor) : RPG.BGM.stop();
-			//		return;
-			//	} catch (Exception) { } //rescue;
+			//if (GameData.GameSystem != null && timeInSeconds>0.0) //&& GameData.GameSystem.respond_to("bgm_fade"))
+			//{
+			//	GameData.GameSystem.bgm_fade(timeInSeconds);
+			//	return;
+			//} else if (GameData.GameSystem != null) //&& GameData.GameSystem.respond_to("bgm_stop"))
+			//{
+			//	GameData.GameSystem.bgm_stop();
+			//	return;
 			//}
 			//(timeInSeconds > 0.0) ? AudioManager.AudioHandler.bgm_fade((timeInSeconds * 1000).floor) : AudioManager.AudioHandler.bgm_stop();
 			if (timeInSeconds > 0.0)
-				AudioManager.AudioHandler.bgm_fade((int)Math.Floor(timeInSeconds * 1000));
+				if (GameData.Audio is IAudio audio) audio.bgm_fade((int)Math.Floor(timeInSeconds * 1000));
 			else
-				AudioManager.AudioHandler.bgm_stop();
+				if (GameData.Audio is IAudio audio1) audio1.bgm_stop();
 		}
 		#endregion
 
@@ -163,9 +149,9 @@ namespace PokemonUnity.Interface.UnityEngine
 			MEPlay(param, volume, pitch);
 			//if (param.name != null && param.name != "")
 			//{
-			//	if (Game.GameData.GameSystem != null) //&& Game.GameData.GameSystem.respond_to("me_play"))
+			//	if (GameData.GameSystem != null) //&& GameData.GameSystem.respond_to("me_play"))
 			//	{
-			//		Game.GameData.GameSystem.me_play(param);
+			//		GameData.GameSystem.me_play(param);
 			//		return;
 			//	}
 			//	//else if (RPG.const_defined(:ME)) { //rescue false
@@ -187,19 +173,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			IAudioME param = name as IAudioME;
 			if (param.name != null && param.name != "")
 			{
-				if (Game.GameData.GameSystem != null) //&& Game.GameData.GameSystem.respond_to("me_play"))
-				{
-					Game.GameData.GameSystem.me_play(param);
-					return;
-				}
-				//else if (RPG.const_defined(:ME)) { //rescue false
-				//	b = new RPG.ME(param.name, param.volume, param.pitch);
-				//	if (b && b.respond_to("play"))
-				//	{
-				//		b.play(); return;
-				//	}
+				//if (GameData.GameSystem != null) //&& GameData.GameSystem.respond_to("me_play"))
+				//{
+				//	GameData.GameSystem.me_play(param);
+				//	return;
 				//}
-				AudioManager.AudioHandler.me_play("Audio/ME/" + param.name, param.volume, param.pitch);
+				if (GameData.Audio is IAudio audio) audio.me_play("Audio/ME/" + param.name, param.volume, param.pitch);
 			}
 		}
 
@@ -214,32 +193,22 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			if (Game.GameData.GameSystem != null && timeInSeconds > 0.0) //&& Game.GameData.GameSystem.respond_to("me_fade"))
-			{
-				Game.GameData.GameSystem.me_fade(timeInSeconds);
-				return;
-			}
-			else if (Game.GameData.GameSystem != null) //&& Game.GameData.GameSystem.respond_to("me_stop"))
-			{
-				//Game.GameData.GameSystem.me_stop(null);
-				Game.GameData.GameSystem.me_stop();
-				return;
-			}
-			//else if (RPG.const_defined(:ME)) { //rescue false
-			//	try { //begin;
-			//		  //(timeInSeconds > 0.0) ? RPG.ME.fade((timeInSeconds * 1000).floor) : RPG.ME.stop();
-			//		if (timeInSeconds > 0.0)
-			//			RPG.ME.fade(Math.Floor(timeInSeconds * 1000));
-			//		else
-			//			RPG.ME.stop();
-			//		return;
-			//	} catch (Exception) { } //rescue;
+			//if (GameData.GameSystem != null && timeInSeconds > 0.0) //&& GameData.GameSystem.respond_to("me_fade"))
+			//{
+			//	GameData.GameSystem.me_fade(timeInSeconds);
+			//	return;
+			//}
+			//else if (GameData.GameSystem != null) //&& GameData.GameSystem.respond_to("me_stop"))
+			//{
+			//	//GameData.GameSystem.me_stop(null);
+			//	GameData.GameSystem.me_stop();
+			//	return;
 			//}
 			//(timeInSeconds>0.0) ? AudioManager.AudioHandler.me_fade((timeInSeconds*1000).floor) : AudioManager.AudioHandler.me_stop();
 			if (timeInSeconds > 0.0)
-				AudioManager.AudioHandler.me_fade((int)Math.Floor(timeInSeconds * 1000));
+				if (GameData.Audio is IAudio audio) audio.me_fade((int)Math.Floor(timeInSeconds * 1000));
 			else
-				AudioManager.AudioHandler.me_stop();
+				if (GameData.Audio is IAudio audio1) audio1.me_stop();
 		}
 		#endregion
 
@@ -252,19 +221,12 @@ namespace PokemonUnity.Interface.UnityEngine
 			IAudioBGS param = ResolveAudioFile(name, volume, pitch) as IAudioBGS;
 			if (param.name != null && param.name != "")
 			{
-				if (Game.GameData.GameSystem != null) //&& Game.GameData.GameSystem.respond_to("bgs_play"))
-				{
-					Game.GameData.GameSystem.bgs_play(param);
-					return;
-				}
-				//else if (RPG.const_defined(:BGS)) { //rescue false
-				//	b = new RPG.BGS(param.name, param.volume, param.pitch);
-				//	if (b != null && b.respond_to("play"))
-				//	{
-				//		b.play(); return;
-				//	}
+				//if (GameData.GameSystem != null) //&& GameData.GameSystem.respond_to("bgs_play"))
+				//{
+				//	GameData.GameSystem.bgs_play(param);
+				//	return;
 				//}
-				AudioManager.AudioHandler.bgs_play("Audio/BGS/" + param.name, param.volume, param.pitch);
+				if (GameData.Audio is IAudio audio) audio.bgs_play("Audio/BGS/" + param.name, param.volume, param.pitch);
 			}
 		}
 
@@ -284,33 +246,21 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			if (Game.GameData.GameSystem != null && timeInSeconds > 0.0) //&& Game.GameData.GameSystem.respond_to("bgs_fade"))
-			{
-				Game.GameData.GameSystem.bgs_fade(timeInSeconds);
-				return;
-			}
-			else if (Game.GameData.GameSystem != null) //&& Game.GameData.GameSystem.respond_to("bgs_play"))
-			{
-				Game.GameData.GameSystem.bgs_play(null);
-				return;
-			}
-			//else if (RPG.const_defined(:BGS)) { //rescue false
-			//	try { //begin;
-			//		//(timeInSeconds > 0.0) ? RPG.BGS.fade((timeInSeconds * 1000).floor) : RPG.BGS.stop();
-			//		if (timeInSeconds > 0.0)
-			//			RPG.BGS.fade((timeInSeconds * 1000).floor);
-			//		else
-			//			RPG.BGS.stop();
-			//		return;
-			//	} catch (Exception) {
-			//		//rescue;
-			//	}
+			//if (GameData.GameSystem != null && timeInSeconds > 0.0) //&& GameData.GameSystem.respond_to("bgs_fade"))
+			//{
+			//	GameData.GameSystem.bgs_fade(timeInSeconds);
+			//	return;
+			//}
+			//else if (GameData.GameSystem != null) //&& GameData.GameSystem.respond_to("bgs_play"))
+			//{
+			//	GameData.GameSystem.bgs_play(null);
+			//	return;
 			//}
 			//(timeInSeconds > 0.0) ? AudioManager.AudioHandler.bgs_fade((timeInSeconds * 1000).floor) : AudioManager.AudioHandler.bgs_stop();
 			if (timeInSeconds > 0.0)
-				AudioManager.AudioHandler.bgs_fade((int)Math.Floor(timeInSeconds * 1000));
+				if (GameData.Audio is IAudio audio) audio.bgs_fade((int)Math.Floor(timeInSeconds * 1000));
 			else
-				AudioManager.AudioHandler.bgs_stop();
+				if (GameData.Audio is IAudio audio1) audio1.bgs_stop();
 		}
 		#endregion
 
@@ -331,9 +281,9 @@ namespace PokemonUnity.Interface.UnityEngine
 			{
 				// If layer like unity cant handle, then try a different approach like
 				// playing it directly from device, older/newer unity technology, or something...
-				//if (Game.GameData.GameSystem != null && param is IAudioSE audioSE) //Game.GameData.GameSystem.respond_to("se_play")
+				//if (GameData.GameSystem != null && param is IAudioSE audioSE) //GameData.GameSystem.respond_to("se_play")
 				//{
-				//	Game.GameData.GameSystem.se_play(audioSE);
+				//	GameData.GameSystem.se_play(audioSE);
 				//	return;
 				//}
 				//else if ((RPG.const_defined(:SE) rescue false)) {
@@ -343,7 +293,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				//		b.play; return;
 				//	}
 				//}
-				AudioManager.AudioHandler.se_play("Audio/SE/" + param.name, param.volume, param.pitch);
+				if (GameData.Audio is IAudio audio) audio.se_play("Audio/SE/" + param.name, param.volume, param.pitch);
 			}
 		}
 
@@ -358,17 +308,12 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			if (Game.GameData.GameSystem != null)
-			{
-				Game.GameData.GameSystem.se_stop();
-			}
-			//else if ((RPG.const_defined(:SE) rescue false)) {
-			//	RPG.ME.stop; //rescue null
+			//if (GameData.GameSystem != null)
+			//{
+			//	GameData.GameSystem.se_stop();
+			//	return;
 			//}
-			else
-			{
-				AudioManager.AudioHandler.se_stop();
-			}
+			if (GameData.Audio is IAudio audio) audio.se_stop();
 		}
 		#endregion
 
@@ -377,20 +322,16 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			if (Game.GameData.DataSystem != null && //Game.GameData.DataSystem.respond_to("cursor_se") &&
-			   Game.GameData.DataSystem.cursor_se != null && Game.GameData.DataSystem.cursor_se.name != "")
+			if (GameData.DataSystem != null && //GameData.DataSystem.respond_to("cursor_se") &&
+			   GameData.DataSystem.cursor_se != null && GameData.DataSystem.cursor_se.name != "")
 			{
-				SEPlay(Game.GameData.DataSystem.cursor_se);
+				SEPlay(GameData.DataSystem.cursor_se);
 			}
-			//else if (Game.GameData.DataSystem && Game.GameData.DataSystem.respond_to("sounds") &&
-			// Game.GameData.DataSystem.sounds && Game.GameData.DataSystem.sounds[0] && Game.GameData.DataSystem.sounds[0].name != "")
+			//else if (GameData.DataSystem && GameData.DataSystem.respond_to("sounds") &&
+			// GameData.DataSystem.sounds && GameData.DataSystem.sounds[0] && GameData.DataSystem.sounds[0].name != "")
 			//{
-			//	SEPlay(Game.GameData.DataSystem.sounds[0]);
+			//	SEPlay(GameData.DataSystem.sounds[0]);
 			//}
-			else if (FileTest.Instance.SoundEffectChoose != null)
-			{
-				SEPlay(FileTest.Instance.SoundEffectChoose, 80);
-			}
 			else if (FileTest.audio_exist("Audio/SE/Choose"))
 			{
 				SEPlay("Choose", 80);
@@ -401,20 +342,16 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			if (Game.GameData.DataSystem != null && //Game.GameData.DataSystem.respond_to("decision_se") &&
-			   Game.GameData.DataSystem.decision_se != null && Game.GameData.DataSystem.decision_se.name != "")
+			if (GameData.DataSystem != null && //GameData.DataSystem.respond_to("decision_se") &&
+			   GameData.DataSystem.decision_se != null && GameData.DataSystem.decision_se.name != "")
 			{
-				SEPlay(Game.GameData.DataSystem.decision_se);
+				SEPlay(GameData.DataSystem.decision_se);
 			}
-			//else if (Game.GameData.DataSystem && Game.GameData.DataSystem.respond_to("sounds") &&
-			// Game.GameData.DataSystem.sounds && Game.GameData.DataSystem.sounds[1] && Game.GameData.DataSystem.sounds[1].name != "")
+			//else if (GameData.DataSystem && GameData.DataSystem.respond_to("sounds") &&
+			// GameData.DataSystem.sounds && GameData.DataSystem.sounds[1] && GameData.DataSystem.sounds[1].name != "")
 			//{
-			//	SEPlay(Game.GameData.DataSystem.sounds[1]);
+			//	SEPlay(GameData.DataSystem.sounds[1]);
 			//}
-			else if (FileTest.Instance.SoundEffectChoose != null)
-			{
-				SEPlay(FileTest.Instance.SoundEffectChoose, 80);
-			}
 			else if (FileTest.audio_exist("Audio/SE/Choose"))
 			{
 				SEPlay("Choose", 80);
@@ -425,15 +362,15 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			if (Game.GameData.DataSystem != null && //Game.GameData.DataSystem.respond_to("cancel_se") &&
-			   Game.GameData.DataSystem.cancel_se != null && Game.GameData.DataSystem.cancel_se.name != "")
+			if (GameData.DataSystem != null && //GameData.DataSystem.respond_to("cancel_se") &&
+			   GameData.DataSystem.cancel_se != null && GameData.DataSystem.cancel_se.name != "")
 			{
-				SEPlay(Game.GameData.DataSystem.cancel_se);
+				SEPlay(GameData.DataSystem.cancel_se);
 			}
-			//else if (Game.GameData.DataSystem != null && Game.GameData.DataSystem.respond_to("sounds") &&
-			// Game.GameData.DataSystem.sounds && Game.GameData.DataSystem.sounds[2] && Game.GameData.DataSystem.sounds[2].name != "")
+			//else if (GameData.DataSystem != null && GameData.DataSystem.respond_to("sounds") &&
+			// GameData.DataSystem.sounds && GameData.DataSystem.sounds[2] && GameData.DataSystem.sounds[2].name != "")
 			//{
-			//	SEPlay(Game.GameData.DataSystem.sounds[2]);
+			//	SEPlay(GameData.DataSystem.sounds[2]);
 			//}
 			else if (FileTest.Instance.SoundEffectChoose != null)
 			{
@@ -449,20 +386,16 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			Core.Logger.Log("Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			if (Game.GameData.DataSystem != null && //Game.GameData.DataSystem.respond_to("buzzer_se") &&
-			   Game.GameData.DataSystem.buzzer_se != null && Game.GameData.DataSystem.buzzer_se.name != "")
+			if (GameData.DataSystem != null && //GameData.DataSystem.respond_to("buzzer_se") &&
+			   GameData.DataSystem.buzzer_se != null && GameData.DataSystem.buzzer_se.name != "")
 			{
-				SEPlay(Game.GameData.DataSystem.buzzer_se);
+				SEPlay(GameData.DataSystem.buzzer_se);
 			}
-			//else if (Game.GameData.DataSystem && Game.GameData.DataSystem.respond_to("sounds") &&
-			// Game.GameData.DataSystem.sounds && Game.GameData.DataSystem.sounds[3] && Game.GameData.DataSystem.sounds[3].name != "")
+			//else if (GameData.DataSystem && GameData.DataSystem.respond_to("sounds") &&
+			// GameData.DataSystem.sounds && GameData.DataSystem.sounds[3] && GameData.DataSystem.sounds[3].name != "")
 			//{
-			//	SEPlay(Game.GameData.DataSystem.sounds[3]);
+			//	SEPlay(GameData.DataSystem.sounds[3]);
 			//}
-			else if (FileTest.Instance.SoundEffectBuzzer != null)
-			{
-				SEPlay(FileTest.Instance.SoundEffectBuzzer, 80);
-			}
 			else if (FileTest.audio_exist("Audio/SE/buzzer"))
 			{
 				SEPlay("buzzer", 80);

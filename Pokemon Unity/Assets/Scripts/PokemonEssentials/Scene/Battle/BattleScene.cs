@@ -497,7 +497,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					if (cw.pause)
 					{
-						if (!abortable && AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+						if (!abortable && Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 						cw.resume();
 					}
 				}
@@ -543,13 +543,13 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					if (cw.busy)
 					{
-						if (cw.pausing && !@abortable && AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+						if (cw.pausing && !@abortable && Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 						cw.resume();
 					}
 					else if (!inPartyAnimation)
 					{
 						cw.text = "";
-						if (AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+						if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 						if (@messagemode) cw.visible = false;
 						yield break;
 					}
@@ -624,7 +624,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					if (dw.busy)
 					{
-						if (dw.pausing && AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+						if (dw.pausing && Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 						dw.resume();
 					}
 					else
@@ -639,7 +639,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					if (dw.busy)
 					{
-						if (dw.pausing && AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+						if (dw.pausing && Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 						dw.resume();
 					}
 					else
@@ -1476,7 +1476,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			@abortable = false;
 			ShowWindow(BLANK);
 			//  Fade out all sprites
-			if (AudioHandler is IGameAudioPlay gap) gap.BGMFade(1.0f);
+			if (Game.GameData is IGameAudioPlay gap) gap.BGMFade(1.0f);
 			//FadeOutAndHide(@sprites);
 			DisposeSprites();
 			yield break;
@@ -1914,34 +1914,34 @@ namespace PokemonUnity.Interface.UnityEngine
 				//  Update selected command
 				if (PokemonUnity.Input.trigger(PokemonUnity.Input.LEFT) && (cw.index & 1) == 1)
 				{
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 					cw.index -= 1;
 				}
 				else if (PokemonUnity.Input.trigger(PokemonUnity.Input.RIGHT) && (cw.index & 1) == 0)
 				{
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 					cw.index += 1;
 				}
 				else if (PokemonUnity.Input.trigger(PokemonUnity.Input.UP) && (cw.index & 2) == 2)
 				{
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 					cw.index -= 2;
 				}
 				else if (PokemonUnity.Input.trigger(PokemonUnity.Input.DOWN) && (cw.index & 2) == 0)
 				{
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 					cw.index += 2;
 				}
 				if (PokemonUnity.Input.trigger(PokemonUnity.Input.A))	// Confirm choice
 				{
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 					int ret = cw.index;
 					@lastcmd[index] = (MenuCommands)ret;
 					return ret;
 				}
 				else if (PokemonUnity.Input.trigger(PokemonUnity.Input.B) && index == 2 && @lastcmd[0] != (MenuCommands)2)	// Cancel
 				{
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 					return -1;
 				}
 			} while (true);*/
@@ -1981,34 +1981,34 @@ namespace PokemonUnity.Interface.UnityEngine
 				//  Update selected command
 				if (PokemonUnity.Input.trigger(PokemonUnity.Input.LEFT) && (cw.index & 1) == 1)
 				{
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 					cw.index -= 1;
 				}
 				else if (PokemonUnity.Input.trigger(PokemonUnity.Input.RIGHT) && (cw.index & 1) == 0)
 				{
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 					cw.index += 1;
 				}
 				else if (PokemonUnity.Input.trigger(PokemonUnity.Input.UP) && (cw.index & 2) == 2)
 				{
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 					cw.index -= 2;
 				}
 				else if (PokemonUnity.Input.trigger(PokemonUnity.Input.DOWN) && (cw.index & 2) == 0)
 				{
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 					cw.index += 2;
 				}
 				if (PokemonUnity.Input.trigger(PokemonUnity.Input.A))	// Confirm choice
 				{
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 					int ret = cw.index;
 					@lastcmd[index] = (MenuCommands)ret;
 					return ret;
 				}
 				else if (PokemonUnity.Input.trigger(PokemonUnity.Input.B) && index == 2 && @lastcmd[0] != (MenuCommands)2)	// Cancel
 				{
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 					return -1;
 				}
 			} while (true);*/
@@ -2030,35 +2030,35 @@ namespace PokemonUnity.Interface.UnityEngine
 				if (global::UnityEngine.Input.GetKeyDown(global::UnityEngine.KeyCode.LeftArrow) && (cw.index & 1) == 1)
 				{
 					Core.Logger.Log("[CommandMenu] Going Left !");
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 					cw.index -= 1;
 				}
 				//else if (PokemonUnity.Input.trigger(PokemonUnity.Input.RIGHT) && (cw.index & 1) == 0)
 				else if (global::UnityEngine.Input.GetKeyDown(global::UnityEngine.KeyCode.RightArrow) && (cw.index & 1) == 0)
 				{
 					Core.Logger.Log("[CommandMenu] Going Right !");
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 					cw.index += 1;
 				}
 				//else if (PokemonUnity.Input.trigger(PokemonUnity.Input.UP) && (cw.index & 2) == 2)
 				else if (global::UnityEngine.Input.GetKeyDown(global::UnityEngine.KeyCode.UpArrow) && (cw.index & 2) == 2)
 				{
 					Core.Logger.Log("[CommandMenu] Going Up !");
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 					cw.index -= 2;
 				}
 				//else if (PokemonUnity.Input.trigger(PokemonUnity.Input.DOWN) && (cw.index & 2) == 0)
 				else if (global::UnityEngine.Input.GetKeyDown(global::UnityEngine.KeyCode.DownArrow) && (cw.index & 2) == 0)
 				{
 					Core.Logger.Log("[CommandMenu] Going Down !");
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 					cw.index += 2;
 				}
 				//if (PokemonUnity.Input.trigger(PokemonUnity.Input.A))   // Confirm choice
 				if (global::UnityEngine.Input.GetKeyDown(global::UnityEngine.KeyCode.Space))   // Confirm choice
 				{
 					Core.Logger.Log("[CommandMenu] Select !");
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 					int ret = cw.index;
 					@lastcmd[index] = (MenuCommands)ret;
 					//return ret;
@@ -2068,7 +2068,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				else if (global::UnityEngine.Input.GetKeyDown(global::UnityEngine.KeyCode.Escape) && index == 2 && @lastcmd[0] != (MenuCommands)2)  // Cancel
 				{
 					Core.Logger.Log("[CommandMenu] Cancel !");
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 					//return -1;
 					result(-1); break;
 				}
@@ -2111,24 +2111,24 @@ namespace PokemonUnity.Interface.UnityEngine
 				//  Update selected command
 				if (PokemonUnity.Input.trigger(PokemonUnity.Input.LEFT) && (cw.index & 1) == 1)
 				{
-					if (cw.setIndex(cw.index - 1) && AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (cw.setIndex(cw.index - 1) && Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 				}
 				else if (PokemonUnity.Input.trigger(PokemonUnity.Input.RIGHT) && (cw.index & 1) == 0)
 				{
-					if (cw.setIndex(cw.index + 1) && AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (cw.setIndex(cw.index + 1) && Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 				}
 				else if (PokemonUnity.Input.trigger(PokemonUnity.Input.UP) && (cw.index & 2) == 2)
 				{
-					if (cw.setIndex(cw.index - 2) && AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (cw.setIndex(cw.index - 2) && Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 				}
 				else if (PokemonUnity.Input.trigger(PokemonUnity.Input.DOWN) && (cw.index & 2) == 0)
 				{
-					if (cw.setIndex(cw.index + 2) && AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (cw.setIndex(cw.index + 2) && Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 				}
 				if (PokemonUnity.Input.trigger(PokemonUnity.Input.A))       // Confirm choice
 				{
 					int ret = cw.index;
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 					@lastmove[index] = ret;
 					return ret;
 				}
@@ -2138,13 +2138,13 @@ namespace PokemonUnity.Interface.UnityEngine
 					{
 						@battle.RegisterMegaEvolution(index);
 						cw.megaButton = 2;
-						if (AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+						if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 					}
 				}
 				else if (PokemonUnity.Input.trigger(PokemonUnity.Input.B))       // Cancel fight menu
 				{
 					@lastmove[index] = cw.index;
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayCancelSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayCancelSE();
 					return -1;
 				}
 			} while (true);*/
@@ -2184,24 +2184,24 @@ namespace PokemonUnity.Interface.UnityEngine
 				//  Update selected command
 				if (PokemonUnity.Input.trigger(PokemonUnity.Input.LEFT) && (cw.index & 1) == 1)
 				{
-					if (cw.setIndex(cw.index - 1) && AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (cw.setIndex(cw.index - 1) && Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 				}
 				else if (PokemonUnity.Input.trigger(PokemonUnity.Input.RIGHT) && (cw.index & 1) == 0)
 				{
-					if (cw.setIndex(cw.index + 1) && AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (cw.setIndex(cw.index + 1) && Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 				}
 				else if (PokemonUnity.Input.trigger(PokemonUnity.Input.UP) && (cw.index & 2) == 2)
 				{
-					if (cw.setIndex(cw.index - 2) && AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (cw.setIndex(cw.index - 2) && Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 				}
 				else if (PokemonUnity.Input.trigger(PokemonUnity.Input.DOWN) && (cw.index & 2) == 0)
 				{
-					if (cw.setIndex(cw.index + 2) && AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (cw.setIndex(cw.index + 2) && Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 				}
 				if (PokemonUnity.Input.trigger(PokemonUnity.Input.A))       // Confirm choice
 				{
 					int ret = cw.index;
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 					@lastmove[index] = ret;
 					return ret;
 				}
@@ -2211,13 +2211,13 @@ namespace PokemonUnity.Interface.UnityEngine
 					{
 						@battle.RegisterMegaEvolution(index);
 						cw.megaButton = 2;
-						if (AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+						if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 					}
 				}
 				else if (PokemonUnity.Input.trigger(PokemonUnity.Input.B))       // Cancel fight menu
 				{
 					@lastmove[index] = cw.index;
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayCancelSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayCancelSE();
 					return -1;
 				}
 			} while (true);*/
@@ -2248,35 +2248,35 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					Core.Logger.Log("[CommandMenu] Going Left !");
 					cw.setIndex(cw.index - 1);
-					if (cw.setIndex(cw.index - 1) && AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (cw.setIndex(cw.index - 1) && Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 				}
 				//else if (PokemonUnity.Input.trigger(PokemonUnity.Input.RIGHT) && (cw.index & 1) == 0)
 				else if (global::UnityEngine.Input.GetKeyDown(global::UnityEngine.KeyCode.RightArrow) && (cw.index & 1) == 0)
 				{
 					Core.Logger.Log("[CommandMenu] Going Right !");
 					cw.setIndex(cw.index + 1);
-					if (cw.setIndex(cw.index + 1) && AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (cw.setIndex(cw.index + 1) && Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 				}
 				//else if (PokemonUnity.Input.trigger(PokemonUnity.Input.UP) && (cw.index & 2) == 2)
 				else if (global::UnityEngine.Input.GetKeyDown(global::UnityEngine.KeyCode.UpArrow) && (cw.index & 2) == 2)
 				{
 					Core.Logger.Log("[CommandMenu] Going Up !");
 					cw.setIndex(cw.index - 2);
-					if (cw.setIndex(cw.index - 2) && AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (cw.setIndex(cw.index - 2) && Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 				}
 				//else if (PokemonUnity.Input.trigger(PokemonUnity.Input.DOWN) && (cw.index & 2) == 0)
 				else if (global::UnityEngine.Input.GetKeyDown(global::UnityEngine.KeyCode.DownArrow) && (cw.index & 2) == 0)
 				{
 					Core.Logger.Log("[CommandMenu] Going Down !");
 					cw.setIndex(cw.index + 2);
-					if (cw.setIndex(cw.index + 2) && AudioHandler is IGameAudioPlay gap) gap.PlayCursorSE();
+					if (cw.setIndex(cw.index + 2) && Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 				}
 				//if (PokemonUnity.Input.trigger(PokemonUnity.Input.A))				// Confirm choice
 				if (global::UnityEngine.Input.GetKeyDown(global::UnityEngine.KeyCode.Space))		// Confirm choice
 				{
 					Core.Logger.Log("[CommandMenu] Select !");
 					int ret = cw.index;
-					 if (AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+					 if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 					@lastmove[index] = ret;
 					result(ret);
 					break;
@@ -2289,7 +2289,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					{
 						@battle.RegisterMegaEvolution(index);
 						cw.megaButton = 2;
-						if (AudioHandler is IGameAudioPlay gap) gap.PlayDecisionSE();
+						if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 					}
 				}
 				//else if (PokemonUnity.Input.trigger(PokemonUnity.Input.B))			// Cancel fight menu
@@ -2297,7 +2297,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					Core.Logger.Log("[CommandMenu] Cancel !");
 					@lastmove[index] = cw.index;
-					if (AudioHandler is IGameAudioPlay gap) gap.PlayCancelSE();
+					if (Game.GameData is IGameAudioPlay gap) gap.PlayCancelSE();
 					result(-1);
 					break;
 				}
@@ -3279,13 +3279,22 @@ namespace PokemonUnity.Interface.UnityEngine
 			switch (effectiveness)
 			{
 				case TypeEffective.NormalEffective: //0:
-					if (AudioHandler is IGameAudioPlay gap1) gap1.SEPlay("normaldamage");
+					if (Game.GameData is IGameAudioPlay gap1)
+						if (FileTest.Instance.SoundEffectNormalDamage != null)
+							gap1.SEPlay(FileTest.Instance.SoundEffectNormalDamage, 80);
+						else gap1.SEPlay("normaldamage");
 					break;
 				case TypeEffective.NotVeryEffective: //1:
-					if (AudioHandler is IGameAudioPlay gap2) gap2.SEPlay("notverydamage");
+					if (Game.GameData is IGameAudioPlay gap2)
+						if (FileTest.Instance.SoundEffectNotVeryDamage != null)
+							gap2.SEPlay(FileTest.Instance.SoundEffectNotVeryDamage, 80);
+						else  gap2.SEPlay("notverydamage");
 					break;
 				case TypeEffective.SuperEffective: //2:
-					if (AudioHandler is IGameAudioPlay gap3) gap3.SEPlay("superdamage");
+					if (Game.GameData is IGameAudioPlay gap3)
+						if (FileTest.Instance.SoundEffectSuperDamage != null)
+							gap3.SEPlay(FileTest.Instance.SoundEffectSuperDamage, 80);
+						else gap3.SEPlay("superdamage");
 					break;
 				//ToDo: Ineffective?
 			}
@@ -3366,8 +3375,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
+			if (Game.GameData is IGameUtility gu) gu.PlayCry(pkmn.pokemon);
 			/*int frames = CryFrameLength(pkmn.pokemon);
-			PlayCry(pkmn.pokemon);
 			int i = 0; do {
 				GraphicsUpdate();
 				InputUpdate();
@@ -3391,9 +3400,12 @@ namespace PokemonUnity.Interface.UnityEngine
 				{
 					ycoord = PokeBattle_SceneConstants.PLAYERBATTLER_Y;
 				}
-			}
-			if (AudioHandler is IGameAudioPlay gap) gap.SEPlay("faint");
-			do //;loop
+			}*/
+			if (Game.GameData is IGameAudioPlay gap)
+				if (FileTest.Instance.SoundEffectFaint != null)
+					gap.SEPlay(FileTest.Instance.SoundEffectFaint);
+				else gap.SEPlay("faint");
+			/*do //;loop
 			{
 				pkmnsprite.y += 8;
 				if (pkmnsprite.y - pkmnsprite.oy + pkmnsprite.src_rect.height >= ycoord)
@@ -3413,9 +3425,9 @@ namespace PokemonUnity.Interface.UnityEngine
 				GraphicsUpdate();
 				InputUpdate();
 				FrameUpdate();
-			} while (i < 8); //8.times
+			} while (i < 8);*/ //8.times
 			(@sprites[$"battlebox{pkmn.Index}"] as IPokemonDataBox).visible = false;
-			pkmn.ResetForm();*/
+			pkmn.ResetForm();
 			yield return null;
 		}
 
@@ -3454,7 +3466,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			//yield return if (AudioHandler is IGameAudioPlay gap) gap.BGMPlay(GetWildVictoryME());
+			//yield return if (Game.GameData is IGameAudioPlay gap) gap.BGMPlay(GetWildVictoryME());
 			yield break;
 		}
 
@@ -3464,7 +3476,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			LogManager.Logger.LogDebug(this, message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
 
-			//yield retun if (AudioHandler is IGameAudioPlay gap) gap.BGMPlay(GetTrainerVictoryME(@battle.opponent));
+			//yield retun if (Game.GameData is IGameAudioPlay gap) gap.BGMPlay(GetTrainerVictoryME(@battle.opponent));
 			yield break;
 		}
 
@@ -3954,7 +3966,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			//if wild pokemon...
 			if (@battle.opponent == null) {
 				@briefmessage=false;
-				if (AudioHandler is IGameAudioPlay gap) gap.MEPlay("Jingle - HMTM");
+				if (Game.GameData is IGameAudioPlay gap) gap.MEPlay("Jingle - HMTM");
 				//All of this below should be a coroutine that returns the value selected in UI
 				int frames=(int)(3.5*(Game.GameData as Game).Graphics.frame_rate);
 				int i = 0; do {

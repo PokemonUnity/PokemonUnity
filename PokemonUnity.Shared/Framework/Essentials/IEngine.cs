@@ -20,7 +20,7 @@ namespace PokemonEssentials.Interface
 		/// <param name="filename"></param>
 		/// <param name="volume"></param>
 		/// <param name="pitch"></param>
-		void bgm_play(string filename, float volume, float pitch);
+		void bgm_play(string filename, float volume, float pitch, int position = 0);
 		/// <summary>
 		/// Stops BGM playback.
 		/// </summary>

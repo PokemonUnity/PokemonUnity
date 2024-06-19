@@ -10,6 +10,7 @@ using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
+using PokemonUnity.Legacy;
 
 namespace PokemonUnity.Interface.UnityEngine
 {
@@ -523,15 +524,15 @@ namespace PokemonUnity.Interface.UnityEngine
 			//global::UnityEngine.UI.Image _bgoverlay=@sprites["bgoverlay"].bitmap;
 			//_bgoverlay.clear();
 			//SetSystemFont(bgoverlay);
-			IList<ITextPosition> textPositions=new List<ITextPosition>() {
-				//new TextPosition(@helptext, 160, 12, false, new Color(16, 24, 32), new Color(168, 184, 184))
-			};
-			char[] chars=@helper.textChars();
-			int x=166;
-			foreach (char ch in chars) { //ToDo: Maybe instantiate gameobject or submit keystrokes to an existing text box.
-				//textPositions.Add(new TextPosition(ch, x, 48, false, new Color(16, 24, 32), new Color(168, 184, 184)));
-				//x+=24;
-			}
+			//IList<ITextPosition> textPositions=new List<ITextPosition>() {
+			//	//new TextPosition(@helptext, 160, 12, false, new Color(16, 24, 32), new Color(168, 184, 184))
+			//};
+			//char[] chars=@helper.textChars();
+			//int x=166;
+			//foreach (char ch in chars) { //ToDo: Maybe instantiate gameobject or submit keystrokes to an existing text box.
+			//	textPositions.Add(new TextPosition(ch, x, 48, false, new Color(16, 24, 32), new Color(168, 184, 184)));
+			//	x+=24;
+			//}
 			//DrawTextPositions(_bgoverlay,textPositions);
 		}
 
@@ -654,7 +655,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			if (@cursorpos!=oldcursor) {			// Cursor position changed
 				cursor.setCursorPos(@cursorpos);	//@sprites["cursor"]
-				Game.GameData.Audio.PlayCursorSE();
+				if (Game.GameData is IGameAudioPlay gap) gap.PlayCursorSE();
 				return true;
 			} else {
 				return false;
@@ -837,28 +838,28 @@ namespace PokemonUnity.Interface.UnityEngine
 					if (index==-3) {		// Confirm text
 						ret=(@sprites["entry"] as IWindow_TextEntry_Keyboard).text;
 						if (ret.Length<@Minlength || ret.Length>Maxlength) {
-							//PlayBuzzerSE();
+							if (Game.GameData is IGameAudioPlay gap) gap.PlayBuzzerSE();
 						} else {
-							//PlayDecisionSE();
+							if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 							break;
 						}
 					} else if (index==-1) {		// Insert a space
 						if ((@sprites["entry"] as IWindow_TextEntry_Keyboard).insert(" ")) {
-							//PlayDecisionSE();
+							if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 						} else {
-							//PlayBuzzerSE();
+							if (Game.GameData is IGameAudioPlay gap) gap.PlayBuzzerSE();
 						}
 					} else if (index==-2) {		// Change character set
-						//PlayDecisionSE();
+						if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 						@symtype+=1;
 						if (@symtype>=@Characters.Length) @symtype=0;
 						(@sprites["entry2"] as IWindow_CharacterEntry).setCharset("[*]");		//@Characters[@symtype][0]
 						(@sprites["entry2"] as IWindow_CharacterEntry).setOtherCharset("[A]");	//@Characters[@symtype][1]
 					} else { // Insert given character
 						if ((@sprites["entry"] as IWindow_TextEntry_Keyboard).insert((@sprites["entry2"] as IWindow_CharacterEntry).character())) {
-							//PlayDecisionSE();
+							if (Game.GameData is IGameAudioPlay gap) gap.PlayDecisionSE();
 						} else {
-							///PlayBuzzerSE();
+							if (Game.GameData is IGameAudioPlay gap) gap.PlayBuzzerSE();
 						}
 					}
 					continue;

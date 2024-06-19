@@ -701,7 +701,10 @@ namespace PokemonUnity
 		public void TrainerPC() {
 			(this as IGameMessage).Message(Game._INTL("\\se[computeropen]{1} booted up the PC.",Trainer.name));
 			TrainerPCMenu();
-			(this as IGameAudioPlay).SEPlay("computerclose");
+			if (Audio is IGameAudioPlay gap) gap.SEPlay("computerclose");
+				//if (FileTest.Instance.SoundEffectComputerClose != null)
+				//	gap.SEPlay(FileTest.Instance.SoundEffectComputerClose);
+				//else gap.SEPlay("computerclose");
 		}
 
 		public void PokeCenterPC() {
@@ -714,7 +717,7 @@ namespace PokemonUnity
 					break;
 				}
 			} while (true);
-			(this as IGameAudioPlay).SEPlay("computerclose");
+			if (Audio is IGameAudioPlay gap) gap.SEPlay("computerclose");
 		}
 		#endregion
 	}
