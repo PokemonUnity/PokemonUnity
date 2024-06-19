@@ -24,12 +24,14 @@ namespace PokemonUnity
 		//public PokemonEssentials.Interface.Field.IMapMetadata MapData { get; private set; }
 		public PokemonEssentials.Interface.Screen.IPokemonSystemOption PokemonSystem { get; private set; }
 		public PokemonEssentials.Interface.Field.ITempMetadata PokemonTemp { get; set; }
+		public PokemonEssentials.Interface.Field.IEncounters MapEncounterData { get; set; }
 		public PokemonEssentials.Interface.Field.IEncounters PokemonEncounters { get; private set; }
 		public PokemonEssentials.Interface.Screen.IPCPokemonStorage PokemonStorage { get; private set; }
 		public PokemonEssentials.Interface.Screen.IBag Bag { get; private set; }
 		public PokemonEssentials.Interface.ISceneMap Scene { get; set; }
 		public PokemonEssentials.Interface.IGameTemp GameTemp { get; private set; }
-		public PokemonEssentials.Interface.IGamePlayer Player { get; set; }
+		public PokemonEssentials.Interface.IGamePlayer GamePlayer { get; set; }
+		//public PokemonEssentials.Interface.IGamePlayer Player { get; set; }
 		public PokemonEssentials.Interface.PokeBattle.ITrainer Trainer { get; set; }
 		public PokemonEssentials.Interface.RPGMaker.Kernal.ISystem DataSystem { get; set; }
 		public PokemonEssentials.Interface.ITileset[] DataTilesets { get; set; }
@@ -39,14 +41,12 @@ namespace PokemonUnity
 		public PokemonEssentials.Interface.IGameSelfSwitches GameSelfSwitches { get; set; }
 		public PokemonEssentials.Interface.IGameVariable GameVariables { get; set; }
 		public PokemonEssentials.Interface.IGameScreen GameScreen { get; set; }
-		public PokemonEssentials.Interface.IGamePlayer GamePlayer { get; set; }
 		public PokemonEssentials.Interface.IGameMap GameMap { get; set; }
 		public PokemonEssentials.Interface.IGameMessage GameMessage { get; set; }
 		//public PokemonEssentials.Interface.IGameAudioPlay Audio { get; set; }
 
 		//public static PokemonUnity.Interface.IFrontEnd UI { get; private set; }
 		public PokemonEssentials.Interface.IChooseNumberParams ChooseNumberParams { get; set; }
-		public PokemonEssentials.Interface.Field.IEncounters MapEncounterData { get; set; }
 
 		/// <summary>
 		/// Singleton Instance of Game class to store current/active play state.

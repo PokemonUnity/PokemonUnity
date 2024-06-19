@@ -456,7 +456,7 @@ namespace PokemonUnity.Character
 
 		//Events.onStepTaken+=delegate(object sender, EventArgs e) {
 		public void OnStepTakenEventHandler(object sender, IOnStepTakenFieldMovementEventArgs e) {
-			if (Game.GameData.Player == null) return;
+			if (Game.GameData.Trainer == null) return;
 			int deposited= this.DayCareDeposited();
 			if (deposited==2 && !Game.GameData.Global.daycareEgg) {//==0
 				if (Game.GameData.Global.daycareEggSteps == null) Game.GameData.Global.daycareEggSteps=0;

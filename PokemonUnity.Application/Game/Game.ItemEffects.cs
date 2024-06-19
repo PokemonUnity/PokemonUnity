@@ -42,7 +42,7 @@ namespace PokemonUnity//.Inventory
 				case Items.SUPER_REPEL: args.Response = Repel(Items.SUPER_REPEL,200); break;
 				case Items.MAX_REPEL: args.Response = Repel(Items.MAX_REPEL,250); break;
 				case Items.BLACK_FLUTE:
-					(this as IGameMessage).Message(Game._INTL("{1} used the {2}.",Player.name,Game._INTL(Items.BLACK_FLUTE.ToString(TextScripts.Name))));
+					(this as IGameMessage).Message(Game._INTL("{1} used the {2}.",Trainer.name,Game._INTL(Items.BLACK_FLUTE.ToString(TextScripts.Name))));
 					(this as IGameMessage).Message(Game._INTL("Wild Pokémon will be repelled."));
 					PokemonMap.blackFluteUsed=true;
 					PokemonMap.whiteFluteUsed=false;
@@ -50,7 +50,7 @@ namespace PokemonUnity//.Inventory
 					args.Response = ItemUseResults.UsedNotConsumed;
 					break;
 				case Items.WHITE_FLUTE:
-					(this as IGameMessage).Message(Game._INTL("{1} used the {2}.",Player.name,Game._INTL(Items.WHITE_FLUTE.ToString(TextScripts.Name))));
+					(this as IGameMessage).Message(Game._INTL("{1} used the {2}.",Trainer.name,Game._INTL(Items.WHITE_FLUTE.ToString(TextScripts.Name))));
 					(this as IGameMessage).Message(Game._INTL("Wild Pokémon will be lured."));
 					PokemonMap.blackFluteUsed=false;
 					PokemonMap.whiteFluteUsed=true;
@@ -191,7 +191,7 @@ namespace PokemonUnity//.Inventory
 			switch (item) {
 				#region UseInField handlers
 				case Items.HONEY:
-					(this as IGameMessage).Message(Game._INTL("{1} used the {2}.",Player.name,Game._INTL(Items.HONEY.ToString(TextScripts.Name))));
+					(this as IGameMessage).Message(Game._INTL("{1} used the {2}.",Trainer.name,Game._INTL(Items.HONEY.ToString(TextScripts.Name))));
 					if (this is IGameHiddenMoves ghm) ghm.SweetScent();
 					break;
 				case Items.ESCAPE_ROPE:
@@ -206,7 +206,7 @@ namespace PokemonUnity//.Inventory
 						//next;
 						return;
 					}
-					(this as IGameMessage).Message(Game._INTL("{1} used the {2}.",Player.name,Game._INTL(item.ToString(TextScripts.Name))));
+					(this as IGameMessage).Message(Game._INTL("{1} used the {2}.",Trainer.name,Game._INTL(item.ToString(TextScripts.Name))));
 					FadeOutIn(99999, block: () => {
 						CancelVehicles();
 						GameTemp.player_new_map_id=escape.MapId;//[0];
@@ -2943,7 +2943,7 @@ namespace PokemonUnity//.Inventory
 		//Events.OnStepTaken+=OnStepTakenEventHandler;
 		private void OnStepTakenEventHandler(object sender, OnStepTakenFieldMovementEventArgs e)
 		{
-			if (!Terrain.isIce(Player.terrain_tag)) {		// Shouldn't count down if on ice
+			if (!Terrain.isIce(GamePlayer.terrain_tag)) {		// Shouldn't count down if on ice
 				if (Global.repel>0) {
 					Global.repel-=1;
 					if (Global.repel<=0) {

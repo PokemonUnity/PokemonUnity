@@ -27,12 +27,14 @@ namespace PokemonEssentials.Interface
 		//PokemonEssentials.Interface.Field.IMapMetadata MapData				{ get; }		//this is Data about the Current/Active Map the player is on
 		PokemonEssentials.Interface.Screen.IPokemonSystemOption PokemonSystem { get; }
 		PokemonEssentials.Interface.Field.ITempMetadata PokemonTemp			{ get; set; }		//ToDo: Rename to `TempData`
-		PokemonEssentials.Interface.Field.IEncounters PokemonEncounters		{ get; }
+		//PokemonEssentials.Interface.Field.IEncounters MapEncounterData		{ get; set; }
+		PokemonEssentials.Interface.Field.IEncounters PokemonEncounters		{ get; }			//ToDo: Rename to `MapEncounterData`
 		PokemonEssentials.Interface.Screen.IPCPokemonStorage PokemonStorage	{ get; }
 		PokemonEssentials.Interface.Screen.IBag Bag							{ get; }
 		PokemonEssentials.Interface.ISceneMap Scene							{ get; set; }
 		PokemonEssentials.Interface.IGameTemp GameTemp						{ get; }
-		PokemonEssentials.Interface.IGamePlayer Player						{ get; set; }		//ToDo: Rename to `Avatar`?
+		PokemonEssentials.Interface.IGamePlayer GamePlayer					{ get; set; }		//ToDo: Rename to `Player` -> `Avatar`
+		//PokemonEssentials.Interface.IGamePlayer Player						{ get; set; }		//ToDo: Rename to `Avatar`?
 		PokemonEssentials.Interface.PokeBattle.ITrainer Trainer				{ get; set; }
 		PokemonEssentials.Interface.RPGMaker.Kernal.ISystem DataSystem		{ get; set; }
 		PokemonEssentials.Interface.ITileset[] DataTilesets					{ get; set; }
@@ -41,9 +43,7 @@ namespace PokemonEssentials.Interface
 		PokemonEssentials.Interface.IGameSwitches GameSwitches				{ get; set; }
 		PokemonEssentials.Interface.IGameSelfSwitches GameSelfSwitches		{ get; set; }
 		PokemonEssentials.Interface.IGameVariable GameVariables				{ get; set; }
-		PokemonEssentials.Interface.IGamePlayer GamePlayer					{ get; set; }		//ToDo: Rename to `Player` -> `Avatar`
 		PokemonEssentials.Interface.IGameMap GameMap						{ get; set; }
-		PokemonEssentials.Interface.Field.IEncounters MapEncounterData		{ get; set; }
 
 		#region UI Components
 		PokemonEssentials.Interface.IGameScreen GameScreen					{ get; set; }		//ToDo: Rename to `Screen`, maybe include `Component` or `Element` in name?

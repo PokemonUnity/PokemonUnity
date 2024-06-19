@@ -165,7 +165,7 @@ namespace PokemonUnity
 		}
 
 		public int MetaID { get {
-			if (!@metaID.HasValue && Game.GameData != null) @metaID=Game.GameData.Player.GetHashCode();//ID;
+			if (!@metaID.HasValue && Game.GameData != null) @metaID=Game.GameData.GamePlayer.GetHashCode();//ID;
 			if (!@metaID.HasValue) @metaID=0;
 			return @metaID.Value;
 		} }
