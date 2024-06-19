@@ -144,6 +144,8 @@ namespace PokemonUnity
 		/// Triggers when the player presses the Action button on the map.
 		/// </summary>
 		public event EventHandler OnAction;
+		public event EventHandler<PokemonUnity.EventArg.OnLoadLevelEventArgs> OnLoadLevel;
+		event Action<object, PokemonEssentials.Interface.EventArg.IOnLoadLevelEventArgs> PokemonEssentials.Interface.IGame.OnLoadLevel { add { GameData.OnLoadLevel += value;  } remove { GameData.OnLoadLevel -= value; } }
 		#endregion
 	}
 }

@@ -62,6 +62,7 @@ namespace PokemonEssentials.Interface
 		PokemonEssentials.Interface.Field.ILocationWindow LocationWindow	{ get; set; }
 		PokemonEssentials.Interface.Field.IEncounterModifier EncounterModifier	{ get; set; }
 		#endregion
+		event Action<object, PokemonEssentials.Interface.EventArg.IOnLoadLevelEventArgs> OnLoadLevel;
 	}
 	public interface IGlobalMetadata : Field.IGlobalMetadata, IGlobalMetadataDependantEvents, IGlobalMetadataPokeRadar, IGlobalMetadataRoaming { }
 	//public interface ITempMetadata : Field.ITempMetadata, ITempMetadataBerryPlants, ITempMetadataDependantEvents, ITempMetadataField, ITempMetadataPokeRadar, ITempMetadataRoaming, ITempMetadataPokemonShadow { }

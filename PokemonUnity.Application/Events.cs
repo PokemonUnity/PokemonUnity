@@ -516,7 +516,7 @@ namespace PokemonUnity
 		}
 		#endregion
 
-		public class OnLoadLevelEventArgs : EventArgs, PokemonEssentials.Interface.EventArg.IEventArgs
+		public class OnLoadLevelEventArgs : EventArgs, PokemonEssentials.Interface.EventArg.IOnLoadLevelEventArgs
 		{
 			public static readonly int EventId = typeof(OnLoadLevelEventArgs).GetHashCode();
 

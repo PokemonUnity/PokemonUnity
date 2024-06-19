@@ -33,11 +33,11 @@ namespace PokemonUnity.Interface.UnityEngine
 		public AudioManager AudioManager;
 		public FileTest FileTest;
 		public IGame game; //game scope used for temp actions, without affecting original copy?
-		public event Action onUpdate;
-		public event Action onLevelLoaded;
+		//public event Action onUpdate;
+		//public event Action onLevelLoaded;
 		//public event Action<int> onLoadLevel;
-		public event Action<IScene> onLoadLevel;
-		//public event Action<IOnLoadLevelEventArgs> onLoadLevel;
+		//public event Action<IScene> onLoadLevel;
+		public event Action<IOnLoadLevelEventArgs> onLoadLevel;
 		/// <summary>
 		/// <see cref="IGameScenesUI"/>
 		/// </summary>
@@ -95,6 +95,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				//Core.Logger?.Log("Path to DB: " + ((System.Data.SQLite.SQLiteConnection)Game.con).FileName);
 				Core.Logger?.Log("Path to DB: " + ((Mono.Data.Sqlite.SqliteConnection)Game.con).DataSource);
 				game = new Game();
+				game.Scenes = gameObject.GetComponent<LevelLoader>() as IGameScenesUI;
 				Core.Logger?.Log("New Game Entity Successfully Instantiated!~");
 			}
 			catch (InvalidOperationException) { Core.Logger?.LogError("Problem executing SQL with connected database"); }
@@ -106,7 +107,6 @@ namespace PokemonUnity.Interface.UnityEngine
 				Core.Logger?.Log("Is Pokemon DB Null? " + (Kernal.PokemonData == null).ToString());
 				if (Kernal.PokemonData == null)
 				{
-					//Game.InitPokemons();
 					try
 					{
 						Game.InitTypes();
@@ -136,7 +136,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 
 			Core.Logger?.Log("Is Game Null? " + (Game.GameData == null).ToString());
-			Core.Logger?.Log("Is Player Null? " + (Game.GameData.Player == null).ToString());
+			Core.Logger?.Log("Is Player Overworld Avatar Null? " + (Game.GameData.GamePlayer == null).ToString());
 			//if (Game.GameData.Player == null)
 			//{
 			//	Core.Logger?.Log("Create Player Object");
@@ -145,8 +145,6 @@ namespace PokemonUnity.Interface.UnityEngine
 			//	//Game.GameData.Player = p;
 			//}
 			Core.Logger?.Log("Is Trainer Null? " + (Game.GameData.Trainer == null).ToString());
-
-			//ConfigureScenes();
 		}
 		void Start()
 		{
@@ -156,9 +154,6 @@ namespace PokemonUnity.Interface.UnityEngine
 			//System.Console.WriteLine(System.IO.Directory.GetParent(englishLocalization).FullName);
 			Game.LocalizationDictionary = new XmlStringRes(null); //new Debugger());
 			Game.LocalizationDictionary.Initialize(englishLocalization, (int)Languages.English);
-
-			//Enable "OnStart" to trigger battle scene...
-			//((object)game.Scenes?.BattleScene as GameObject)?.SetActive(true); //Scene is already active... Sort later.
 		}
 		#endregion
 
@@ -171,17 +166,11 @@ namespace PokemonUnity.Interface.UnityEngine
 		//{
 		//	if (onLoadLevel != null) onLoadLevel(scene);
 		//}
-		//
-		//private void ConfigureScenes()
-		//{
-		//	Core.Logger?.LogDebug(message: "Run: {0}.{1}", GetType().Name, System.Reflection.MethodBase.GetCurrentMethod().Name);
-		//
-		//	game.Scenes = gameObject.GetComponent<LevelLoader>() as IGameScenesUI;
-		//	//ToDo: Load all the different game scenes into an array, from unity inspector, and pass them as an input parameter below
-		//	//game.Scenes.initialize((IScene[])(object[])sceneList);
-		//	//game.Scenes.initialize((IPokeBattle_Scene)battle.GetComponent<BattleScene>());
-		//	//(game as Game).SetScenes((IPokeBattle_SceneIE)battle.GetComponent<BattleScene>());
-		//}
+		protected void Events_OnLoadLevel(object sender, EventArg.OnLoadLevelEventArgs args)
+		{
+			//if (onLoadLevel != null) onLoadLevel(scene);
+			sceneList.LoadNextLevel(args.Scene);
+		}
 		#endregion
 	}
 }

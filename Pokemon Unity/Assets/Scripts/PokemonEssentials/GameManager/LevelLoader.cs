@@ -39,7 +39,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		#region Unity Monobehavior
 		void Awake()
 		{
-			GameManager.current.onLoadLevel += Scene_onLoadLevel;
+			//GameManager.current.onLoadLevel += Scene_onLoadLevel;
 			SceneManager.sceneLoaded += SceneManager_sceneLoaded;
 		}
 
@@ -64,7 +64,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		void OnDestroy()
 		{
-			GameManager.current.onLoadLevel -= Scene_onLoadLevel;
+			//GameManager.current.onLoadLevel -= Scene_onLoadLevel;
 			SceneManager.sceneLoaded -= SceneManager_sceneLoaded;
 		}
 		#endregion
@@ -77,7 +77,8 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public void LoadNextLevel(IScene scene)
 		{
-			Scene_onLoadLevel(scene.Id);
+			//Scene_onLoadLevel(scene); //Changes scene by loading new level
+			StartCoroutine(LoadScene(scene)); //Changes scene by enabling and disabling the layer
 		}
 
 		IEnumerator LoadLevel(int level)
@@ -212,15 +213,5 @@ namespace PokemonUnity.Interface.UnityEngine
 			return Scenes.None; //throw new ArgumentException("No unity scene found for the given interface type");
 		}
 		#endregion
-	}
-}
-namespace PokemonEssentials.Interface.EventArg
-{
-	public class  OnLoadLevelEventArgs : EventArgs, PokemonEssentials.Interface.EventArg.IEventArgs
-	{
-		public static readonly int EventId = typeof(OnLoadLevelEventArgs).GetHashCode();
-
-		public int Id { get { return EventId; } }
-		public IScene Scene { get; set; }
 	}
 }

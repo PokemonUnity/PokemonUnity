@@ -29,6 +29,7 @@ namespace PokemonUnity.Interface.UnityEngine
 	public partial class LevelLoader : MonoBehaviour, IGameScenesUI
 	{
 		#region Private Monobehavior Fields
+		[Header("Pokemon Game UI")]
 		[SerializeField] private TypingForm textEntryScene;
 		[SerializeField] private PokemonEssentials.Interface.Screen.IIntroEventScene introScene;
 		[SerializeField] private PokemonEssentials.Interface.Screen.ILoadScene load;
@@ -59,6 +60,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		[SerializeField] private PokemonEssentials.Interface.Screen.IPurifyChamberScene purityChamber; //Shadow Pokemon
 
 
+		[Header("Battle Related UI")]
 		[SerializeField] private BattleScene battleScene;
 		[SerializeField] private PokemonEssentials.Interface.Screen.IPokeBattleArena_Scene battleArenaScene;
 		[SerializeField] private PokemonEssentials.Interface.Screen.IBattleSwapScene battleSwapScene;
@@ -117,43 +119,43 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// <param name="scenes"></param>
 		/// <returns></returns>
 		/// This gets broken the more reliant on unity inspector the startup becomes...
-		public IGameScenesUI initialize (params PokemonEssentials.Interface.Screen.IScene[] scenes)
-		{
-			foreach (PokemonEssentials.Interface.Screen.IScene scene in scenes)
-			{
-				if (scene is PokemonEssentials.Interface.Screen.IIntroEventScene s1) { IntroScene = s1; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IIntroEventScene), Scenes.Intro); }
-				//else if (scene is PokemonEssentials.Interface.Screen.IPokemonEntryScene s0) { TextEntryScene = s0; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonEntryScene), Scenes.TextEntry); }
-				else if (scene is PokemonEssentials.Interface.Screen.ILoadScene s2) { Load = s2; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.ILoadScene), Scenes.Load); }
-				else if (scene is PokemonEssentials.Interface.Screen.ISaveScene s3) { Save = s3; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.ISaveScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IOptionScene s4) { OptionScene = s4; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IOptionScene), Scenes.Option); }
-				else if (scene is PokemonEssentials.Interface.Screen.IPokemonMenuScene s5) { PauseMenuScene = s5; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonMenuScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IPartyDisplayScene s6) { Party = s6; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPartyDisplayScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IPokemonSummaryScene s7) { Summary = s7; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonSummaryScene), Scenes.Summary); }
-				else if (scene is PokemonEssentials.Interface.Screen.IBagScene s8) { Bag = s8; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IBagScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IItemStorageScene s9) { Bag_ItemStore = s9; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IItemStorageScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IWithdrawItemScene s10) { Bag_ItemWithdraw = s10; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IWithdrawItemScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.ITossItemScene s11) { Bag_ItemToss = s11; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.ITossItemScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IPokegearScene s12) { PokeGear = s12; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokegearScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.ITrainerCardScene s13) { TrainerCard = s13; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.ITrainerCardScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IPokemonStorageScene s14) { PokemonStorageScene = s14; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonStorageScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IPokemonPokedexScene s15) { PokedexScene = s15; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonPokedexScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IPokemonNestMapScene s16) { PokedexNestScene = s16; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonNestMapScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IPokemonFormScene s17) { PokedexFormScene = s17; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonFormScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IPokemonEvolutionScene s18) { EvolvingScene = s18; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonEvolutionScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IMartScene s19) { Mart = s19; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IMartScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IRelicStoneScene s20) { RelicStone = s20; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IRelicStoneScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IPurifyChamberScene s21) { PurityChamber = s21; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPurifyChamberScene), Scenes.Intro); }
-				//else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_Scene s22) { battleScene = s22; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_Scene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattleArena_Scene s23) { BattleArenaScene = s23; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattleArena_Scene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IBattleSwapScene s24) { BattleSwapScene = s24; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IBattleSwapScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.ISafariZone_Scene s25) { BattleSafari = s25; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.ISafariZone_Scene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugScene s26) { BattleSceneDebug = s26; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_DebugScene), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_SceneNonInteractive s27) { BattleSceneDebugNoUI = s27; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_SceneNonInteractive), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoLogging s28) { BattleSceneDebugWithoutLog = s28; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoLogging), Scenes.Intro); }
-				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics s29) { BattleSceneDebugWithoutGfx = s29; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics), Scenes.Intro); }
-			}
-			return this;
-		}
+		//public IGameScenesUI initialize (params PokemonEssentials.Interface.Screen.IScene[] scenes)
+		//{
+		//	foreach (PokemonEssentials.Interface.Screen.IScene scene in scenes)
+		//	{
+		//		if (scene is PokemonEssentials.Interface.Screen.IIntroEventScene s1) { IntroScene = s1; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IIntroEventScene), Scenes.Intro); }
+		//		//else if (scene is PokemonEssentials.Interface.Screen.IPokemonEntryScene s0) { TextEntryScene = s0; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonEntryScene), Scenes.TextEntry); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.ILoadScene s2) { Load = s2; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.ILoadScene), Scenes.Load); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.ISaveScene s3) { Save = s3; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.ISaveScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IOptionScene s4) { OptionScene = s4; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IOptionScene), Scenes.Option); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IPokemonMenuScene s5) { PauseMenuScene = s5; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonMenuScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IPartyDisplayScene s6) { Party = s6; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPartyDisplayScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IPokemonSummaryScene s7) { Summary = s7; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonSummaryScene), Scenes.Summary); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IBagScene s8) { Bag = s8; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IBagScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IItemStorageScene s9) { Bag_ItemStore = s9; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IItemStorageScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IWithdrawItemScene s10) { Bag_ItemWithdraw = s10; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IWithdrawItemScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.ITossItemScene s11) { Bag_ItemToss = s11; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.ITossItemScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IPokegearScene s12) { PokeGear = s12; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokegearScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.ITrainerCardScene s13) { TrainerCard = s13; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.ITrainerCardScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IPokemonStorageScene s14) { PokemonStorageScene = s14; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonStorageScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IPokemonPokedexScene s15) { PokedexScene = s15; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonPokedexScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IPokemonNestMapScene s16) { PokedexNestScene = s16; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonNestMapScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IPokemonFormScene s17) { PokedexFormScene = s17; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonFormScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IPokemonEvolutionScene s18) { EvolvingScene = s18; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonEvolutionScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IMartScene s19) { Mart = s19; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IMartScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IRelicStoneScene s20) { RelicStone = s20; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IRelicStoneScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IPurifyChamberScene s21) { PurityChamber = s21; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPurifyChamberScene), Scenes.Intro); }
+		//		//else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_Scene s22) { battleScene = s22; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_Scene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IPokeBattleArena_Scene s23) { BattleArenaScene = s23; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattleArena_Scene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IBattleSwapScene s24) { BattleSwapScene = s24; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IBattleSwapScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.ISafariZone_Scene s25) { BattleSafari = s25; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.ISafariZone_Scene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugScene s26) { BattleSceneDebug = s26; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_DebugScene), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_SceneNonInteractive s27) { BattleSceneDebugNoUI = s27; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_SceneNonInteractive), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoLogging s28) { BattleSceneDebugWithoutLog = s28; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoLogging), Scenes.Intro); }
+		//		else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics s29) { BattleSceneDebugWithoutGfx = s29; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics), Scenes.Intro); }
+		//	}
+		//	return this;
+		//}
 	}
 
 	/// <summary>

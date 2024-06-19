@@ -89,6 +89,6 @@ namespace PokemonEssentials.Interface.Screen
 		PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoLogging BattleSceneDebugWithoutLog { get; }
 		PokemonEssentials.Interface.Screen.IPokeBattle_DebugSceneNoGraphics BattleSceneDebugWithoutGfx { get; }
 
-		IGameScenesUI initialize(params PokemonEssentials.Interface.Screen.IScene[] scenes);
+		//IGameScenesUI initialize(params PokemonEssentials.Interface.Screen.IScene[] scenes);
 	}
 }
