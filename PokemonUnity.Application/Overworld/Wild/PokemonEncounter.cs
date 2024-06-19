@@ -456,13 +456,13 @@ namespace PokemonUnity.Overworld
 
 		public event Action<object, IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
 		//Events.onWildPokemonCreate+=proc {|sender,e|
-		//private void onWildPokemonCreate(object sender, Events.OnWildPokemonCreateEventArgs e) {
-		//   // Make all wild Pokémon shiny while a certain Switch is ON (see Settings).
-		//   //Monster.Pokemon pokemon = e[0];
-		//   Monster.Pokemon pokemon = e.Pokemon;
-		//   if (Core.SHINY_WILD_POKEMON_SWITCH) {
-		//     pokemon.makeShiny();
-		//   }
+		protected void Events_onWildPokemonCreate(object sender, EventArg.OnWildPokemonCreateEventArgs e) {
+		   // Make all wild Pokémon shiny while a certain Switch is ON (see Settings).
+		   //Monster.Pokemon pokemon = e[0];
+			IPokemon pokemon = e.Pokemon;
+			if (Core.SHINY_WILD_POKEMON_SWITCH) {
+				pokemon.makeShiny();
+			}
 		//}
 
 		// Used in the random dungeon map.  Makes the levels of all wild Pokémon in that
@@ -471,16 +471,17 @@ namespace PokemonUnity.Overworld
 		// and other such details.  Of course, you don't HAVE to use this code.
 		//Events.onWildPokemonCreate+=proc {|sender,e|
 		//private void onWildPokemonCreate(object sender, EventArgs e) {
-		//   Monster.Pokemon pokemon = e[0];
-		//   if (Game.GameData.GameMap.map_id==51) {
-		//     int newlevel=(int)Math.Round(Game.BalancedLevel(Game.GameData.Player.Party) - 4 + Core.Rand.Next(5));   // For variety
-		//     if (newlevel < 1) newlevel=1;
-		//     if (newlevel > Core.MAXIMUMLEVEL) newlevel = Core.MAXIMUMLEVEL;
-		//     pokemon.Level=newlevel;
-		//     //pokemon.calcStats();
-		//     pokemon.resetMoves();
-		//   }
-		//}
+			//IPokemon pokemon = e[0];
+			if (Game.GameData.GameMap.map_id==51) {
+				int newlevel=(int)Math.Round((Game.GameData as PokemonEssentials.Interface.IGameUtility).BalancedLevel(Game.GameData.Trainer.party) - 4 + Core.Rand.Next(5));   // For variety
+				if (newlevel < 1) newlevel=1;
+				if (newlevel > Core.MAXIMUMLEVEL) newlevel = Core.MAXIMUMLEVEL;
+				//pokemon.Level=newlevel;
+				((Pokemon)pokemon).SetLevel((byte)newlevel);
+				pokemon.calcStats();
+				pokemon.resetMoves();
+			}
+		}
 
 		// This is the basis of a trainer modifier.  It works both for trainers loaded
 		// when you battle them, and for partner trainers when they are registered.
@@ -489,14 +490,14 @@ namespace PokemonUnity.Overworld
 		// before each battle.
 		public event Action<object, IOnTrainerPartyLoadEventArgs> OnTrainerPartyLoad;
 		//Events.onTrainerPartyLoad+=proc {|sender,e|
-		//private void onWildPokemonCreate(object sender, EventArgs e) {
-		//   if (e[0]) { // Game.GameData.Trainer data should exist to be loaded, but may not exist somehow
-		//     Game.GameData.Trainer trainer=e[0][0]; // A PokeBattle_Trainer object of the loaded trainer
-		//     Items[] items=e[0][1];   // An array of the trainer's items they can use
-		//     Monster.Pokemon[] party=e[0][2];   // An array of the trainer's Pokémon
-		//     //YOUR CODE HERE
-		//   }
-		//}
+		private protected void Events_onTrainerPartyLoad(object sender, EventArg.OnTrainerPartyLoadEventArgs e) {
+			if (e.Trainer!=null) {				//[0] Game.GameData.Trainer data should exist to be loaded, but may not exist somehow
+				ITrainer trainer=e.Trainer;		//[0][0] A PokeBattle_Trainer object of the loaded trainer
+				IList<Items> items=e.Items;		//[0][1] An array of the trainer's items they can use
+				IList<IPokemon> party=e.Party;	//[0][2] An array of the trainer's Pokémon
+				//YOUR CODE HERE
+			}
+		}
 		#endregion
 	}
 }

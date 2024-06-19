@@ -14,9 +14,27 @@ using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.Battle;
 using PokemonUnity.Utility;
 using PokemonEssentials.Interface.RPGMaker.Kernal;
+using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonUnity
 {
+	namespace EventArg {
+
+		public class OnEncounterCreateEventArgs : EventArgs, IEncounterModifierEventArgs
+		{
+			public static readonly int EventId = typeof(OnEncounterCreateEventArgs).GetHashCode();
+
+			public int Id { get { return EventId; } }
+			/// <summary>
+			/// Pokémon being created
+			/// </summary>
+			public IPokemon Pokemon { get; set; }
+			Pokemons IEncounterPokemon.Pokemon	{ get { return Pokemon.Species; } }
+			int IEncounterPokemon.MinLevel		{ get { return Pokemon.Level; } }
+			int IEncounterPokemon.MaxLevel		{ get { return Pokemon.Level; } }
+		}
+	}
+
 	// ===============================================================================
 	// Battles
 	// ===============================================================================
@@ -37,36 +55,85 @@ namespace PokemonUnity
 
 	/// <summary>
 	/// This module stores encounter-modifying events that can happen during the game.
-	/// A procedure can subscribe to an event by adding itself to the event.  It will
-	/// then be called whenever the event occurs.
+	/// A procedure can subscribe to an event by adding itself to the event.
+	/// It will then be called whenever the event occurs.
 	/// </summary>
-	public static partial class EncounterModifier { //: PokemonEssentials.Interface.Field.IEncounterModifier
+	/// ToDo: Integrate into Game class?
+	public partial class EncounterModifier : PokemonEssentials.Interface.Field.IEncounterModifier { //
 		//public static List<Func<IEncounterPokemon,IEncounterPokemon>> @procs=new List<Func<IEncounterPokemon,IEncounterPokemon>>();
-		public static List<Func<IPokemon,IPokemon>> @procs=new List<Func<IPokemon,IPokemon>>();
-		public static List<Action> @procsEnd=new List<Action>();
+		private List<Func<IPokemon,IPokemon>> @procs=new List<Func<IPokemon,IPokemon>>();
+		private List<Action> @procsEnd=new List<Action>();
+		public event EventHandler<EventArg.OnEncounterCreateEventArgs> OnEncounter;
+		public event EventHandler OnEncounterEnd;
+		event Action<object, IEncounterModifierEventArgs> IEncounterModifier.OnEncounter
+		{
+			add
+			{
+				OnEncounter += new EventHandler<EventArg.OnEncounterCreateEventArgs>((sender, args) => { value.Invoke(sender, args); }); //value;
+			}
+
+			remove
+			{
+				OnEncounter -= new EventHandler<EventArg.OnEncounterCreateEventArgs>((sender, args) => { value.Invoke(sender, args); }); //value;
+			}
+		}
 
 		//public static void register(Func<IEncounterPokemon,IEncounterPokemon> p) {
-		public static void register(Func<IPokemon,IPokemon> p) {
+		public void register(Func<IPokemon,IPokemon> p) {
 			@procs.Add(p);
 		}
 
-		public static void registerEncounterEnd(Action p) {
+		public void registerEncounterEnd(Action p) {
 			@procsEnd.Add(p);
 		}
 
 		//public static IEncounterPokemon trigger(IEncounterPokemon encounter) {
-		public static IPokemon trigger(IPokemon encounter) {
-			foreach (var prc in @procs) {
-				//encounter=prc.call(encounter);
-				encounter=prc.Invoke(encounter);
+		//public IPokemon trigger(IPokemon encounter) {
+		public IPokemon triggerEncounter(IPokemon encounter) {
+			//foreach (var prc in @procs) {
+			//	//encounter=prc.call(encounter);
+			//	encounter=prc.Invoke(encounter);
+			//}
+			//return encounter;
+			if (OnEncounter != null)
+			{
+				//OnEncounter(sender, new EventArg.OnEncounterCreateEventArgs()
+				EventArg.OnEncounterCreateEventArgs arg = new EventArg.OnEncounterCreateEventArgs()
+				{
+					Pokemon = encounter,
+					//Pokemon = encounter.Pokemon,
+					//MinLevel = encounter.MinLevel,
+					//MaxLevel = encounter.MaxLevel
+				};
+				triggerEncounter(this,arg);
+				return arg.Pokemon;
 			}
 			return encounter;
 		}
 
-		public static void triggerEncounterEnd() {
-			foreach (var prc in @procsEnd) {
-				//prc.call();
-				prc.Invoke();
+		public void triggerEncounter(object sender, EventArg.OnEncounterCreateEventArgs args)
+		{
+			if (OnEncounter != null)
+			{
+				OnEncounter.Invoke(sender, args);
+				//OnEncounter(sender, new EventArg.OnEncounterCreateEventArgs()
+				//{
+				//	Pokemon = encounter,
+				//	//Pokemon = encounter.Pokemon,
+				//	//MinLevel = encounter.MinLevel,
+				//	//MaxLevel = encounter.MaxLevel
+				//});
+			}
+		}
+
+		public void triggerEncounterEnd() {
+			//foreach (var prc in @procsEnd) {
+			//	//prc.call();
+			//	prc.Invoke();
+			//}
+			if (OnEncounterEnd != null)
+			{
+				OnEncounterEnd.Invoke(this, EventArgs.Empty);
 			}
 		}
 	}
@@ -525,7 +592,7 @@ namespace PokemonUnity
 		/// <param name="canRun"></param>
 		/// <param name="canLose"></param>
 		/// <returns></returns>
-		/*public bool ControlledWildBattle(Pokemons species, int level, Moves[] moves = null, int? ability = null,
+		public bool ControlledWildBattle(Pokemons species, int level, Moves[] moves = null, int? ability = null,
 						Natures? nature = null, bool? gender = null, Items? item = null, bool? shiny = null,
 						int outcomeVar = 1, bool canRun = true, bool canLose = false) {
 			// Create an instance
@@ -585,14 +652,15 @@ namespace PokemonUnity
 			//if (!canRun) setBattleRule("cannotRun");
 			//if (canLose) setBattleRule("canLose");
 			// Perform the battle
-			Combat.BattleResults decision = WildBattleCore(pkmn,outcomeVar,canRun,canLose);
+			//Combat.BattleResults decision = WildBattleCore(pkmn,outcomeVar,canRun,canLose);
+			Combat.BattleResults decision = WildBattleCore(pkmn.Species, pkmn.Level, outcomeVar, canRun, canLose) ? Combat.BattleResults.WON : Combat.BattleResults.LOST;
 			// Used by the Poké Radar to update/break the chain
 			//Events.onWildBattleEnd.trigger(null,species,level,decision);
 			PokemonEssentials.Interface.EventArg.IOnWildBattleEndEventArgs e3 = new PokemonUnity.EventArg.OnWildBattleEndEventArgs()
 			{
 				Species = species,
 				Level = level
-				//,Result = decision
+				,Result = decision
 			};
 			//Events.OnWildBattleEnd?.Invoke(null,e3);
 			Events.OnWildBattleEndTrigger(this,species, level, decision);
@@ -704,7 +772,7 @@ namespace PokemonUnity
 			//Events.OnWildBattleEnd?.Invoke(this,e3);
 			Events.OnWildBattleEndTrigger(this,species,level,decision);
 			return decision!=Combat.BattleResults.LOST;
-		}*/
+		}
 
 		/// <summary>
 		/// </summary>
@@ -1054,9 +1122,9 @@ namespace PokemonUnity
 			}
 		}
 
-		//Events.onEndBattle+=delegate(object sender, EventArgs e) {
 		//Events.OnEndBattle+=delegate(object sender, PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs e) {
-		protected virtual void Events_OnEndBattle(object sender, PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs e) {
+		//protected virtual void Events_OnEndBattle(object sender, PokemonEssentials.Interface.EventArg.IOnEndBattleEventArgs e) {
+		protected virtual void Events_OnEndBattle(object sender, PokemonUnity.EventArg.OnEndBattleEventArgs e) {
 			int decision = (int)e.Decision; //[0];
 			bool canlose = e.CanLose; //[1];
 			if (Core.USENEWBATTLEMECHANICS || (decision!=2 && decision!=5)) {		// not a loss or a draw
@@ -1108,23 +1176,23 @@ namespace PokemonUnity
 		}
 
 		//Events.onSpritesetCreate+=delegate(object sender, EventArgs e) {
-		protected virtual void Events_OnSpritesetCreate(object sender, EventArgs e) {
-			//ISpritesetMap spriteset=e[0]; // Spriteset being created
-			//IViewport viewport=e[1]; // Viewport used for tilemap and characters
-			//IGameMap map=spriteset.map; // Map associated with the spriteset (not necessarily the current map).
-			//foreach (var i in map.events.keys) {
-			//	if (map.events[i].name[/^OutdoorLight\((\w+)\)$/]) {
-			//		string filename=$~[1].ToString();
-			//		spriteset.addUserSprite(new LightEffect_DayNight(map.events[i],viewport,map,filename));
-			//	} else if (map.events[i].name=="OutdoorLight") {
-			//		spriteset.addUserSprite(new LightEffect_DayNight(map.events[i],viewport,map));
-			//	} else if (map.events[i].name[/^Light\((\w+)\)$/]) {
-			//		string filename=$~[1].ToString();
-			//		spriteset.addUserSprite(new LightEffect_Basic(map.events[i],viewport,map,filename));
-			//	} else if (map.events[i].name=="Light") {
-			//		spriteset.addUserSprite(new LightEffect_Basic(map.events[i],viewport,map));
-			//	}
-			//}
+		protected virtual void Events_OnSpritesetCreate(object sender, PokemonUnity.EventArg.OnSpritesetCreateEventArgs e) {
+			ISpritesetMap spriteset=e.SpritesetId; //[0] Spriteset being created
+			IViewport viewport=e.Viewport; //[1] Viewport used for tilemap and characters
+			IGameMap map=spriteset.map; // Map associated with the spriteset (not necessarily the current map).
+			foreach (var i in map.events.Keys) {
+				if (map.events[i].name.Contains("OutdoorLight")) { //[/^OutdoorLight\((\w+)\)$/]
+					//string filename=$~[1].ToString();
+					//spriteset.addUserSprite(new LightEffect_DayNight(map.events[i],viewport,map,filename));
+				//} else if (map.events[i].name=="OutdoorLight") {
+				//	spriteset.addUserSprite(new LightEffect_DayNight(map.events[i],viewport,map));
+				//} else if (map.events[i].name[/^Light\((\w+)\)$/]) {
+				//	string filename=$~[1].ToString();
+				//	spriteset.addUserSprite(new LightEffect_Basic(map.events[i],viewport,map,filename));
+				} else if (map.events[i].name=="Light") {
+					//spriteset.addUserSprite(new LightEffect_Basic(map.events[i],viewport,map));
+				}
+			}
 			//spriteset.addUserSprite(new Particle_Engine(viewport,map));
 		}
 
@@ -1179,7 +1247,8 @@ namespace PokemonUnity
 		/// <param name="sender"></param>
 		/// <param name="e"></param>
 		//Events.onStepTakenTransferPossible+=delegate(object sender, EventArgs e) {
-		protected virtual void Events_OnStepTakenTransferPossible(object sender, PokemonEssentials.Interface.EventArg.IOnStepTakenTransferPossibleEventArgs e) {
+		//protected virtual void Events_OnStepTakenTransferPossible(object sender, PokemonEssentials.Interface.EventArg.IOnStepTakenTransferPossibleEventArgs e) {
+		protected virtual void Events_OnStepTakenTransferPossible(object sender, PokemonUnity.EventArg.OnStepTakenTransferPossibleEventArgs e) {
 			bool[] handled = new bool[] { e.Index }; //[0];
 			if (handled[0]) return; //continue;
 			if (Global.stepcount % 4 == 0 && Core.POISONINFIELD) {
@@ -1231,7 +1300,8 @@ namespace PokemonUnity
 		}
 
 		//Events.onStepTakenFieldMovement+=delegate(object sender, EventArgs e) {
-		protected virtual void Events_OnStepTakenFieldMovement(object sender, PokemonEssentials.Interface.EventArg.IOnStepTakenFieldMovementEventArgs e) {
+		//protected virtual void Events_OnStepTakenFieldMovement(object sender, PokemonEssentials.Interface.EventArg.IOnStepTakenFieldMovementEventArgs e) {
+		protected virtual void Events_OnStepTakenFieldMovement(object sender, PokemonUnity.EventArg.OnStepTakenFieldMovementEventArgs e) {
 			//IGamePlayer @event=e[0]; // Get the event affected by field movement
 			IGamePlayer @event=e.Index; // Get the event affected by field movement
 			ITilePosition thistile=MapFactory.getRealTilePos(@event.map.map_id,@event.x,@event.y);
@@ -1281,7 +1351,7 @@ namespace PokemonUnity
 				if (encounterType>=0) {
 					if (PokemonEncounters.IsEncounterPossibleHere) {
 						IPokemon encounter=PokemonEncounters.GenerateEncounter(encounterType.Value);
-						encounter=EncounterModifier.trigger(encounter);
+						encounter=EncounterModifier.triggerEncounter(encounter);
 						if (PokemonEncounters.CanEncounter(encounter)) {
 							if (Global.partner != null) {
 								IPokemon encounter2=PokemonEncounters.EncounteredPokemon(encounterType.Value);
@@ -1535,7 +1605,8 @@ namespace PokemonUnity
 
 		#region Moving between maps
 		//Events.onMapChange+=delegate(object sender, EventArgs e) {
-		protected virtual void Events_OnMapChange(object sender, PokemonEssentials.Interface.EventArg.IOnMapChangeEventArgs e) {
+		//protected virtual void Events_OnMapChange(object sender, PokemonEssentials.Interface.EventArg.IOnMapChangeEventArgs e) {
+		protected virtual void Events_OnMapChange(object sender, PokemonUnity.EventArg.OnMapChangeEventArgs e) {
 			int oldid=e.MapId; //[0] previous map ID, 0 if no map ID
 			ITilePosition healing=GetMetadata(GameMap.map_id).Map.HealingSpot;
 			if (healing != null) Global.healingSpot=healing;
@@ -1557,7 +1628,8 @@ namespace PokemonUnity
 		}
 
 		//Events.onMapChanging+=delegate(object sender, EventArgs e) {
-		protected virtual void Events_OnMapChanging(object sender, PokemonEssentials.Interface.EventArg.IOnMapChangingEventArgs e) {
+		//protected virtual void Events_OnMapChanging(object sender, PokemonEssentials.Interface.EventArg.IOnMapChangingEventArgs e) {
+		protected virtual void Events_OnMapChanging(object sender, PokemonUnity.EventArg.OnMapChangingEventArgs e) {
 			int newmapID = e.MapId; //[0];
 			IGameMap newmap = e.GameMap; //[1];
 			//  Undo the weather (GameMap still refers to the old map)
@@ -1574,7 +1646,8 @@ namespace PokemonUnity
 		}
 
 		//Events.onMapSceneChange+=delegate(object sender, EventArgs e) {
-		protected virtual void Events_OnMapSceneChange(object sender, PokemonEssentials.Interface.EventArg.IOnMapSceneChangeEventArgs e) {
+		//protected virtual void Events_OnMapSceneChange(object sender, PokemonEssentials.Interface.EventArg.IOnMapSceneChangeEventArgs e) {
+		protected virtual void Events_OnMapSceneChange(object sender, PokemonUnity.EventArg.OnMapSceneChangeEventArgs e) {
 			ISceneMap scene = e.Object; //[0];
 			bool mapChanged = e.NewMap; //[1];
 			if (scene == null || scene.spriteset == null) return;
@@ -1625,12 +1698,12 @@ namespace PokemonUnity
 						if (GameMap.name==oldmapname) nosignpost=true;
 					}
 					if (!nosignpost)
-						if (scene.spriteset is PokemonEssentials.Interface.ISpritesetMapAnimation s2)
-						{
-							//s2.addUserSprite(new LocationWindow(GameMap.name));
-							//LocationWindow.initialize(GameMap.name); //ToDo: make a UI variable for sign-post
-							//s2.addUserSprite(LocationWindow);
-						}
+						//if (scene.spriteset is PokemonEssentials.Interface.ISpritesetMapAnimation s2)
+						//{
+						//	//s2.addUserSprite(new LocationWindow(GameMap.name));
+							LocationWindow.initialize(GameMap.name);
+						//	//s2.addUserSprite(LocationWindow);
+						//}
 				}
 			}
 			if (GetMetadata(GameMap.map_id).Map.BicycleAlways) {

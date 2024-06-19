@@ -19,7 +19,7 @@ using PokemonEssentials.Interface.PokeBattle.Effects;
 namespace PokemonEssentials.Interface
 {
 	//ToDo: Too many variables are named with `pokemon` and have nothing to do with an individual pokemon record, and only pertains to pokemon in general sense of the application's game logic...
-	public interface IGame //: IGameBerryPlants, IGameDungeon, IGameFactory, IGameField, IGameHiddenMoves, IGameItem, IGameItemEffect, IGameOrgBattle, IGamePokeball, IGameResizer, IGameSafari, IGameTime, IGameMessage, IGameAudioPlay, IGameMetadataMisc
+	public interface IGame //: IGameBerryPlants, IGameDungeon, IGameFactory, IGameField, IGameHiddenMoves, IGameItem, IGameItemEffect, IGameOrgBattle, IGamePokeball, IGameResizer, IGameSafari, IGameTime, IGameMessage, IGameAudioPlay, IGameMetadataMisc, IGameUtility
 	{
 		PokemonEssentials.Interface.IGlobalMetadata Global					{ get; }
 		PokemonEssentials.Interface.Field.IMapFactory MapFactory			{ get; }
@@ -56,6 +56,11 @@ namespace PokemonEssentials.Interface
 		PokemonEssentials.Interface.IInterpreter Interpreter				{ get; set; }
 		PokemonEssentials.Interface.Screen.IGameScenesUI Scenes				{ get; set; }
 		PokemonEssentials.Interface.Screen.IGameScreensUI Screens			{ get; set; }
+		/// <summary>
+		/// UI component for sign-post, when entering new map zone
+		/// </summary>
+		PokemonEssentials.Interface.Field.ILocationWindow LocationWindow	{ get; set; }
+		PokemonEssentials.Interface.Field.IEncounterModifier EncounterModifier	{ get; set; }
 		#endregion
 	}
 	public interface IGlobalMetadata : Field.IGlobalMetadata, IGlobalMetadataDependantEvents, IGlobalMetadataPokeRadar, IGlobalMetadataRoaming { }

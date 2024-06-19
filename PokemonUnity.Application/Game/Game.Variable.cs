@@ -59,6 +59,10 @@ namespace PokemonUnity
 		public PokemonEssentials.Interface.Screen.IGameScenesUI Scenes { get; set; }
 		public PokemonEssentials.Interface.Screen.IGameScreensUI Screens { get; set; }
 
+		//Used by map UI
+		public PokemonEssentials.Interface.Field.ILocationWindow LocationWindow { get; set; }
+		public PokemonEssentials.Interface.Field.IEncounterModifier EncounterModifier { get; set; }
+
 		#region Events used by Game Interface
 		//public PokemonEssentials.Interface.IEvents Events { get; private set; }
 		/// <summary>
