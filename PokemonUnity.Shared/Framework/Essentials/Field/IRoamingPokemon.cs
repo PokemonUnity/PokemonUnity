@@ -9,27 +9,36 @@ using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonEssentials.Interface.Field
 {
+	public interface IEncounterPokemonRoaming : IEncounterPokemon {
+		IAudioBGM battleBGM			{ get; set; }
+		int roamerIndex			{ get; set; }
+	}
+
 	/// <summary>
 	/// Extension on <see cref="ITempMetadata"/>
 	/// </summary>
-	public interface ITempMetadataRoaming {
-		int nowRoaming				{ get; }
-		int roamerIndex				{ get; }
+	public interface ITempMetadataRoaming : ITempMetadata {
+		bool nowRoaming				{ get; set; }
+		int? roamerIndex			{ get; set; }
 	}
 
 	/// <summary>
 	/// Extension on <see cref="IGlobalMetadata"/>
 	/// </summary>
-	public interface IGlobalMetadataRoaming {
+	public interface IGlobalMetadataRoaming : Field.IGlobalMetadata {
 		//ToDo: nullable int array?...
-		int[] roamPosition				{ get; set; }
-		Queue<int> roamHistory			{ get; set; }
-		bool roamedAlready				{ get; set; }
-		bool roamEncounter				{ get; }
+		int[] roamPosition						{ get; set; }
+		Queue<int> roamHistory					{ get; set; }
+		bool roamedAlready						{ get; set; }
+		IEncounterPokemonRoaming roamEncounter	{ get; set; }
 		/// <summary>
 		/// Boolean array representing if pokemon is roaming;
 		/// <see cref="Kernal.RoamingSpecies"/> as Index/Key
 		/// </summary>
+		/// <remarks>
+		/// If Roaming Pokemon is caught, captured, or defeated, then assign slot to null?
+		/// Otherwise, can use to progressively reload and grow Pokemon instance...
+		/// </remarks>
 		IList<IPokemon> roamPokemon		{ get; set; }
 		/// <summary>
 		/// Boolean array representing if pokemon is captured;
@@ -41,7 +50,7 @@ namespace PokemonEssentials.Interface.Field
 	/// <summary>
 	/// Extension on <see cref="IGame"/>
 	/// </summary>
-	public interface IGameRoaming {
+	public interface IGameRoaming : IGame {
 		/// <summary>
 		/// Resets all roaming Pokemon that were defeated without having been caught.
 		/// </summary>
@@ -79,8 +88,8 @@ namespace PokemonEssentials.Interface.Field
 		event Action<object, EventArg.IOnWildBattleOverrideEventArgs> OnWildBattleOverride;
 		//Events.OnWildBattleOverride+=proc { |sender,e|
 
-		//PokemonUnity.Combat.BattleResults RoamingPokemonBattle(Pokemons species, int level);
-		bool RoamingPokemonBattle(Pokemons species, int level);
+		PokemonUnity.Combat.BattleResults RoamingPokemonBattle(Pokemons species, int level);
+		//bool RoamingPokemonBattle(Pokemons species, int level);
 
 		//EncounterModifier.register(proc {|encounter|});
 		//void register(Func<IEncounterPokemon, IEncounterPokemon> p);
