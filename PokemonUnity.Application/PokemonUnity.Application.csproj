@@ -87,6 +87,7 @@
     <Compile Include="Extensions\GameExtension.cs" />
     <Compile Include="Game\Game.MiscData.cs" />
     <Compile Include="Game\Game.AudioPlay.cs" />
+    <Compile Include="Game\GameSystem.cs" />
     <Compile Include="Game\Options.cs" />
     <Compile Include="Game\Temporary\PokemonTemp.cs" />
     <Compile Include="Game\Temporary\GlobalMetadata.cs" />

@@ -62,7 +62,7 @@ namespace PokemonUnity.Interface.UnityEngine
 					seSources.Remove(source);
 		}
 
-		void IAudio.bgm_play(string filename, float volume, float pitch) { bgm_play(filename, volume, pitch); }
+		void IAudio.bgm_play(string filename, float volume, float pitch, int position) { bgm_play(filename, volume, pitch, position); }
 		public void bgm_play(string filename, float volume, float pitch, int position = 0)
 		{
 			//IAudioObject audio = new AudioTrack(clip).initialize(filename, volume, pitch);

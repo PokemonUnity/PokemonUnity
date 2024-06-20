@@ -21,14 +21,17 @@ namespace PokemonUnity
 				string file = m1.Captures[1].Value; //$1;
 				int volume = int.Parse(m1.Captures[2].Value); //$2.to_i;
 				int pitch = int.Parse(m1.Captures[3].Value); //$3.to_i;
-				return new AudioTrack().initialize(file,volume,pitch);
+				//return new AudioTrack().initialize(file,volume,pitch);
 				//return Audio.ResolveAudioFile(file,volume,pitch);
+				return FileTest.initialize(file,volume,pitch);
 			} else if (m2.Success) {//str[/^(.*)\:\s*(\d+)\s*$/]
 				string file = m2.Captures[1].Value; //$1;
 				int volume = int.Parse(m2.Captures[2].Value); //$2.to_i;
-				return new AudioTrack().initialize(file,volume,100);
+				//return new AudioTrack().initialize(file,volume,100);
+				return FileTest.initialize(file,volume,100);
 			} else {
-				return new AudioTrack().initialize(name,100,100);
+				//return new AudioTrack().initialize(name,100,100);
+				return FileTest.initialize(name,100,100);
 			}
 		}
 
@@ -55,7 +58,8 @@ namespace PokemonUnity
 			{
 				if (volume != null || pitch != null)
 				{
-					return new AudioTrack().initialize(str.name,
+					//return new AudioTrack().initialize(str.name,
+					return FileTest.initialize(str.name,
 											  volume ?? str.volume, //?? 80
 											  pitch ?? str.pitch); //?? 100
 				}
@@ -372,10 +376,10 @@ namespace PokemonUnity
 			//{
 			//	SEPlay(GameData.DataSystem.sounds[2]);
 			//}
-			else if (FileTest.Instance.SoundEffectChoose != null)
-			{
-				SEPlay(FileTest.Instance.SoundEffectChoose, 80);
-			}
+			//else if (FileTest.Instance.SoundEffectChoose != null)
+			//{
+			//	SEPlay(FileTest.Instance.SoundEffectChoose, 80);
+			//}
 			else if (FileTest.audio_exist("Audio/SE/Choose"))
 			{
 				SEPlay("Choose", 80);

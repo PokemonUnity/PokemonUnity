@@ -332,7 +332,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		public void bgs_play(IAudioBGS bgs)
 		{
-			@playing_bgs = bgs == null ? null : (IAudioBGS)(IAudioBGM)bgs.Clone();
+			@playing_bgs = bgs == null ? null : (IAudioBGS)bgs.Clone();
 			if (bgs != null && bgs.name != "")
 			{
 				if (FileTest.audio_exist("Audio/BGS/" + bgs.name))
@@ -536,25 +536,28 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 		}
 
-		void IAudio.bgm_play(string filename, float volume, float pitch)
+		void IAudio.bgm_play(string filename, float volume, float pitch, int position)
 		{
-
-			throw new NotImplementedException();
+			bgm_play_internal2(filename, volume, pitch, position);
 		}
 
 		void IAudio.bgs_play(string filename, float volume, float pitch)
 		{
-			throw new NotImplementedException();
+			//bgs_play(filename);
+			if (!string.IsNullOrEmpty(filename))
+			{
+				bgs_play(new AudioTrack().initialize(filename) as IAudioBGS);
+			}
 		}
 
 		void IAudio.me_play(string filename, float volume, float pitch)
 		{
-			throw new NotImplementedException();
+			me_play(filename);
 		}
 
 		void IAudio.se_play(string filename, float volume, float pitch)
 		{
-			throw new NotImplementedException();
+			se_play(filename);
 		}
 	}
 }

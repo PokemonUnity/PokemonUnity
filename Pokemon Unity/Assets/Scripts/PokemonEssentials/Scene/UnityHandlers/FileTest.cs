@@ -98,27 +98,51 @@ namespace PokemonUnity.Interface.UnityEngine
 			return null;
 		}
 
-		public static bool audio_exist(string filename)
+		public static bool audio_exist(string filename)//, out IAudioObject clip
 		{
 			if (filename == null || filename == "")
 				return false;
+			//string[] folders = filename.Split('/');
+			//if(folders.Length > 0)
+			//{
+			//	//if (folders[1] == "BGM")
+			//	if (filename.StartsWith("Audio/BGM/"))
+			//		return _audioData.BackgroundMusic.Any(clip => clip.name.Contains(folders[2]));
+			//	//if (folders[1] == "BGS")
+			//	if (filename.StartsWith("Audio/BGS/"))
+			//		return _audioData.BackgroundSound.Any(clip => clip.name.Contains(folders[2]));
+			//	//if (folders[1] == "ME")
+			//	if (filename.StartsWith("Audio/ME/"))
+			//		return _audioData.MusicEffect.Any(clip => clip.name.Contains(folders[2]));
+			//	//if (folders[1] == "SE")
+			//	if (filename.StartsWith("Audio/SE/"))
+			//		return _audioData.SoundEffect.Any(clip => clip.name.Contains(folders[2]));
+			//};
+			if (getAudio(filename) != null) return true;
+			return false;
+		}
+
+		private static AudioClip getAudio(string filename)//, out IAudioObject clip
+		{
+			if (filename == null || filename == "")
+				return null;
 			string[] folders = filename.Split('/');
 			if(folders.Length > 0)
 			{
 				//if (folders[1] == "BGM")
 				if (filename.StartsWith("Audio/BGM/"))
-					return _audioData.BackgroundMusic.Any(clip => clip.name.Contains(folders[2]));
+					return _audioData.BackgroundMusic.FirstOrDefault(clip => clip.name.Contains(folders[2]));
 				//if (folders[1] == "BGS")
 				if (filename.StartsWith("Audio/BGS/"))
-					return _audioData.BackgroundSound.Any(clip => clip.name.Contains(folders[2]));
+					return _audioData.BackgroundSound.FirstOrDefault(clip => clip.name.Contains(folders[2]));
 				//if (folders[1] == "ME")
 				if (filename.StartsWith("Audio/ME/"))
-					return _audioData.MusicEffect.Any(clip => clip.name.Contains(folders[2]));
+					return _audioData.MusicEffect.FirstOrDefault(clip => clip.name.Contains(folders[2]));
 				//if (folders[1] == "SE")
 				if (filename.StartsWith("Audio/SE/"))
-					return _audioData.SoundEffect.Any(clip => clip.name.Contains(folders[2]));
+					return _audioData.SoundEffect.FirstOrDefault(clip => clip.name.Contains(folders[2]));
 			};
-			return false;
+			return null;
 		}
 
 		public static bool image_exist(string filename)
@@ -134,6 +158,18 @@ namespace PokemonUnity.Interface.UnityEngine
 		bool IFileTest.image_exist(string filename)
 		{
 			return image_exist(filename);
+		}
+
+		IAudioObject IFileTest.initialize(string filename, float volume, float pitch)
+		{
+			AudioClip clip = getAudio(filename);
+			if (clip != null)
+			{
+				IAudioObject audio = new AudioTrack(clip) //_audioData.BackgroundMusic.First(clip => clip.name.Contains(filename))
+					.initialize(filename, volume, pitch);
+				return audio;
+			}
+			return null;
 		}
 	}
 }

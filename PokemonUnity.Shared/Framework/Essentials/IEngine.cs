@@ -75,6 +75,7 @@ namespace PokemonEssentials.Interface
 		/// Stops ME playback.
 		/// </summary>
 		void se_stop();
+		//IAudioObject ResolveAudioFile(string filename, float volume, float pitch);
 	}
 	public interface IAudioObject
 	{

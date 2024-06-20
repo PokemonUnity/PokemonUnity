@@ -1,7 +1,7 @@
 ﻿using System;
 using PokemonEssentials.Interface;
 
-namespace PokemonUnity.Interface.UnityEngine
+namespace PokemonUnity
 {
 	public partial class GameSystem : IGameSystem
 	{
@@ -122,7 +122,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			@playing_bgm = bgm == null ? null : (IAudioBGM)bgm.Clone();
 			if (bgm != null && bgm.name != "")
 			{
-				if (FileTest.audio_exist("Audio/BGM/" + bgm.name))
+				if (Game.FileTest.audio_exist("Audio/BGM/" + bgm.name))
 				{
 					if (defaultBGM == null) bgm_play_internal2("Audio/BGM/" + bgm.name, bgm.volume, bgm.pitch,
 					  @bgm_position);
@@ -228,7 +228,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			if (!string.IsNullOrEmpty(bgm))
 			{
-				setDefaultBGM(new AudioTrack().initialize(bgm, volume, pitch) as IAudioBGM, volume, pitch);
+				//setDefaultBGM(new AudioTrack().initialize(bgm, volume, pitch) as IAudioBGM, volume, pitch);
+				setDefaultBGM(Game.FileTest.initialize(bgm, volume, pitch) as IAudioBGM, volume, pitch);
 			}
 			//if (bgm != null && bgm.name != "")
 			//{
@@ -268,16 +269,17 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			if (!string.IsNullOrEmpty(me))
 			{
-				me_play(new AudioTrack().initialize(me) as IAudioME);
+				//me_play(new AudioTrack().initialize(me) as IAudioME);
+				me_play(Game.FileTest.initialize(me, 80, 100) as IAudioME);
 			}
 			//if (me != null && me.name != "")
 			//{
-			//	if (FileTest.audio_exist("AudioManager/ME/" + me.name))
+			//	if (FileTest.audio_exist("Audio/ME/" + me.name))
 			//	{
 			//		int vol = me.volume;
 			//		if (Game.GameData.PokemonSystem) vol *= (Game.GameData.PokemonSystem.bgmvolume / 100.0f);
 			//		vol = vol.to_i;
-			//		AudioManager.AudioHandler.me_play("AudioManager/ME/" + me.name, vol, me.pitch);
+			//		AudioManager.AudioHandler.me_play("Audio/ME/" + me.name, vol, me.pitch);
 			//	}
 			//}
 			//else
@@ -295,7 +297,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			//}
 			if (me != null && me.name != "")
 			{
-				if (FileTest.audio_exist("Audio/ME/" + me.name))
+				if (Game.FileTest.audio_exist("Audio/ME/" + me.name))
 				{
 					float vol = me.volume;
 					if (Game.GameData.PokemonSystem != null) vol *= (Game.GameData.PokemonSystem.bgmvolume / 100.0f);
@@ -341,7 +343,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			@playing_bgs = bgs == null ? null : (IAudioBGS)bgs.Clone();
 			if (bgs != null && bgs.name != "")
 			{
-				if (FileTest.audio_exist("Audio/BGS/" + bgs.name))
+				if (Game.FileTest.audio_exist("Audio/BGS/" + bgs.name))
 				{
 					float vol = bgs.volume;
 					if (Game.GameData.PokemonSystem != null) vol *= (Game.GameData.PokemonSystem.sevolume / 100.0f);
@@ -429,16 +431,17 @@ namespace PokemonUnity.Interface.UnityEngine
 		{
 			if (!string.IsNullOrEmpty(se))
 			{
-				se_play(new AudioTrack().initialize(se) as IAudioSE);
+				//se_play(new AudioTrack().initialize(se) as IAudioSE);
+				se_play(Game.FileTest.initialize(se, 80, 100) as IAudioSE);
 			}
 			//if (se != null && se.name != "")
 			//{
-			//	if (FileTest.audio_exist("AudioManager/SE/" + se.name))
+			//	if (FileTest.audio_exist("Audio/SE/" + se.name))
 			//	{
 			//		int vol = se.volume;
 			//		if (Game.GameData.PokemonSystem) vol *= (Game.GameData.PokemonSystem.sevolume / 100.0f);
 			//		vol = vol.to_i;
-			//		AudioManager.AudioHandler.se_play("AudioManager/SE/" + se.name, vol, se.pitch);
+			//		AudioManager.AudioHandler.se_play("Audio/SE/" + se.name, vol, se.pitch);
 			//	}
 			//}
 		}
@@ -451,15 +454,21 @@ namespace PokemonUnity.Interface.UnityEngine
 			//}
 			if (se != null && se.name != "")
 			{
-				if (FileTest.audio_exist("Audio/SE/" + se.name))
+				if (Game.FileTest.audio_exist("Audio/SE/" + se.name))
 				{
 					float vol = se.volume;
 					if (Game.GameData.PokemonSystem != null) vol *= (Game.GameData.PokemonSystem.sevolume / 100.0f);
 					vol = (int)vol;
 					//AudioManager.AudioHandler.se_play("Audio/SE/" + se.name, vol, se.pitch);
-					if (Game.GameData.Audio is IAudio audio) audio.se_play(se.name, vol, se.pitch);
+					//if (Game.GameData.Audio is IAudio audio) audio.se_play(se.name, vol, se.pitch);
+					se_play(se.name, vol, se.pitch);
 				}
 			}
+		}
+
+		public void se_play(string filename, float volume, float pitch)
+		{
+			if (Game.GameData is IAudio audio) audio.se_play(filename, volume, pitch);
 		}
 
 		public void se_stop()
@@ -560,11 +569,6 @@ namespace PokemonUnity.Interface.UnityEngine
 		void IAudio.me_play(string filename, float volume, float pitch)
 		{
 			if (Game.GameData is IAudio audio) audio.me_play(filename, volume, pitch);
-		}
-
-		void IAudio.se_play(string filename, float volume, float pitch)
-		{
-			if (Game.GameData is IAudio audio) audio.se_play(filename, volume, pitch);
 		}
 	}
 }
