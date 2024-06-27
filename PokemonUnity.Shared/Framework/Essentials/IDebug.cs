@@ -56,7 +56,7 @@ namespace PokemonEssentials.Interface
 		void list();
 	}
 
-	public interface IGameDebug {
+	public interface IGameDebug : IGame {
 		IList<object> pbMapTree();
 
 		void pbExtractText();

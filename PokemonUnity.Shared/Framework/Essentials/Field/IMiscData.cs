@@ -307,7 +307,7 @@ namespace PokemonEssentials.Interface.Field
 		/// <summary>
 		/// If this is TRUE, then the screen cannot scroll past the edges of the map.
 		/// This avoids showing the black borders beyond the edges of maps,
-		/// but the camera will not be centred on the player if they are close to the edges.
+		/// but the camera will not be centered on the player if they are close to the edges.
 		/// </summary>
 		public bool SnapEdges				{ get; set; }
 		/// <summary>
@@ -359,9 +359,9 @@ namespace PokemonEssentials.Interface.Field
 	{
 		//object this[GlobalMetadatas i]	{ get; } //{ return GlobalTypes[i]; } }
 		//object this[MapMetadatas i]		{ get; } //{ return NonGlobalTypes[i]; } }
-		MapMetadata this[int i]				{ get; }
+		//MapMetadata this[int i]				{ get; }
 
-		int MapId						{ get; }
+		//int MapId						{ get; }
 		GlobalMetadata Global			{ get; }
 		MapMetadata Map					{ get; }
 
@@ -451,7 +451,7 @@ namespace PokemonEssentials.Interface.Field
 	/// <summary>
 	/// Extension of <see cref="IGame"/>
 	/// </summary>
-	public interface IGameMetadataMisc {
+	public interface IGameMetadataMisc : IGame {
 		#region Manipulation methods for metadata, phone data and Pokémon species data
 		IDictionary<int, IPokemonMetadata> LoadMetadata();
 

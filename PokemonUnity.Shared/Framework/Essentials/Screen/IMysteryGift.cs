@@ -54,7 +54,7 @@ namespace PokemonEssentials.Interface.Screen
 	/// <summary>
 	/// Extension of <see cref="IGame"/>
 	/// </summary>
-	public interface IGameMysteryGift
+	public interface IGameMysteryGift : IGame
 	{
 		/// <summary>
 		/// This url is the location of an example Mystery Gift file.

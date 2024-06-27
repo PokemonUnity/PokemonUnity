@@ -195,7 +195,10 @@ namespace PokemonEssentials.Interface.Battle
 		IList<IPokemon> load(IList<IPokemon> party);
 	}
 
-	public interface IGameOrgBattleGenerator
+	/// <summary>
+	/// Extension of <seealso cref="IGame"/>
+	/// </summary>
+	public interface IGameOrgBattleGenerator : IGame
 	{
 		//$tmData          = null;
 		//$legalMoves      = [];

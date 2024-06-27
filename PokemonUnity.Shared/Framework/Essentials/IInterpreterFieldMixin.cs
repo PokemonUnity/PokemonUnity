@@ -8,7 +8,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// Logic that's used by Game while player is in `Overworld_Field`
 	/// </summary>
-	public interface IInterpreterFieldMixin //: IInterpreter
+	public interface IInterpreterFieldMixin : IInterpreter
 	{
 		//object[] Params { get; }
 
@@ -17,6 +17,10 @@ namespace PokemonEssentials.Interface
 		PokemonEssentials.Interface.PokeBattle.IPokemon GetPokemon(int id);
 		bool Headbutt();
 		bool PushThisBoulder();
+		/// <summary>
+		/// Used in boulder events. Allows an event to be pushed. To be used in
+		/// a script event command.
+		/// </summary>
 		void PushThisEvent();
 		//void SetEventTime(params int[] arg);
 		void SetEventTime(object arg);

@@ -240,9 +240,9 @@ namespace PokemonUnity.Monster
 			Item = Items.NONE;
 			ribbons = new HashSet<Ribbons>();
 			calcStats();
-			if (Game.GameData.GameMap != null)
+			if (Game.GameData.GameMap != null && Game.GameData.GameMap is IGameMapOrgBattle gmo)
 			{
-				@ObtainMap = (Locations)Game.GameData.GameMap.map_id;
+				@ObtainMap = (Locations)gmo.map_id;
 				//@ObtainText = null;
 				@ObtainLevel = Level;
 			}
@@ -720,8 +720,8 @@ namespace PokemonUnity.Monster
 		{
 			//ToDo: If OT != null, dont change it... Pokemon is already captured... Unless Pokeball.SnagBall?
 			//if not npc?
-			if(Game.GameData.GameMap != null)
-				this.ObtainMap = (Locations)Game.GameData.GameMap.map_id; //todo: remove locations enum from code?
+			if(Game.GameData.GameMap != null && Game.GameData.GameMap is IGameMapOrgBattle gmo)
+				this.ObtainMap = (Locations)gmo.map_id; //todo: remove locations enum from code?
 			else
 				this.ObtainMap = 0;
 			//this.CatchTrainerName = Game.GameData.Player.Name;
@@ -2307,7 +2307,7 @@ namespace PokemonUnity.Monster
 		/// <summary>
 		/// Nickname
 		/// </summary>
-		public bool IsNicknamed { get { return !string.IsNullOrEmpty(name.Trim()); } }
+		public bool IsNicknamed { get { return !string.IsNullOrEmpty(name?.Trim()); } }
 		/// <summary>
 		/// Nickname;
 		/// Returns Pokemon species name if not nicknamed.
@@ -2429,7 +2429,7 @@ namespace PokemonUnity.Monster
 					gain += Happiness < 200 ? 1 : 0;
 					//ToDo: if trainer is on map pkmn was captured on, add more happiness on walk
 					//gain += this.metMap.Id == currentMap.Id ? 1 : 0; //change to "obtainMap"?
-					if ((int)this.ObtainMap == Game.GameData.GameMap.map_id) gain += 1;
+					if (Game.GameData.GameMap is IGameMapOrgBattle gmo && (int)this.ObtainMap == gmo.map_id) gain += 1;
 					luxury = true;
 					break;
 				case HappinessMethods.LEVELUP:

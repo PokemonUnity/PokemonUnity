@@ -21,7 +21,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// Reversion forms.
 	/// Extensions of <seealso cref="IPokemon"/>
 	/// </summary>
-	public interface IPokemonMegaEvolution
+	public interface IPokemonMegaEvolution : IPokemon
 	{
 		bool hasMegaForm();
 

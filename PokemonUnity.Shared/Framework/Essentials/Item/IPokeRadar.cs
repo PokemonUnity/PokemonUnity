@@ -14,7 +14,7 @@ namespace PokemonEssentials.Interface.Item
 	/// <summary>
 	/// Extension of <seealso cref="Interface.IGlobalMetadata"/>
 	/// </summary>
-	public interface IGlobalMetadataPokeRadar
+	public interface IGlobalMetadataPokeRadar : Field.IGlobalMetadata
 	{
 		int pokeradarBattery { get; }
 	}
@@ -51,7 +51,7 @@ namespace PokemonEssentials.Interface.Item
 	/// <summary>
 	/// Extension of <seealso cref="IGame"/>
 	/// </summary>
-	public interface IGamePokeRadar
+	public interface IGamePokeRadar : IGame
 	{
 		bool CanUsePokeRadar();
 

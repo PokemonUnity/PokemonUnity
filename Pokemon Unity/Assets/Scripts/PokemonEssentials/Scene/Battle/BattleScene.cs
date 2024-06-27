@@ -254,20 +254,20 @@ namespace PokemonUnity.Interface.UnityEngine
 			IPokemon[] p1 = new IPokemon[] { new PokemonUnity.Monster.Pokemon(Pokemons.ABRA), new PokemonUnity.Monster.Pokemon(Pokemons.EEVEE) };
 			IPokemon[] p2 = new IPokemon[] { new PokemonUnity.Monster.Pokemon(Pokemons.MONFERNO) }; //, new PokemonUnity.Monster.Pokemon(Pokemons.SEEDOT) };
 
-			p1[0].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
-			p1[1].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
+			//p1[0].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
+			//p1[1].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
 
-			p2[0].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
+			//p2[0].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
 			//p2[1].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
 
 			//PokemonUnity.Character.TrainerData trainerData = new PokemonUnity.Character.TrainerData("FlakTester", true, 120, 002);
 			//Game.GameData.Player = new PokemonUnity.Character.Player(trainerData, p1);
 			//Game.GameData.Trainer = new Trainer("FlakTester", true, 120, 002);
 
-			(p1[0] as PokemonUnity.Monster.Pokemon).SetNickname("Test1");
-			(p1[1] as PokemonUnity.Monster.Pokemon).SetNickname("Test2");
+			//(p1[0] as PokemonUnity.Monster.Pokemon).SetNickname("Test1");
+			//(p1[1] as PokemonUnity.Monster.Pokemon).SetNickname("Test2");
 
-			(p2[0] as PokemonUnity.Monster.Pokemon).SetNickname("OppTest1");
+			//(p2[0] as PokemonUnity.Monster.Pokemon).SetNickname("OppTest1");
 			//(p2[1] as PokemonUnity.Monster.Pokemon).SetNickname("OppTest2");
 
 			//ITrainer player = new Trainer(Game.GameData.Trainer.name, TrainerTypes.PLAYER);
@@ -895,14 +895,14 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			else
 			{
-				if (Game.GameData.GameMap == null || (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.GetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor)) //!GetMetadata(Game.GameData.GameMap.map_id, MetadataOutdoor))
+				if (Game.GameData.GameMap == null || (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.GetMetadata(Game.GameData.GameMap is IGameMapOrgBattle gmo ? gmo.map_id : 0).Map.Outdoor)) //!GetMetadata(Game.GameData.GameMap.map_id, MetadataOutdoor))
 				{
 					backdrop = "IndoorA";
 				}
 			}
 			if (Game.GameData.GameMap != null && Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc m1)
 			{
-				string back = m1.GetMetadata(Game.GameData.GameMap.map_id).Map.BattleBack;
+				string back = m1.GetMetadata(Game.GameData.GameMap is IGameMapOrgBattle gmo ? gmo.map_id : 0).Map.BattleBack;
 				if (back != null && back != "")
 				{
 					backdrop = back;

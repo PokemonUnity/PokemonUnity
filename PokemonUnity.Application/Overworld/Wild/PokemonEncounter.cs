@@ -472,7 +472,7 @@ namespace PokemonUnity.Overworld
 		//Events.onWildPokemonCreate+=proc {|sender,e|
 		//private void onWildPokemonCreate(object sender, EventArgs e) {
 			//IPokemon pokemon = e[0];
-			if (Game.GameData.GameMap.map_id==51) {
+			if (Game.GameData.GameMap is IGameMapOrgBattle gmo && gmo.map_id==51) {
 				int newlevel=(int)Math.Round((Game.GameData as PokemonEssentials.Interface.IGameUtility).BalancedLevel(Game.GameData.Trainer.party) - 4 + Core.Rand.Next(5));   // For variety
 				if (newlevel < 1) newlevel=1;
 				if (newlevel > Core.MAXIMUMLEVEL) newlevel = Core.MAXIMUMLEVEL;

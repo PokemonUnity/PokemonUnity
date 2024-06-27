@@ -144,7 +144,8 @@ namespace PokemonUnity
 					gmr.roamHistory.Dequeue(); //.shift();
 				}
 				gmr.roamedAlready=false;
-				gmr.roamHistory.Enqueue(GameMap.map_id);
+				if (GameMap is IGameMapOrgBattle gmo)
+					gmr.roamHistory.Enqueue(gmo.map_id);
 			}
 		}
 

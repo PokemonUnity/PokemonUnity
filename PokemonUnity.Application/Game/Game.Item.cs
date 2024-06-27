@@ -12,6 +12,7 @@ using PokemonEssentials.Interface.Item;
 using PokemonEssentials.Interface.Screen;
 using PokemonEssentials.Interface.EventArg;
 using PokemonEssentials.Interface.PokeBattle;
+using PokemonEssentials.Interface.Battle;
 
 namespace PokemonUnity//.Inventory
 {
@@ -373,16 +374,16 @@ namespace PokemonUnity//.Inventory
 			}
 			if (Global.bicycle) {
 				//if (GetMetadata(GameMap.map_id,MetadataBicycleAlways)) {
-				if (GetMetadata(GameMap.map_id).Map.BicycleAlways) {
+				if (GetMetadata(GameMap is IGameMapOrgBattle gmo ? gmo.map_id : 0).Map.BicycleAlways) {
 					GameMessage.Message(Game._INTL("You can't dismount your Bike here."));
 					return false;
 				}
 				return true;
 			} else {
 				//bool? val=GetMetadata(GameMap.map_id,MetadataBicycle);
-				bool? val=GetMetadata(GameMap.map_id).Map.Bicycle;
+				bool? val=GetMetadata(GameMap is IGameMapOrgBattle gmo0 ? gmo0.map_id : 0).Map.Bicycle;
 				//if (val == null) val=GetMetadata(GameMap.map_id,MetadataOutdoor);
-				if (val == null) val=GetMetadata(GameMap.map_id).Map.Outdoor;
+				if (val == null) val=GetMetadata(GameMap is IGameMapOrgBattle gmo1 ? gmo1.map_id : 0).Map.Outdoor;
 				if (val == null) {
 					GameMessage.Message(Game._INTL("Can't use that here."));
 					return false;
@@ -395,11 +396,11 @@ namespace PokemonUnity//.Inventory
 			IList<IGameCharacter> result = new List<IGameCharacter>();
 			float playerX=GamePlayer.x;
 			float playerY=GamePlayer.y;
-			foreach (IGameCharacter @event in GameMap.events.Values) {
+			foreach (IGameEvent @event in GameMap.events.Values) {
 				if (@event.name!="HiddenItem") continue;
 				if (Math.Abs(playerX-@event.x)>=8) continue;
 				if (Math.Abs(playerY-@event.y)>=6) continue;
-				if (GameSelfSwitches[(ISelfSwitchVariable)new SelfSwitchVariable(GameMap.map_id,@event.id,"A")]) continue;
+				if (GameSelfSwitches[(ISelfSwitchVariable)new SelfSwitchVariable(GameMap is IGameMapOrgBattle gmo ? gmo.map_id : 0,@event.id,"A")]) continue;
 				result.Add(@event);
 			}
 			if (result.Count==0) return null;

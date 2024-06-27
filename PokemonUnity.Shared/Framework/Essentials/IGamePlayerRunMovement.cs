@@ -10,7 +10,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// <seealso cref="IGamePlayer"/>
 	/// </summary>
-	public interface IGamePlayerRunMovement
+	public interface IGamePlayerRunMovement : IGamePlayer
 	{
 		int fullPattern();
 
@@ -20,10 +20,10 @@ namespace PokemonEssentials.Interface
 
 		bool IsRunning();
 
-		string character_name { get; }
+		//string character_name { get; }
 
 		//alias update_old update;
 
-		IEnumerator update();
+		//IEnumerator update();
 	}
 }

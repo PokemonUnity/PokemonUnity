@@ -18,7 +18,7 @@ using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface.Screen
 {
-	public interface IGameSave {
+	public interface IGameSave : IGame {
 
 		void EmergencySave();
 

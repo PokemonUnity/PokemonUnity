@@ -23,6 +23,7 @@ namespace PokemonUnity
 	namespace Character
 	{
 		public partial class PokemonBox : PokemonEssentials.Interface.Screen.IPokemonBox,  IList<PokemonEssentials.Interface.PokeBattle.IPokemon>, ICollection<PokemonEssentials.Interface.PokeBattle.IPokemon> {
+			//protected readonly IList<PokemonEssentials.Interface.PokeBattle.IPokemon> pokemon;
 			public IList<PokemonEssentials.Interface.PokeBattle.IPokemon> pokemon				{ get; protected set; }
 			public string name						{ get; set; }
 			public string background				{ get; set; }
@@ -33,18 +34,19 @@ namespace PokemonUnity
 			}
 
 			public IPokemonBox initialize (string name,int maxPokemon=30) {
-				@pokemon=new List<PokemonEssentials.Interface.PokeBattle.IPokemon>(capacity: maxPokemon);
+				@pokemon=new IPokemon[maxPokemon]; //List<PokemonEssentials.Interface.PokeBattle.IPokemon>(capacity: maxPokemon);
 				this.name=name;
 				@background=null;
-				for (int i = 0; i < maxPokemon; i++) {
-					@pokemon[i]=null;
-				}
+				//for (int i = 0; i < maxPokemon; i++) {
+				//	@pokemon[i]=null;
+				//}
 				return this;
 			}
 
 			public bool full { get {
 				//return (@pokemon.nitems==this.Length);
-				return (this.nitems==this.length);
+				//return (this.nitems==this.length);
+				return pokemon.Any(p => !p.IsNotNullOrNone());
 			} }
 
 			public int nitems { get { //item count
@@ -52,7 +54,8 @@ namespace PokemonUnity
 			} }
 
 			public int length { get { //capacity
-				return (@pokemon as List<Pokemon>).Capacity;
+				//return (@pokemon as List<Pokemon>).Capacity;
+				return @pokemon.Count;
 			} }
 
 			int ICollection<IPokemon>.Count { get { return nitems; } }
@@ -79,7 +82,15 @@ namespace PokemonUnity
 				{
 					if (!pokemon.Contains(item)
 							&& item.IsNotNullOrNone())
-						pokemon.Add(item);
+						//pokemon.Add(item);
+						for (int i = 0; i < length; i++)
+						{
+							if (!pokemon[i].IsNotNullOrNone())
+							{
+								pokemon[i] = item;
+								break;
+							}
+						}
 				}
 				//move to next box, if full? or send player message to remove?
 			}
@@ -108,7 +119,7 @@ namespace PokemonUnity
 			{
 				if (!item.IsNotNullOrNone()) return true;
 				//if object is removed, it will remove nulls and empty space
-				return pokemon.Remove(item);
+				return pokemon.Remove(item); //ToDo: get index and assign null
 			}
 
 			IEnumerator<IPokemon> IEnumerable<IPokemon>.GetEnumerator()
@@ -132,13 +143,13 @@ namespace PokemonUnity
 			{
 				if (!item.IsNotNullOrNone()) return;
 				//return ((IList<PokemonEssentials.Interface.PokeBattle.IPokemon>)pokemon).Insert(index, item);
-				pokemon.Insert(index, item);
+				pokemon[index] = item; //pokemon.Insert(index, item);
 			}
 
 			void IList<IPokemon>.RemoveAt(int index)
 			{
 				//((IList<PokemonEssentials.Interface.PokeBattle.IPokemon>)pokemon).RemoveAt(index);
-				pokemon.RemoveAt(index);
+				pokemon[index] = null; //pokemon.RemoveAt(index);
 			}
 			#endregion
 
@@ -380,9 +391,9 @@ namespace PokemonUnity
 					//throw Exception(Game._INTL("The player is not on a map, so the region could not be determined."));
 					Core.Logger.LogError(Game._INTL("The player is not on a map, so the region could not be determined."));
 				}
-				if (@lastmap!=Game.GameData.GameMap.map_id) {
+				if (Game.GameData.GameMap is IGameMapOrgBattle gmo && @lastmap != gmo.map_id) {
 					@rgnmap=Game.GameData is IGameUtility g ? g.GetCurrentRegion() : -1; // may access file IO, so caching result
-					@lastmap=Game.GameData.GameMap.map_id;
+					@lastmap=gmo.map_id;
 				}
 				if (@rgnmap<0) {
 					//throw Exception(Game._INTL("The current map has no region set. Please set the MapPosition metadata setting for this map."));

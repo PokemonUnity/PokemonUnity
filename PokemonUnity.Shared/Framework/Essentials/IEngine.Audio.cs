@@ -12,7 +12,7 @@ namespace PokemonEssentials.Interface
 	/// <remarks>
 	/// Use this to fetch and control the Audio Player Volume, and Pitch. This should connect to the audio stream output/input feed
 	/// </remarks>
-	public interface IGameAudio
+	public interface IGameAudio : IGame
 	{
 		void getPlayMusic();
 		void getPlaySound();

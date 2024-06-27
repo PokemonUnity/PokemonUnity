@@ -15,7 +15,7 @@ namespace PokemonEssentials.Interface
 	/// Not an Extension of <see cref="IGame"/>
 	/// </remarks>
 	/// ToDo: Rename?
-	public interface IGameMap : Battle.IGameMapOrgBattle
+	public interface IGameMap //: Battle.IGameMapOrgBattle
 	{
 		/// <summary>
 		/// tileset file name
@@ -126,10 +126,10 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		void autoplay();
 		void refresh();
-		void scroll_down(int distance);
-		void scroll_left(int distance);
-		void scroll_right(int distance);
-		void scroll_up(int distance);
+		void scroll_down(float distance);
+		void scroll_left(float distance);
+		void scroll_right(float distance);
+		void scroll_up(float distance);
 		bool valid(float x, float y);
 		bool validLax(float x, float y);
 		bool passable(float x, float y, int d, IGameCharacter self_event = null);

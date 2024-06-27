@@ -175,9 +175,9 @@ namespace PokemonEssentials.Interface.Field
 	}
 
 	/// <summary>
-	/// Extension of base Game...
+	/// Extension of <seealso cref="IGame"/>
 	/// </summary>
-	public interface IGameDungeon
+	public interface IGameDungeon : IGame
 	{
 		//IPoint is supposed to be an int array of x and y (`[int x,int y]`)
 		PokemonUnity.Utility.IPoint RandomRoomTile(IDungeon dungeon, IList<PokemonUnity.Utility.IPoint> tiles);

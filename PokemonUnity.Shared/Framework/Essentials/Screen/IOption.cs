@@ -95,7 +95,7 @@ namespace PokemonEssentials.Interface.Screen
 	/// <summary>
 	/// Extension of <see cref="IGame"/>
 	/// </summary>
-	public interface IGameOption
+	public interface IGameOption : IGame
 	{
 
 		//string[] SpeechFrames { get; }
@@ -122,14 +122,14 @@ namespace PokemonEssentials.Interface.Screen
 	/// </summary>
 	public interface IPokemonSystemOption {
 		int textspeed				{ get; set; }
-		int battlescene			    { get; set; }
-		int battlestyle			    { get; set; }
-		int frame				    { get; set; }
+		int battlescene				{ get; set; }
+		int battlestyle				{ get; set; }
+		int frame					{ get; set; }
 		int textskin				{ get; }
-		int font				    { get; set; }
+		int font					{ get; set; }
 		int screensize				{ get; set; }
 		int language				{ get; }
-		int border				    { get; }
+		int border					{ get; }
 		int runstyle				{ get; }
 		int bgmvolume				{ get; }
 		int sevolume				{ get; }

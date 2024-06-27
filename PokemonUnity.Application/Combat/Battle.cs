@@ -2865,7 +2865,14 @@ namespace PokemonUnity.Combat
 				StartBattleCore(canlose);
 			} catch (BattleAbortedException e){ //rescue BattleAbortedException;
 				Core.Logger.LogError(e.Message);
-				Core.Logger.LogError(e.StackTrace);
+				Core.Logger.LogDebug(e.StackTrace);
+
+				@decision = BattleResults.ABORTED;
+				(@scene as IPokeBattle_DebugSceneNoGraphics).EndBattle(@decision);
+			} catch (Exception e){ //rescue BattleAbortedException;
+				Core.Logger.LogError(e.Message);
+				Core.Logger.LogDebug(e.StackTrace);
+				Core.Logger.LogDebug("{0}", e);
 
 				@decision = BattleResults.ABORTED;
 				(@scene as IPokeBattle_DebugSceneNoGraphics).EndBattle(@decision);

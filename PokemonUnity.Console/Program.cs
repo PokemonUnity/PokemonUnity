@@ -53,20 +53,20 @@ namespace PokemonUnity.ConsoleApp
 			IPokemon[] p1 = new IPokemon[] { new PokemonUnity.Monster.Pokemon(Pokemons.ABRA), new PokemonUnity.Monster.Pokemon(Pokemons.EEVEE) };
 			IPokemon[] p2 = new IPokemon[] { new PokemonUnity.Monster.Pokemon(Pokemons.MONFERNO) }; //, new PokemonUnity.Monster.Pokemon(Pokemons.SEEDOT) };
 
-			p1[0].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
-			p1[1].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
+			//p1[0].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
+			//p1[1].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
 
-			p2[0].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
+			//p2[0].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
 			//p2[1].moves[0] = new PokemonUnity.Attack.Move(Moves.POUND);
 
 			//PokemonUnity.Character.TrainerData trainerData = new PokemonUnity.Character.TrainerData("FlakTester", true, 120, 002);
 			//Game.GameData.Player = new PokemonUnity.Character.Player(trainerData, p1);
 			//Game.GameData.Trainer = new Trainer("FlakTester", true, 120, 002);
 
-			(p1[0] as PokemonUnity.Monster.Pokemon).SetNickname("Test1");
-			(p1[1] as PokemonUnity.Monster.Pokemon).SetNickname("Test2");
+			//(p1[0] as PokemonUnity.Monster.Pokemon).SetNickname("Test1");
+			//(p1[1] as PokemonUnity.Monster.Pokemon).SetNickname("Test2");
 
-			(p2[0] as PokemonUnity.Monster.Pokemon).SetNickname("OppTest1");
+			//(p2[0] as PokemonUnity.Monster.Pokemon).SetNickname("OppTest1");
 			//(p2[1] as PokemonUnity.Monster.Pokemon).SetNickname("OppTest2");
 
 			//ITrainer player = new Trainer(Game.GameData.Trainer.name, TrainerTypes.PLAYER);
@@ -326,12 +326,15 @@ namespace PokemonUnity.ConsoleApp
 			LogManager.Logger.LogDebug(this, message: "Run: {0}", System.Reflection.MethodBase.GetCurrentMethod().Name);
 
 			bool shadowTrainer = //(hasConst(Types,:SHADOW) && //Game has shadow pokemons
-				//@battle.opponent != null;
+				(@battle.opponent != null && battle.opponent.Length>0) && //Opponent is a trainer
 				battle.battlers[index] is IPokemonShadowPokemon p && p.hypermode;
 
 			Core.Logger.Log("Enemy: {0} HP: {1}/{2}", battle.battlers[index].Opposing1.Name, battle.battlers[index].Opposing1.HP, battle.battlers[index].Opposing1.TotalHP);
 			if (battle.battlers[index].Opposing2.IsNotNullOrNone())
 				Core.Logger.Log("Enemy: {0} HP: {1}/{2}", battle.battlers[index].Opposing2.Name, battle.battlers[index].Opposing2.HP, battle.battlers[index].Opposing2.TotalHP);
+			Core.Logger.Log("Player: {0} HP: {1}/{2}", battle.battlers[index].Name, battle.battlers[index].HP, battle.battlers[index].TotalHP);
+			if (battle.battlers[index].Partner.IsNotNullOrNone())
+				Core.Logger.Log("Player: {0} HP: {1}/{2}", battle.battlers[index].Partner.Name, battle.battlers[index].Partner.HP, battle.battlers[index].Partner.TotalHP);
 
 			System.Console.WriteLine("Fight - 1");
 			System.Console.WriteLine("Bag - 2");

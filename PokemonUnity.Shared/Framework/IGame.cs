@@ -21,7 +21,7 @@ namespace PokemonEssentials.Interface
 	//ToDo: Too many variables are named with `pokemon` and have nothing to do with an individual pokemon record, and only pertains to pokemon in general sense of the application's game logic...
 	public interface IGame //: IGameBerryPlants, IGameDungeon, IGameFactory, IGameField, IGameHiddenMoves, IGameItem, IGameItemEffect, IGameOrgBattle, IGamePokeball, IGameResizer, IGameSafari, IGameTime, IGameMessage, IGameAudioPlay, IGameMetadataMisc, IGameUtility
 	{
-		PokemonEssentials.Interface.IGlobalMetadata Global					{ get; }
+		PokemonEssentials.Interface.Field.IGlobalMetadata Global			{ get; }
 		PokemonEssentials.Interface.Field.IMapFactory MapFactory			{ get; }
 		PokemonEssentials.Interface.Field.IMapMetadata PokemonMap			{ get; }			//ToDo: Rename to `MapData`
 		//PokemonEssentials.Interface.Field.IMapMetadata MapData				{ get; }		//this is Data about the Current/Active Map the player is on
@@ -61,9 +61,10 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		PokemonEssentials.Interface.Field.ILocationWindow LocationWindow	{ get; set; }
 		PokemonEssentials.Interface.Field.IEncounterModifier EncounterModifier	{ get; set; }
+		//PokemonEssentials.Interface.IFileTest FileTest						{ get; set; }
 		#endregion
 		event Action<object, PokemonEssentials.Interface.EventArg.IOnLoadLevelEventArgs> OnLoadLevel;
 	}
-	public interface IGlobalMetadata : Field.IGlobalMetadata, IGlobalMetadataDependantEvents, IGlobalMetadataPokeRadar, IGlobalMetadataRoaming { }
+	//public interface IGlobalMetadata : Field.IGlobalMetadata, IGlobalMetadataDependantEvents, IGlobalMetadataPokeRadar, IGlobalMetadataRoaming { }
 	//public interface ITempMetadata : Field.ITempMetadata, ITempMetadataBerryPlants, ITempMetadataDependantEvents, ITempMetadataField, ITempMetadataPokeRadar, ITempMetadataRoaming, ITempMetadataPokemonShadow { }
 }

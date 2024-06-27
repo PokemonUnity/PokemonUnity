@@ -12,7 +12,10 @@ namespace PokemonEssentials.Interface
 	/// This class handles the player. Its functions include event starting
 	/// determinants and map scrolling.
 	/// </summary>
-	/// Refer to "Game.GameData.GamePlayer" for the one instance of this class.
+	/// <remarks>
+	/// There is only one `IGamePlayer`, everything else is an `IGameEvent` or `IGameCharacter`.
+	/// Refer to <see cref="IGame.GamePlayer"/> for the one instance of this class.
+	/// </remarks>
 	public interface IGamePlayer : IGameCharacter
 	{
 		IAudioSE bump_se { get; set; }
@@ -21,7 +24,7 @@ namespace PokemonEssentials.Interface
 		//int bush_depth { get; }
 
 		//IGamePlayer(Game_Map map);
-		//IGamePlayer initialize(IGameMap map);
+		new IGamePlayer initialize(IGameMap map);
 
 		bool HasDependentEvents();
 
@@ -30,15 +33,15 @@ namespace PokemonEssentials.Interface
 		//void move_right(bool turn_enabled = true);
 		//void move_up(bool turn_enabled = true);
 
-		List<IGameEvent> TriggeredTrainerEvents(int[] triggers, bool checkIfRunning = true);
+		IList<IGameCharacter> TriggeredTrainerEvents(IList<int> triggers, bool checkIfRunning = true);
 
-		List<IGameEvent> TriggeredCounterEvents(int[] triggers, bool checkIfRunning = true);
+		IList<IGameCharacter> TriggeredCounterEvents(IList<int> triggers, bool checkIfRunning = true);
 
 		void CheckEventTriggerAfterTurning();
 
-		bool CheckEventTriggerFromDistance(int[] triggers);
+		bool CheckEventTriggerFromDistance(IList<int> triggers);
 
-		IEntity FacingEvent();
+		IGameCharacter FacingEvent();
 		/// <summary>
 		/// Passable Determinants
 		/// </summary>
@@ -77,13 +80,13 @@ namespace PokemonEssentials.Interface
 		/// </summary>
 		/// <param name="triggers"></param>
 		/// <returns></returns>
-		bool check_event_trigger_here(int[] triggers);
+		bool check_event_trigger_here(IList<int> triggers);
 		/// <summary>
 		/// Front Event Starting Determinant
 		/// </summary>
 		/// <param name="triggers"></param>
 		/// <returns></returns>
-		bool check_event_trigger_there(int[] triggers);
+		bool check_event_trigger_there(IList<int> triggers);
 		/// <summary>
 		/// Touch Event Starting Determinant
 		/// </summary>

@@ -228,14 +228,14 @@ namespace PokemonEssentials.Interface
 			int scroll_y { get; set; }
 		}
 
-		public interface IEvent
-		{
-			int id { get; set; }
-			string name { get; set; }
-			int x { get; set; }
-			int y { get; set; }
-			IList<IEventPage> pages { get; set; }
-		}
+		//public interface IEvent
+		//{
+		//	int id { get; set; }
+		//	string name { get; set; }
+		//	int x { get; set; }
+		//	int y { get; set; }
+		//	IList<IEventPage> pages { get; set; }
+		//}
 
 		public interface IEventPage
 		{
@@ -274,7 +274,7 @@ namespace PokemonEssentials.Interface
 			/// Priority type (0: below characters, 1: same as characters, 2: above characters).
 			/// </summary>
 			int priority_type { get; set; }
-			//bool always_on_top { get; set; }
+			bool always_on_top { get; set; }
 			/// <summary>
 			/// Event trigger (0: action button, 1: player touch, 2: event touch, 3: autorun, 4: parallel process).
 			/// </summary>
@@ -340,7 +340,7 @@ namespace PokemonEssentials.Interface
 			/// The character's graphic file name.
 			/// </summary>
 			string character_name { get; set; }
-			//int character_hue { get; set; }
+			int character_hue { get; set; }
 			/// <summary>
 			/// The character's index of the graphic file (0..7).
 			/// </summary>
@@ -353,8 +353,8 @@ namespace PokemonEssentials.Interface
 			/// The character's pattern (0..2).
 			/// </summary>
 			int pattern { get; set; }
-			//int opacity { get; set; }
-			//int blend_type { get; set; }
+			int opacity { get; set; }
+			int blend_type { get; set; }
 		}
 
 		public interface IEventCommand
@@ -407,7 +407,9 @@ namespace PokemonEssentials.Interface
 			IMoveParameters parameters { get; set; }
 		}
 
-		public interface IMoveParameters { }
+		public interface IMoveParameters {
+			object this[int index] { get; }
+		}
 
 		public interface ISystemWords
 		{

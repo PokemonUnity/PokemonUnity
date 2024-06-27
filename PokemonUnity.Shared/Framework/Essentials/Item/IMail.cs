@@ -31,7 +31,10 @@ namespace PokemonEssentials.Interface.Item
 		IMail initialize(Items item, string message, string sender, IPokemon poke1 = null, IPokemon poke2 = null, IPokemon poke3 = null);
 	}
 
-	public interface IGameMail
+	/// <summary>
+	/// Extension of <seealso cref="IGame"/>
+	/// </summary>
+	public interface IGameMail : IGame
 	{
 		bool MoveToMailbox(IPokemon pokemon);
 

@@ -189,12 +189,12 @@ namespace PokemonUnity
 			@daycareEggSteps      = 0;
 			int numRegions        = 0;
 			//RgssOpen("Data/regionals.dat","rb"){|f| numRegions = f.fgetw }
-			@pokedexUnlocked      = new bool[numRegions];
+			@pokedexUnlocked      = new bool[numRegions+1];	// National Dex isn't a region, but is included
 			@pokedexViable        = new List<int>();
 			@pokedexDex           = (numRegions==0) ? -1 : 0;
-			@pokedexIndex         = new int[numRegions];
+			@pokedexIndex         = new int[numRegions+1];	// National Dex isn't a region, but is included
 			@pokedexMode          = 0;
-			for (int i = 0; i < numRegions+1; i++) {	// National Dex isn't a region, but is included
+			for (int i = 0; i < numRegions+1; i++) {		// National Dex isn't a region, but is included
 				@pokedexIndex[i]    = 0;
 				@pokedexUnlocked[i] = (i==0);
 			}

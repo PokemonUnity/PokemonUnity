@@ -22,7 +22,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Extensions of <seealso cref="IPokemon"/>
 		/// </summary>
-		public interface IPokemonChatter
+		public interface IPokemonChatter : IPokemon
 		{
 			IWaveData chatter		{ get; set; }
 		}
@@ -31,7 +31,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// Extensions of <seealso cref="IGame"/>
 	/// </summary>
-	public interface IGameChatter
+	public interface IGameChatter : IGame
 	{
 		void Chatter(PokemonEssentials.Interface.PokeBattle.IPokemonChatter pokemon);
 
@@ -48,7 +48,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// Extensions of <seealso cref="IPokeBattle_Scene"/>
 	/// </summary>
-	public interface IPokeBattle_SceneChatter //: IPokeBattle_Scene 
+	public interface IPokeBattle_SceneChatter //: IPokeBattle_Scene
 	{
 		void Chatter(IBattler attacker, IBattler opponent);
 	}

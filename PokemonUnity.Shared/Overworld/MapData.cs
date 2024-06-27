@@ -23,7 +23,8 @@ namespace PokemonUnity
 		//public IList<IMapEncounterMetadata> encounter_list	{ get; private set; }
 		public int encounter_step								{ get; private set; }
 		public int?[,,] data									{ get; private set; }
-		public IDictionary<int,int> events						{ get; private set; }
+		//public IDictionary<int,int> events					{ get; private set; }
+		public IDictionary<int,IGameCharacter> events			{ get; private set; }
 
 		public MapData(int width, int height)
 		{
@@ -37,7 +38,8 @@ namespace PokemonUnity
 			@encounter_list = new List<IEncounterPokemon>();
 			@encounter_step = 30;
 			@data = new int?[width, height, 3];
-			@events = new Dictionary<int, int>();
+			//@events = new Dictionary<int, int>();
+			@events = new Dictionary<int, IGameCharacter>();
 		}
 
 		public MapData(int width, int height, IAudioBGM bgmusic, IAudioBGS bgsound)
@@ -52,7 +54,8 @@ namespace PokemonUnity
 			@encounter_list = new List<IEncounterPokemon>();
 			@encounter_step = 30;
 			@data = new int?[width, height, 3];
-			@events = new Dictionary<int, int>();
+			//@events = new Dictionary<int, int>();
+			@events = new Dictionary<int, IGameCharacter>();
 		}
 	}
 }

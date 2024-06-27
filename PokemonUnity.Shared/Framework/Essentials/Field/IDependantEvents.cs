@@ -12,13 +12,13 @@ namespace PokemonEssentials.Interface.Field
 	/// <summary>
 	/// Extension of <see cref="ITempMetadata"/>
 	/// </summary>
-	public interface ITempMetadataDependantEvents {
+	public interface ITempMetadataDependantEvents : ITempMetadata {
 		IDependentEvents dependentEvents				{ get; }
 
 		//IDependentEvents dependentEvents();
 	}
 
-	public interface IGameDependantEvents
+	public interface IGameDependantEvents : IGame
 	{
 		void RemoveDependencies();
 
@@ -91,9 +91,10 @@ namespace PokemonEssentials.Interface.Field
 		//   }}
 	}
 
-	public interface IGlobalMetadataDependantEvents {
+	public interface IGlobalMetadataDependantEvents : Field.IGlobalMetadata {
 		//IList<IDependentEvents> dependentEvents				{ get; }
-		IList<IGameEvent> dependentEvents				{ get; }
+		//IList<IGameEvent> dependentEvents				{ get; }
+		IList<IGameCharacter> dependentEvents				{ get; }
 
 		//public void dependentEvents() {
 		//	if (!@dependentEvents) @dependentEvents=[];
@@ -101,18 +102,24 @@ namespace PokemonEssentials.Interface.Field
 		//}
 	}
 
-	public interface IGameEventDependantEvents {
+	public interface IGameEventDependantEvents //: IGameEvent
+	{
 		void set_starting();
 	}
 
 	//ToDo: replace IGameEvents to IGameCharacters?
 	public interface IDependentEvents {
-		// eventData input parameter:
-		//  [Original map ID, original event ID, current map ID,
-		//  event X, event Y, event direction,
-		//  event's filename,
-		//  event's hue, event's name, common event ID]
-		IGameEvent createEvent(IGameEvent eventData);
+		/// <summary>
+		/// </summary>
+		/// <param name="eventData">
+		/// eventData input parameter:
+		///  [Original map ID, original event ID, current map ID,
+		///  event X, event Y, event direction,
+		///  event's filename,
+		///  event's hue, event's name, common event ID]
+		/// </param>
+		/// <returns></returns>
+		IGameEvent createEvent(IGameCharacter eventData);
 
 		int lastUpdate				{ get; }
 
@@ -131,19 +138,20 @@ namespace PokemonEssentials.Interface.Field
 		void TurnDependentEvents();
 
 		//ToDo: Review Return Datatypes
-		IEnumerable<KeyValuePair<IGameEvent, IGameEvent>> eachEvent();
+		IEnumerable<KeyValuePair<IGameCharacter, IGameEvent>> eachEvent();
 
 		void updateDependentEvents();
 
-		void removeEvent(IGameEvent @event);
+		//void removeEvent(IGameEvent @event);
+		void removeEvent(IGameCharacter @event);
 
-		IGameCharacter getEventByName(string name);
+		IGameEvent getEventByName(string name);
 
 		void removeAllEvents();
 
 		void removeEventByName(string name);
 
-		void addEvent(IGameEvent @event, string eventName = null, object commonEvent= null);
+		void addEvent(IGameCharacter @event, string eventName = null, object commonEvent= null);
 	}
 
 

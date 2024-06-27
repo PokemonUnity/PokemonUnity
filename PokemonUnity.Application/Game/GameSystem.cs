@@ -552,7 +552,7 @@ namespace PokemonUnity
 				if (@map_interpreter is IInterpreter i) @event = i.get_character(0);
 				if (@map_interpreter is IInterpreterMixinMessage im)  im.SetSelfSwitch(@event.id, "A", true);
 				if (@map_interpreter is IInterpreter imm) imm.command_end();
-				@event.start();
+				if (@event is IGameEvent ge) ge.start();
 			}
 		}
 

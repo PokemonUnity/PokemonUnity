@@ -24,7 +24,7 @@ namespace PokemonEssentials.Interface.Screen
 	/// <summary>
 	/// Extension of <see cref="IGame"/>
 	/// </summary>
-	public interface IGamePhone
+	public interface IGamePhone : IGame
 	{
 		int pbRandomPhoneTrainer();
 

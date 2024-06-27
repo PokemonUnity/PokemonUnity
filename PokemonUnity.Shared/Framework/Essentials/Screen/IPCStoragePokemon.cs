@@ -131,8 +131,10 @@ namespace PokemonEssentials.Interface.Screen
 		void Delete(int box, int index);
 	}
 
-
-	public interface IGamePCStorage
+	/// <summary>
+	/// Extension of <seealso cref="IGame"/>
+	/// </summary>
+	public interface IGamePCStorage : IGame
 	{
 		// ###############################################################################
 		// PC menus

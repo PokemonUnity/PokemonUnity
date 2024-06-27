@@ -642,6 +642,7 @@ namespace PokemonEssentials.Interface
 
 		bool image_exist(string filename);
 
+		IResourcesAudio ResourcesAudio { get; }
 		IAudioObject initialize(string filename, float volume, float pitch);
 	}
 

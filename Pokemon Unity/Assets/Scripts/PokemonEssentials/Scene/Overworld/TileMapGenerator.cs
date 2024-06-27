@@ -51,6 +51,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		//public TextAsset jsonFile; // Drag and drop your JSON file here in the inspector
 		//public Vector2[][] uvMap; // Set your UV map here
 		private Dictionary<int, Vector2[]> uvMap;
+		public MapTileNode[][] MapTerrainData { get { return mapData; } }
 
 		private void Awake()
 		{
@@ -74,16 +75,16 @@ namespace PokemonUnity.Interface.UnityEngine
 					uvMap.Add(key, uvCoordinates);
 				}
 			};
-		}
-
-		private void Start()
-		{
 			mesh = new Mesh();
 			mesh.name = "LevelMapTiles";
 			meshFilter = GetComponent<MeshFilter>();
 			meshRenderer = GetComponent<MeshRenderer>();
 			meshCollider = GetComponent<MeshCollider>();
 			//meshCollider = gameObject.AddComponent<MeshCollider>();
+		}
+
+		private void Start()
+		{
 			meshCollider.sharedMesh = null;
 			Material material = new Material(Shader.Find("Diffuse"));
 			//material.mainTexture = spriteAtlas.GetSprite("col_tile").texture;
@@ -275,7 +276,7 @@ namespace PokemonUnity.Interface.UnityEngine
 		//	}
 		//}
 
-		private struct MapTileNode
+		public struct MapTileNode
 		{
 			public Vector3 tileLocation;
 			public Quaternion tileRotation;

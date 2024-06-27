@@ -8,7 +8,7 @@ using PokemonEssentials.Interface.RPGMaker.Kernal;
 
 namespace PokemonEssentials.Interface
 {
-	public interface IGameCharacter : IGameEvent
+	public interface IGameCharacter //: IGameEvent
 	{
 		int id { get; set; }
 		float x { get; set; }
@@ -26,8 +26,8 @@ namespace PokemonEssentials.Interface
 		bool through { get; set; }
 		int animation_id { get; set; }
 		bool transparent { get; set; }
-		IGameMap map { get; set; }
-		int move_speed { get; set; }
+		IGameMap map { get; }
+		float move_speed { get; set; }
 		bool walk_anime { get; set; }
 
 		bool step_anime { get; set; }

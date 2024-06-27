@@ -17,7 +17,7 @@ namespace PokemonUnity.Character
 	// OR! A function to disable boxes until they're "unlocked"
 	// Max # of boxes would be hard-capped if option 2
 	//Add Game.GameData.Feature where player unlocks more boxes
-	[System.Obsolete("Something i plan to transition to; not yet ready for full integration")]
+	[System.Obsolete("Something i plan to transition to; not yet ready for full integration",false)]
 	public class PC : PokemonEssentials.Interface.Screen.IPCPokemonStorage
 	{
 		#region Variables
@@ -50,13 +50,13 @@ namespace PokemonUnity.Character
 		public byte ActiveBox { get; private set; } //Rename to CurrentBox?
 		public string[] BoxNames { get; private set; }
 		public int[] BoxTextures { get; private set; }
-		public string Name { get { return BoxNames[ActiveBox] ?? "Box " + (ActiveBox + 1).ToString(); } }
+		public string Name { get { return BoxNames[ActiveBox] ?? string.Format("{0} {1}", Game._INTL("Box"), ActiveBox + 1); } }
 		public int Texture { get { return BoxTextures[ActiveBox]; } }
 		public IPokemon[] Pokemons
 		{
 			get
 			{
-				IPokemon[] p = new Pokemon[pokemons.GetLength(1)];
+				IPokemon[] p = new IPokemon[pokemons.GetLength(1)];
 				for (int t = 0; t < p.Length; t++)
 				{
 					p[t] = pokemons[ActiveBox, t];
@@ -110,11 +110,11 @@ namespace PokemonUnity.Character
 		{
 			get
 			{
-				IPokemonBox[] boxes = new PokemonBox[pokemons.GetLength(0)];
+				IPokemonBox[] boxes = new IPokemonBox[pokemons.GetLength(0)];
 				for (int i = 0; i < boxes.Length; i++)
 				{
 					//int ip1 = i + 1;
-					@boxes[i] = new PokemonBox(BoxNames[i] ?? "Box " + (i + 1).ToString(), //string.Format("Box {0}", ip1),
+					@boxes[i] = new PokemonBox(BoxNames[i] ?? string.Format("{0} {1}", Game._INTL("Box"), i + 1), //string.Format("Box {0}", ip1),
 						pokemons.GetLength(1));
 					//int backid = i % 24;
 					@boxes[i].background = BoxTextures[i].ToString(); //$"box{backid}";
@@ -160,7 +160,7 @@ namespace PokemonUnity.Character
 			{
 				i = (byte)(i % pokemons.GetLength(0)); //Core.STORAGEBOXES);
 				this.ActiveBox = i;
-				IPokemonBox box = new PokemonBox(BoxNames[i] ?? "Box " + (i + 1).ToString(), //string.Format("Box {0}", ip1),
+				IPokemonBox box = new PokemonBox(BoxNames[i] ?? string.Format("{0} {1}", Game._INTL("Box"), i + 1), //string.Format("Box {0}", ip1),
 					pokemons.GetLength(1));
 				box.background = BoxTextures[i].ToString(); //$"box{backid}";
 				for (int t = 0; t < box.length; t++)
@@ -181,29 +181,12 @@ namespace PokemonUnity.Character
 		#region Constructors
 		public PC()
 		{
-			//PC_Poke = new Pokemon[Core.STORAGEBOXES, 30];
-			pokemons = new Pokemon[Core.STORAGEBOXES, 30];
-			//PC_boxNames = new string[Core.STORAGEBOXES];
-			BoxNames = new string[Core.STORAGEBOXES];
-			//PC_boxTexture = new int[Core.STORAGEBOXES];
-			BoxTextures = new int[Core.STORAGEBOXES];
-			for (int i = 0; i < Core.STORAGEBOXES; i++)
-			{
-				//Initialize the PC storage so pokemons arent null (in value)
-				for (int j = 0; j < pokemons.GetLength(1); j++)
-				{
-					//All default values must be `NONE`
-					pokemons[i, j] = new Pokemon(PokemonUnity.Pokemons.NONE);//pokemons[i, j];
-				}
-				//ToDo: Using string from translator here
-				BoxNames[i] = string.Format("Box {0}", (i + 1).ToString());
-				//PC_boxTexture[i] = i;
-				BoxTextures[i] = i;
-			}
+			initialize();
 			//PC_Items = new List<Items>();
 			items = new Dictionary<Items, int>() { { Inventory.Items.POTION, 1 } };
 		}
 
+		//public PC(Pokemon[] pokemons = null, Items[] items = null, byte? box = null, string[] names = null, int[] textures = null) : this()
 		public PC(IPokemon[][] pkmns = null, KeyValuePair<Items,int>[] items = null, byte? box = null, string[] names = null, int[] textures = null) : this()
 		{
 			if (names != null)
@@ -224,15 +207,33 @@ namespace PokemonUnity.Character
 				for (int x = 0; x < Core.STORAGEBOXES; x++)
 					for (int y = 0; y < 30; y++)
 						if (pkmns.Length - 1 < x || pkmns[x].Length - 1 < y)
-							pokemons[x, y] = new Pokemon(PokemonUnity.Pokemons.NONE);
+							pokemons[x, y] = null; //new Pokemon(PokemonUnity.Pokemons.NONE);
 						else
 							pokemons[x, y] = pkmns[x][y];
 		}
-		//public PC(Pokemon[] pokemons = null, Items[] items = null, byte? box = null, string[] names = null, int[] textures = null) : this()
 
-		IPCPokemonStorage IPCPokemonStorage.initialize(int maxBoxes, int maxPokemon)
+		public IPCPokemonStorage initialize(int maxBoxes = Core.STORAGEBOXES, int maxPokemon = 30)
 		{
-			throw new NotImplementedException();
+			string box = Game._INTL("Box"); //Translation Here...
+			//PC_Poke = new Pokemon[Core.STORAGEBOXES, 30];
+			pokemons = new IPokemon[Core.STORAGEBOXES, 30];
+			//PC_boxNames = new string[Core.STORAGEBOXES];
+			BoxNames = new string[Core.STORAGEBOXES];
+			//PC_boxTexture = new int[Core.STORAGEBOXES];
+			BoxTextures = new int[Core.STORAGEBOXES];
+			for (int i = 0; i < Core.STORAGEBOXES; i++)
+			{
+				//Initialize the PC storage so pokemons arent null (in value)
+				for (int j = 0; j < pokemons.GetLength(1); j++)
+				{
+					//All default values must be `NONE`
+					pokemons[i, j] = null; //new Pokemon(PokemonUnity.Pokemons.NONE);//pokemons[i, j];
+				}
+				BoxNames[i] = string.Format("{0} {1}", box, i + 1);
+				//PC_boxTexture[i] = i;
+				BoxTextures[i] = i;
+			}
+			return this;
 		}
 		#endregion
 
@@ -288,8 +289,8 @@ namespace PokemonUnity.Character
 			byte y = (byte)(pkmnID % pokemons.GetLength(1));
 			if (pokemons[x,y].IsNotNullOrNone())
 			{
-				Pokemons[pkmnID] = new Pokemon();
-				pokemons[x, y] = new Pokemon();
+				//Pokemons[pkmnID] = null; //new Pokemon();
+				pokemons[x, y] = null; //new Pokemon();
 				return true;
 			}
 			return false;
@@ -298,7 +299,7 @@ namespace PokemonUnity.Character
 		//{
 		//	try
 		//	{
-		//      PokemonEssentials.Interface.PokeBattle.IPokemon PartyHolder = player.party[PartyID];
+		//		PokemonEssentials.Interface.PokeBattle.IPokemon PartyHolder = player.party[PartyID];
 		//		player.party[PartyID] = player.PC.Pokemons[PCBoxID];
 		//		Pokemons[PCBoxID] = PartyHolder;
 		//		pokemons[ActiveBox, PCBoxID] = PartyHolder;

@@ -9,6 +9,7 @@ using PokemonUnity.Inventory;
 using PokemonUnity.Monster;
 using PokemonUnity.Character;
 using PokemonUnity.Monster.Data;
+using PokemonEssentials.Interface.Battle;
 
 namespace PokemonUnity.Monster
 {
@@ -355,7 +356,7 @@ namespace PokemonUnity.Monster
 			{
 				int[] maps=new int[] { 49, 50, 51, 72, 73 };   // Map IDs for Origin Forme
 				if (pokemon.Item == Items.GRISEOUS_ORB ||
-					(Game.GameData.GameMap != null && maps.Contains(Game.GameData.GameMap.map_id))) {
+					(Game.GameData.GameMap != null && Game.GameData.GameMap is IGameMapOrgBattle gmo && maps.Contains(gmo.map_id))) {
 					//Game.GameData != null && maps.Contains(Game.GameData.Player.Area)) {
 					return 1;
 				}
@@ -426,7 +427,7 @@ namespace PokemonUnity.Monster
 			{
 				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.GetEnvironment() : Environments.None;
 				//if (!Game.GameData.GetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.GetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
+				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && Game.GameData.GameMap is IGameMapOrgBattle gmo && !e.GetMetadata(gmo.map_id).Map.Outdoor) {
 				//if (Kernal.TileData[Game.GameData.Player.Area] == Indoor) {
 					return 2; // Trash Cloak
 				} else if (env==Environments.Sand ||
@@ -513,7 +514,7 @@ namespace PokemonUnity.Monster
 			{
 				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.GetEnvironment() : Environments.None;
 				//if (!Game.GameData.GetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.GetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
+				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && Game.GameData.GameMap is IGameMapOrgBattle gmo && !e.GetMetadata(gmo.map_id).Map.Outdoor) {
 				//if (Kernal.TileData[Game.GameData.Player.Area] == Indoor) {
 					return 2; // Trash Cloak
 				} else if (env==Environments.Sand ||
@@ -529,7 +530,7 @@ namespace PokemonUnity.Monster
 			{
 				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.GetEnvironment() : Environments.None;
 				//if (!Game.GameData.GetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.GetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
+				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && Game.GameData.GameMap is IGameMapOrgBattle gmo && !e.GetMetadata(gmo.map_id).Map.Outdoor) {
 				//if (Kernal.TileData[Game.GameData.Player.Area] == Indoor) {
 					return 2; // Trash Cloak
 				} else if (env==Environments.Sand || env==Environments.Rock ||
@@ -543,7 +544,7 @@ namespace PokemonUnity.Monster
 			else if (pokemon.Species == Pokemons.SHELLOS || pokemon.Species == Pokemons.GASTRODON)
 			{
 				int[] maps=new int[] { 2, 5, 39, 41, 44, 69 };   // Map IDs for second form
-				if (Game.GameData.GameMap != null && maps.Contains(Game.GameData.GameMap.map_id)) {
+				if (Game.GameData.GameMap != null && Game.GameData.GameMap is IGameMapOrgBattle gmo && maps.Contains(gmo.map_id)) {
 				//if (Game.GameData != null && maps.Contains(Game.GameData.Player.Area)) {
 					return 1;
 				}
@@ -612,7 +613,7 @@ namespace PokemonUnity.Monster
 			{
 				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.GetEnvironment() : Environments.None;
 				//if (!Game.GameData.GetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.GetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
+				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && Game.GameData.GameMap is IGameMapOrgBattle gmo && !e.GetMetadata(gmo.map_id).Map.Outdoor) {
 				//if (Kernal.TileData[Game.GameData.Player.Area] == Indoor) {
 					return Forms.BURMY_TRASH; //2; // Trash Cloak
 				} else if (env==Environments.Sand ||
@@ -628,7 +629,7 @@ namespace PokemonUnity.Monster
 			{
 				Environments env=Game.GameData is PokemonEssentials.Interface.Field.IGameField f ? f.GetEnvironment() : Environments.None;
 				//if (!Game.GameData.GetMetadata(Game.GameData.GameMap.map_id,MetadataOutdoor)) {
-				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && !e.GetMetadata(Game.GameData.GameMap.map_id).Map.Outdoor) {
+				if (Game.GameData is PokemonEssentials.Interface.Field.IGameMetadataMisc e && Game.GameData.GameMap is IGameMapOrgBattle gmo && !e.GetMetadata(gmo.map_id).Map.Outdoor) {
 				//if (Kernal.TileData[Game.GameData.Player.Area] == Indoor) {
 					return Forms.WORMADAM_TRASH; //2; // Trash Cloak
 				} else if (env==Environments.Sand || env==Environments.Rock ||
@@ -642,7 +643,7 @@ namespace PokemonUnity.Monster
 			else if (pokemon == Pokemons.SHELLOS)
 			{
 				int[] maps=new int[] { 2, 5, 39, 41, 44, 69 };   // Map IDs for second form
-				if (Game.GameData.GameMap != null && maps.Contains(Game.GameData.GameMap.map_id)) {
+				if (Game.GameData.GameMap != null && Game.GameData.GameMap is IGameMapOrgBattle gmo && maps.Contains(gmo.map_id)) {
 				//if (Game.GameData != null && maps.Contains(Game.GameData.Player.Area)) {
 					return Forms.SHELLOS_EAST; //1;
 				}
@@ -653,7 +654,7 @@ namespace PokemonUnity.Monster
 			else if (pokemon == Pokemons.GASTRODON)
 			{
 				int[] maps=new int[] { 2, 5, 39, 41, 44, 69 };   // Map IDs for second form
-				if (Game.GameData.GameMap != null && maps.Contains(Game.GameData.GameMap.map_id)) {
+				if (Game.GameData.GameMap != null && Game.GameData.GameMap is IGameMapOrgBattle gmo && maps.Contains(gmo.map_id)) {
 				//if (Game.GameData != null && maps.Contains(Game.GameData.Player.Area)) {
 					return Forms.GASTRODON_EAST; //1;
 				}

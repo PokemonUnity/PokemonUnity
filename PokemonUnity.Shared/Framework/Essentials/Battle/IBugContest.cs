@@ -13,11 +13,11 @@ namespace PokemonEssentials.Interface.Battle
 {
 	public interface IBugContestState
 	{
-		int ballcount				        { get; }
+		int ballcount						{ get; }
 		BattleResults decision				{ get; }
 		IPokemon lastPokemon				{ get; }
-		int timer				            { get; }
-		string[] ContestantNames            { get; }
+		int timer							{ get; }
+		string[] ContestantNames			{ get; }
 		//int TimerSeconds=BUGCONTESTTIME;
 
 		IBugContestState initialize();
@@ -74,7 +74,7 @@ namespace PokemonEssentials.Interface.Battle
 	/// <summary>
 	/// Extension of <seealso cref="IGame"/>
 	/// </summary>
-	public interface IGameBugContest
+	public interface IGameBugContest : IGame
 	{
 		/// <summary>
 		/// Returns a score for this Pokemon in the Bug Catching Contest.

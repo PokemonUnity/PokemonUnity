@@ -8,6 +8,7 @@ using PokemonUnity.Overworld;
 using PokemonEssentials.Interface;
 using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.EventArg;
+using PokemonEssentials.Interface.Battle;
 
 namespace PokemonUnity
 {
@@ -22,6 +23,8 @@ namespace PokemonUnity
 				//} else {
 				//	PokemonTemp.pokemonMetadata=load_data("Data/metadata.dat");
 				//}
+				PokemonTemp.pokemonMetadata=new Dictionary<int,IPokemonMetadata>(); //IPokemonMetadata[0]
+				Kernal.load_data(PokemonTemp.pokemonMetadata,"Data/metadata.dat");
 			}
 			return PokemonTemp.pokemonMetadata;
 		}
@@ -86,8 +89,8 @@ namespace PokemonUnity
 				PokemonTemp.pokemonPhoneData.Clear();
 			}
 			//MapFactoryHelper.clear(); //ToDo: Create static class and uncomment
-			if (GameMap != null && PokemonEncounters != null) {
-				PokemonEncounters.setup(GameMap.map_id);
+			if (GameMap != null && GameMap is IGameMapOrgBattle gmo && PokemonEncounters != null) {
+				PokemonEncounters.setup(gmo.map_id);
 			}
 			//if (RgssExists("Data/Tilesets.rxdata")) {
 			//  DataTilesets=load_data("Data/Tilesets.rxdata");

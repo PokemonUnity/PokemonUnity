@@ -13,6 +13,7 @@ using PokemonEssentials.Interface.Field;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.RPGMaker;
 using PokemonEssentials.Interface.RPGMaker.Kernal;
+using PokemonEssentials.Interface.Battle;
 
 namespace PokemonUnity
 {
@@ -26,7 +27,8 @@ namespace PokemonUnity
 	}
 
 	public partial class GameEvent : IGameEventDependantEvents {
-		protected bool starting;
+		//public bool starting { get; set; }
+		//protected bool starting;
 
 		public void set_starting() {
 			@starting=true;
@@ -35,7 +37,7 @@ namespace PokemonUnity
 
 	public partial class GlobalMetadata : IGlobalMetadataDependantEvents {
 		//public IList<IDependentEvents> dependentEvents				{ get; protected set; }
-		public IList<IGameEvent> dependentEvents				{ get; protected set; }
+		public IList<IGameCharacter> dependentEvents				{ get; protected set; }
 
 		//public IDependentEvents dependentEvents { get {
 		//  if (@dependentEvents == null) @dependentEvents=new List<DependentEvents>();
@@ -68,7 +70,7 @@ namespace PokemonUnity
 		/// </summary>
 		/// <param name="eventName"></param>
 		public IGameCharacter GetDependency(string eventName) {
-			if (Game.GameData.PokemonTemp is ITempMetadataDependantEvents tmd) return tmd.dependentEvents.getEventByName(eventName);
+			if (Game.GameData.PokemonTemp is ITempMetadataDependantEvents tmd) return (IGameCharacter)tmd.dependentEvents.getEventByName(eventName);
 			return null;
 		}
 
@@ -79,7 +81,7 @@ namespace PokemonUnity
 
 
 		public bool TestPass(IGameCharacter follower,float x,float y,int? direction=null) {
-			return Game.GameData.MapFactory.isPassableStrict(follower.map.map_id,x,y,follower);
+			return Game.GameData.MapFactory.isPassableStrict(follower.map is IGameMapOrgBattle gmo ? gmo.map_id : 0,x,y,follower);
 		}
 
 		// Same map only
@@ -182,6 +184,7 @@ namespace PokemonUnity
 		public int lastUpdate				{ get; protected set; }
 		protected IList<IGameEvent> @realEvents;
 		protected IGameEvent @event;
+		//protected IGameCharacter @event;
 
 		public DependentEvents() {
 			initialize();
@@ -189,28 +192,32 @@ namespace PokemonUnity
 
 		public IDependentEvents initialize() {
 			//  Original map, Event ID, Current map, X, Y, Direction
-			IList<IGameEvent> events=Game.GameData.Global.dependentEvents;
+			IList<IGameCharacter> events=new List<IGameCharacter>();
+			if (Game.GameData.Global is IGlobalMetadataDependantEvents gmd) events=gmd.dependentEvents;
 			@realEvents=new List<IGameEvent>();
 			@lastUpdate=-1;
-			foreach (IGameEvent @event in events) {
+			foreach (IGameCharacter @event in events) {
 				@realEvents.Add(createEvent(@event));
 			}
 			return this;
 		}
 
-		public IGameEvent createEvent(IGameEvent eventData) {
-			PokemonEssentials.Interface.RPGMaker.Kernal.IEvent rpgEvent=new RPG.Event(eventData[3],eventData[4]);
-			rpgEvent.id=eventData[1];
-			if (eventData != null) { //common events|eventData[9]
-				//  Must setup common event list here and now
-				IGameCommonEvent commonEvent=new Game_CommonEvent(eventData[9]);
-				rpgEvent.pages[0].list=commonEvent.list;
-			}
-			IGameEvent newEvent=new Game_Event(eventData.map_id,rpgEvent, //eventData[0]
-				Game.GameData.MapFactory.getMap(eventData.map_id)); //eventData[2]
-			newEvent.character_name=eventData.character_name;	//eventData[6];
-			newEvent.character_hue=eventData.character_hue;		//eventData[7];
-			switch (eventData.direction) { // direction|eventData[5]
+		public IGameEvent createEvent(IGameCharacter eventData) {
+			//PokemonEssentials.Interface.RPGMaker.Kernal.IEvent rpgEvent=new RPG.Event(eventData[3],eventData[4]);
+			IGameEvent rpgEvent=new GameEvent(eventData[3],eventData[4]);
+			rpgEvent.id=eventData.id;//[1]
+			//ToDo: Uncomment below...
+			//if (eventData != null) { //common events|eventData[9]
+			//	//  Must setup common event list here and now
+			//	IGameCommonEvent commonEvent=new Game_CommonEvent(eventData[9]);
+			//	rpgEvent.pages[0].list=commonEvent.list;
+			//}
+			IGameEvent newEvent=new GameEvent(eventData is IGameEventOrgBattle ed ? ed.map_id : 0,rpgEvent,	//eventData[0]
+													eventData.map);				//eventData[2]
+			//	Game.GameData.MapFactory.getMap(eventData.map_id));				//eventData[2]
+			//newEvent.character_name=eventData.character_name;					//eventData[6];
+			//newEvent.character_hue=eventData.character_hue;					//eventData[7];
+			switch (eventData.direction) {										// direction|eventData[5]
 				case 2: // down
 					newEvent.turn_down();
 					break;
@@ -228,7 +235,8 @@ namespace PokemonUnity
 		}
 
 		public int EnsureEvent(IGameEvent @event,int newMapID) {
-			IList<IGameEvent> events=Game.GameData.Global.dependentEvents;
+			IList<IGameCharacter> events=new List<IGameCharacter>();
+			if (Game.GameData.Global is IGlobalMetadataDependantEvents gmd) events=gmd.dependentEvents;
 			//int found=-1;
 			for (int i = 0; i < events.Count; i++) {
 				//  Check original map ID and original event ID
@@ -353,11 +361,12 @@ namespace PokemonUnity
 					if (Game.GameData is IGameField igf) igf.TurnTowardEvent(follower,leader);
 				} else {
 					//  Follower will move to different map
-					IList<IGameEvent> events=Game.GameData.Global.dependentEvents;
+					IList<IGameCharacter> events = new List<IGameCharacter>();
+					if (Game.GameData.Global is IGlobalMetadataDependantEvents gmd) events = gmd.dependentEvents;
 					int eventIndex=EnsureEvent((IGameEvent)follower,mapTile.MapId);
 					if (eventIndex>=0) {
-						IGameEvent newFollower=@realEvents[eventIndex];
-						IGameEvent newEventData=events[eventIndex];
+						IGameCharacter newFollower =(IGameCharacter)@realEvents[eventIndex];
+						IGameCharacter newEventData=(IGameCharacter)events[eventIndex];
 						newFollower.moveto(mapTile.X,mapTile.Y);
 						newEventData.x=(int)mapTile.X; //[3]
 						newEventData.y=(int)mapTile.Y; //[4]
@@ -377,13 +386,14 @@ namespace PokemonUnity
 		}
 
 		public void MapChangeMoveDependentEvents() {
-			IList<IGameEvent> events=Game.GameData.Global.dependentEvents;
+			IList<IGameCharacter> events=new List<IGameCharacter>();
+			if (Game.GameData.Global is IGlobalMetadataDependantEvents gmd) events=gmd.dependentEvents;
 			updateDependentEvents();
 			IGamePlayer leader=Game.GameData.GamePlayer;
 			for (int i = 0; i < events.Count; i++) {
-				@event=@realEvents[i];
+				@event=(IGameCharacter)@realEvents[i];
 				FollowEventAcrossMaps(leader,@event,true,i==0);
-				IGameEvent entity = events[i]; //(IGameCharacter)
+				IGameCharacter entity = (IGameCharacter)events[i];
 				//  Update X and Y for this event
 				//events[i][3]=@event.x;
 				//events[i][4]=@event.y;
@@ -393,16 +403,17 @@ namespace PokemonUnity
 				entity.direction=@event.direction;
 				events[i]=entity;
 				//  Set leader to this event
-				leader=@event;
+				leader=(IGamePlayer)@event;
 			}
 		}
 
 		public void MoveDependentEvents() {
-			IList<IGameEvent> events=Game.GameData.Global.dependentEvents;
+			IList<IGameCharacter> events=new List<IGameCharacter>();
+			if (Game.GameData.Global is IGlobalMetadataDependantEvents gmd) events=gmd.dependentEvents;
 			updateDependentEvents();
 			IGamePlayer leader=Game.GameData.GamePlayer;
 			for (int i = 0; i < events.Count; i++) {
-				@event=@realEvents[i];
+				@event=(IGameCharacter)@realEvents[i];
 				FollowEventAcrossMaps(leader,@event,false,i==0);
 				IGameCharacter entity = (IGameCharacter)events[i];
 				//  Update X and Y for this event
@@ -414,39 +425,42 @@ namespace PokemonUnity
 				entity.direction=@event.direction;
 				events[i]=entity;
 				//  Set leader to this event
-				leader=@event;
+				leader=(IGamePlayer)@event;
 			}
 		}
 
 		public void TurnDependentEvents() {
-			IList<IGameEvent> events=Game.GameData.Global.dependentEvents;
+			IList<IGameCharacter> events=new List<IGameCharacter>();
+			if (Game.GameData.Global is IGlobalMetadataDependantEvents gmd) events=gmd.dependentEvents;
 			updateDependentEvents();
 			IGamePlayer leader=Game.GameData.GamePlayer;
 			for (int i = 0; i < events.Count; i++) {
-				@event=@realEvents[i];
+				@event=(IGameCharacter)@realEvents[i];
 				if (Game.GameData is IGameField igf) igf.TurnTowardEvent(@event,leader);
-				IGameEvent entity = events[i]; //(IGameCharacter)
+				IGameCharacter entity = (IGameCharacter)events[i];
 				//  Update direction for this event
 				//events[i][5]=@event.direction;
 				entity.direction=@event.direction;
 				events[i]=entity;
 				//  Set leader to this event
-				leader=(IGameEvent)@event;
+				leader=(IGamePlayer)@event;
 			}
 		}
 
-		public IEnumerable<KeyValuePair<IGameEvent,IGameEvent>> eachEvent() {
-			IList<IGameEvent> events=Game.GameData.Global.dependentEvents;
+		public IEnumerable<KeyValuePair<IGameCharacter,IGameEvent>> eachEvent() {
+			IList<IGameCharacter> events=new List<IGameCharacter>();
+			if (Game.GameData.Global is IGlobalMetadataDependantEvents gmd) events=gmd.dependentEvents;
 			for (int i = 0; i < events.Count; i++) {
-				yield return new KeyValuePair<IGameEvent,IGameEvent>(@realEvents[i],events[i]);
+				yield return new KeyValuePair<IGameCharacter,IGameEvent>((IGameCharacter)@realEvents[i],events[i]);
 			}
 		}
 
 		public void updateDependentEvents() {
-			IList<IGameEvent> events=Game.GameData.Global.dependentEvents;
+			IList<IGameCharacter> events=new List<IGameCharacter>();
+			if (Game.GameData.Global is IGlobalMetadataDependantEvents gmd) events=gmd.dependentEvents;
 			if (events.Count==0) return;
 			for (int i = 0; i < events.Count; i++) {
-				@event=@realEvents[i];
+				@event=(IGameCharacter)@realEvents[i];
 				if (@realEvents[i] == null) continue;
 				@event.transparent=Game.GameData.GamePlayer.transparent;
 				if ((@event.jumping || @event.moving) || !(Game.GameData.GamePlayer.jumping || Game.GameData.GamePlayer.moving)) {
@@ -459,7 +473,7 @@ namespace PokemonUnity
 				//events[i][3]=@event.x;
 				//events[i][4]=@event.y;
 				//events[i][5]=@event.direction;
-				IGameEvent entity = events[i]; //(IGameCharacter)
+				IGameCharacter entity = (IGameCharacter)events[i];
 				entity.x=@event.x;
 				entity.y=@event.y;
 				entity.direction=@event.direction;
@@ -470,7 +484,7 @@ namespace PokemonUnity
 				//  Get position of tile facing the player
 				ITilePosition facingTile=Game.GameData.MapFactory.getFacingTile();
 				//this.eachEvent {|e,d|
-				foreach (KeyValuePair<IGameEvent,IGameEvent> e in this.eachEvent()) { //|e,d|
+				foreach (KeyValuePair<IGameCharacter,IGameEvent> e in this.eachEvent()) { //|e,d|
 					if (!e.Value[9] != null) continue; //if (!d[9]) continue;
 					if (e.Key.x==Game.GameData.GamePlayer.x && e.Key.y==Game.GameData.GamePlayer.y) {
 						//  On same position
@@ -500,8 +514,9 @@ namespace PokemonUnity
 			}
 		}
 
-		public void removeEvent(IGameEvent @event) {
-			IList<IGameEvent> events=Game.GameData.Global.dependentEvents;
+		public void removeEvent(IGameCharacter @event) {
+			IList<IGameCharacter> events=new List<IGameCharacter>();
+			if (Game.GameData.Global is IGlobalMetadataDependantEvents gmd) events=gmd.dependentEvents;
 			int mapid=Game.GameData.GameMap.map_id;
 			for (int i = 0; i < events.Count; i++) {
 				if (events[i].map_id==mapid &&		//[2] Refer to current map
@@ -519,7 +534,8 @@ namespace PokemonUnity
 		}
 
 		public IGameEvent getEventByName(string name) {
-			IList<IGameEvent> events=Game.GameData.Global.dependentEvents;
+			IList<IGameCharacter> events=new List<IGameCharacter>();
+			if (Game.GameData.Global is IGlobalMetadataDependantEvents gmd) events=gmd.dependentEvents;
 			for (int i = 0; i < events.Count; i++) {
 				if (events[i] != null && events[i].name==name) {		//[8] Arbitrary name given to dependent event
 					return @realEvents[i];
@@ -529,14 +545,16 @@ namespace PokemonUnity
 		}
 
 		public void removeAllEvents() {
-			IList<IGameEvent> events=Game.GameData.Global.dependentEvents;
+			IList<IGameCharacter> events=new List<IGameCharacter>();
+			if (Game.GameData.Global is IGlobalMetadataDependantEvents gmd) events=gmd.dependentEvents;
 			events.Clear();
 			@realEvents.Clear();
 			@lastUpdate+=1;
 		}
 
 		public void removeEventByName(string name) {
-			IList<IGameEvent> events=Game.GameData.Global.dependentEvents;
+			IList<IGameCharacter> events=new List<IGameCharacter>();
+			if (Game.GameData.Global is IGlobalMetadataDependantEvents gmd) events=gmd.dependentEvents;
 			for (int i = 0; i < events.Count; i++) {
 				if (events[i] != null && events[i].name==name) {		//[8] Arbitrary name given to dependent event
 					//events[i]=null;
@@ -550,9 +568,10 @@ namespace PokemonUnity
 			}
 		}
 
-		public void addEvent(IGameEvent @event,string eventName=null,object commonEvent=null) {
+		public void addEvent(IGameCharacter @event,string eventName=null,object commonEvent=null) {
 			if (@event == null) return;
-			IList<IGameEvent> events=Game.GameData.Global.dependentEvents;
+			IList<IGameCharacter> events=new List<IGameCharacter>();
+			if (Game.GameData.Global is IGlobalMetadataDependantEvents gmd) events=gmd.dependentEvents;
 			for (int i = 0; i < events.Count; i++) {
 				if (events[i] != null && events[i].map_id==Game.GameData.GameMap.map_id && events[i].id==@event.id) { //[0] && [1]
 					//  Already exists
@@ -569,8 +588,8 @@ namespace PokemonUnity
 				@event.character_name,//.clone
 				@event.character_hue,eventName,commonEvent
 			);//];
-			IGameEvent newEvent=createEvent((IGameEvent)eventData);
-			events.Add((IGameEvent)eventData);
+			IGameEvent newEvent=createEvent(eventData);
+			events.Add(eventData);
 			@realEvents.Add(newEvent);
 			@lastUpdate+=1;
 			@event.erase();

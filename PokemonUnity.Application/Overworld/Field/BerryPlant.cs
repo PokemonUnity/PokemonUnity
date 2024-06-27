@@ -766,7 +766,7 @@ namespace PokemonUnity//.Inventory.Plants
 			IViewport viewport = e.Viewport; //e[1];
 			IGameMap map=spriteset.map;
 			foreach (int i in map.events.Keys) {
-				if (map.events[i].name=="BerryPlant") {
+				if (map.events[i] is IGameEvent ge && ge.name=="BerryPlant") {
 					//spriteset.addUserSprite(new BerryPlantMoistureSprite(map.events[i],map,viewport));
 					//spriteset.addUserSprite(new BerryPlantSprite(map.events[i],map,viewport));
 					spriteset.addUserSprite(BerryPlantMoistureSprite.initialize(map.events[i],map,viewport));

@@ -26,7 +26,7 @@ namespace PokemonEssentials.Interface.Battle
 	/// <summary>
 	/// Extension of <seealso cref="IGame"/>
 	/// </summary>
-	public interface IGameOrgBattle
+	public interface IGameOrgBattle : IGame
 	{
 		bool HasEligible(); //params object[] args
 
@@ -89,18 +89,18 @@ namespace PokemonEssentials.Interface.Battle
 		//IPokemonSerialized(species, item, nature, move1, move2, move3, move4, ev);
 
 		/*=begin;
-		  void _dump(depth) {
+			void _dump(depth) {
 			return [@species,@item,@nature,@move1,@move2,
-			   @move3,@move4,@ev].pack("vvCvvvvC");
-		  }
+				@move3,@move4,@ev].pack("vvCvvvvC");
+			}
 
-		  void _load(str) {
+			void _load(str) {
 			data=str.unpack("vvCvvvvC");
 			return new this(
-			   data[0],data[1],data[2],data[3],
-			   data[4],data[5],data[6],data[7];
+				data[0],data[1],data[2],data[3],
+				data[4],data[5],data[6],data[7];
 			);
-		  }
+			}
 		=end;*/
 
 		IPokemonSerialized fromInspected(string str);
@@ -122,16 +122,22 @@ namespace PokemonEssentials.Interface.Battle
 		IPokemon createPokemon(int level, int iv, ITrainer trainer);
 	}
 
-	public interface IGameMapOrgBattle //: PokemonEssentials.Interface.IGameMap
+	/// <summary>
+	/// Extension of <seealso cref="IGameMap"/>
+	/// </summary>
+	public interface IGameMapOrgBattle : PokemonEssentials.Interface.IGameMap
 	{
 		int map_id { get; set; }
 	}
 
-	public interface IGamePlayerOrgBattle //: IGamePlayer
+	/// <summary>
+	/// Extension of <seealso cref="IGamePlayer"/>
+	/// </summary>
+	public interface IGamePlayerOrgBattle : IGamePlayer
 	{
-	    int direction { get; }
+		int direction { get; set; }
 
-	    void moveto2(float x, float y);
+		void moveto2(float x, float y);
 	}
 
 	public interface IBattleChallengeType : ICloneable
@@ -270,7 +276,7 @@ namespace PokemonEssentials.Interface.Battle
 	/// <summary>
 	/// <seealso cref="IGameEvent"/>
 	/// </summary>
-	public interface IGameEventOrgBattle
+	public interface IGameEventOrgBattle : IGameEvent
 	{
 		bool InChallenge { get; }
 	}

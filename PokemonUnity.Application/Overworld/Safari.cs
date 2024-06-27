@@ -10,8 +10,8 @@ using PokemonUnity.EventArg;
 namespace PokemonUnity
 {
 	public partial class SafariState : PokemonEssentials.Interface.Field.ISafariState {
-		public int ballcount				                { get; set; }
-		public int steps					                { get; set; }
+		public int ballcount								{ get; set; }
+		public int steps									{ get; set; }
 		public Combat.BattleResults decision				{ get; set; }
 		private MetadataPosition? start; //map object
 		private bool inProgress;
@@ -50,7 +50,9 @@ namespace PokemonUnity
 		}
 
 		public void Start(int ballcount_) {
-			@start=new MetadataPosition() { MapId = Game.GameData.GameMap.map_id, X = Game.GameData.GamePlayer.x, Y = Game.GameData.GamePlayer.y, Direction = Game.GameData.GamePlayer.direction };
+			@start=null;
+			if (Game.GameData.GameMap is IGameMapOrgBattle gmo)
+				@start=new MetadataPosition() { MapId = gmo.map_id, X = Game.GameData.GamePlayer.x, Y = Game.GameData.GamePlayer.y, Direction = Game.GameData.GamePlayer.direction };
 			@ballcount=ballcount_;
 			@inProgress=true;
 			@steps=Core.SAFARISTEPS;
@@ -119,13 +121,13 @@ namespace PokemonUnity
 		//event Action<object, IOnWildBattleOverrideEventArgs> IGameSafari.OnWildBattleOverride { add { OnWildBattleOverride += value; } remove { OnWildBattleOverride += value; } }
 
 		public bool InSafari { get {
-			if (SafariState.InProgress) {
+			if (SafariState.InProgress && GameMap is IGameMapOrgBattle gmo) {
 				//  Reception map is handled separately from safari map since the reception
 				//  map can be outdoors, with its own grassy patches.
 				int reception=SafariState.ReceptionMap;
-				if (GameMap.map_id==reception) return true;
+				if (gmo.map_id==reception) return true;
 				//if (GetMetadata(GameMap.map_id,MetadataSafariMap)) {
-				if (GetMetadata(GameMap.map_id).Map.SafariMap) {
+				if (GetMetadata(gmo.map_id).Map.SafariMap) {
 					return true;
 				}
 			}

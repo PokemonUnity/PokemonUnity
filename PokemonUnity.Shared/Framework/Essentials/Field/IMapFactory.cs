@@ -100,7 +100,7 @@ namespace PokemonEssentials.Interface.Field
 	/// <summary>
 	/// Extension of <see cref="PokemonEssentials.Interface.IGameMap"/>
 	/// </summary>
-	public interface IGameMapFactory
+	public interface IGameMapFactory : IGameMap
 	{
 		void updateTileset();
 	}
@@ -108,7 +108,7 @@ namespace PokemonEssentials.Interface.Field
 	/// <summary>
 	/// Extension of base application class (Game)
 	/// </summary>
-	public interface IGameFactory
+	public interface IGameFactory : IGame
 	{
 		void updateTilesets();
 	}

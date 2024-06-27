@@ -69,7 +69,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Extension of <seealso cref="IGame"/>
 		/// </summary>
-		public interface IGamePokeball
+		public interface IGamePokeball : IGame
 		{
 			Items[] BallTypes { get; }
 

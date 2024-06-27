@@ -35,7 +35,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Extensions of <seealso cref="IPokemon"/>
 		/// </summary>
-		public interface IPokemonMultipleForms
+		public interface IPokemonMultipleForms : IPokemon
 		{
 			/// <summary>
 			/// Time when Furfrou's/Hoopa's form was set
@@ -93,7 +93,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Extension of <see cref="IBattlePeer"/>
 		/// </summary>
-		public interface IBattlePeerMultipleForms {
+		public interface IBattlePeerMultipleForms : IBattlePeer {
 			void OnEnteringBattle(IBattle battle, IPokemon pokemon);
 			//int StorePokemon(ITrainer player, IPokemonMultipleForms pokemon);
 			//string GetStorageCreator();
@@ -135,7 +135,7 @@ namespace PokemonEssentials.Interface
 		//  }
 		//}
 
-		public interface IGamePokemonMultipleForms
+		public interface IGamePokemonMultipleForms : IGame
 		{
 			void drawSpot(IBitmap bitmap,int[][] spotpattern, int x, int y, sbyte red, sbyte green, sbyte blue);
 

@@ -27,29 +27,29 @@ namespace PokemonEssentials.Interface
 	public interface IResourcesAudio
 	{
 		#region Sound Effects
-		IAudioObject	SoundEffectMenu			{ get; }
-		IAudioObject	SoundEffectBump			{ get; }
-		IAudioObject	SoundEffectChoose		{ get; }
-		IAudioObject	SoundEffectBuzzer		{ get; }
-		IAudioObject	SoundEffectJump			{ get; }
-		IAudioObject	SoundEffectExpFull		{ get; }
-		IAudioObject	SoundEffectComputerClose{ get; }
+		IAudioSE	SoundEffectMenu			{ get; }
+		IAudioSE	SoundEffectBump			{ get; }
+		IAudioSE	SoundEffectChoose		{ get; }
+		IAudioSE	SoundEffectBuzzer		{ get; }
+		IAudioSE	SoundEffectJump			{ get; }
+		IAudioSE	SoundEffectExpFull		{ get; }
+		IAudioSE	SoundEffectComputerClose{ get; }
 		//Battle
-		IAudioObject	SoundEffectThrow		{ get; }
-		IAudioObject	SoundEffectRecall		{ get; }
-		IAudioObject	SoundEffectBallShake	{ get; }
-		IAudioObject	SoundEffectBallDrop		{ get; }
-		IAudioObject	SoundEffectJumpToBall	{ get; }
-		IAudioObject	SoundEffectNormalDamage	{ get; }
-		IAudioObject	SoundEffectNotVeryDamage{ get; }
-		IAudioObject	SoundEffectSuperDamage	{ get; }
-		IAudioObject	SoundEffectFaint		{ get; }
-		IAudioObject	SoundEffectPkmnCry_		{ get; }
+		IAudioSE	SoundEffectThrow		{ get; }
+		IAudioSE	SoundEffectRecall		{ get; }
+		IAudioSE	SoundEffectBallShake	{ get; }
+		IAudioSE	SoundEffectBallDrop		{ get; }
+		IAudioSE	SoundEffectJumpToBall	{ get; }
+		IAudioSE	SoundEffectNormalDamage	{ get; }
+		IAudioSE	SoundEffectNotVeryDamage{ get; }
+		IAudioSE	SoundEffectSuperDamage	{ get; }
+		IAudioSE	SoundEffectFaint		{ get; }
+		IAudioSE	SoundEffectPkmnCry_		{ get; }
 
 		// Versus Battle, Flashing of "VS" text
-		IAudioObject	SoundEffectFlash		{ get; }
+		IAudioSE	SoundEffectFlash		{ get; }
 		// Versus Battle, After flashing of "VS" text, Sword shwing sound effect
-		IAudioObject	SoundEffectSword		{ get; }
+		IAudioSE	SoundEffectSword		{ get; }
 		//MiniGame - Fishing
 		//MiniGame - Mining
 		//MiniGame - Slot Machine
@@ -63,59 +63,59 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Some wild encounters have their own theme music
 		/// </summary>
-		IAudioObject	BackgroundMusicWildBattle_			{ get; }
-		IAudioObject	BackgroundMusicWildBattleDefault	{ get; }
+		IAudioBGM	BackgroundMusicWildBattle_			{ get; }
+		IAudioBGM	BackgroundMusicWildBattleDefault	{ get; }
 		/// <summary>
 		/// Some trainers have their own theme music
 		/// </summary>
-		IAudioObject	BackgroundMusicTrainerBattle_		{ get; }
+		IAudioBGM	BackgroundMusicTrainerBattle_		{ get; }
 		/// <summary>
 		/// Some maps have their own theme music for any/all trainer battles on that map
 		/// </summary>
-		IAudioObject	BackgroundMusicTrainerBattleMap_		{ get; }
-		IAudioObject	BackgroundMusicTrainerBattleDefault		{ get; }
+		IAudioBGM	BackgroundMusicTrainerBattleMap_		{ get; }
+		IAudioBGM	BackgroundMusicTrainerBattleDefault		{ get; }
 		/// <summary>
 		/// Some maps have day and night versions of their theme music
 		/// </summary>
-		IAudioObject	BackgroundMusicMap_			{ get; }
-		IAudioObject	BackgroundMusicMapDefault	{ get; }
-		IAudioObject	BackgroundMusicEvolve		{ get; }
-		IAudioObject	BackgroundMusicHallOfFame	{ get; }
-		IAudioObject	BackgroundMusicRadioMarch	{ get; }
-		IAudioObject	BackgroundMusicRadioOak		{ get; }
-		IAudioObject	BackgroundMusicRadioLullaby	{ get; }
-		IAudioObject	BackgroundMusicBike			{ get; }
-		IAudioObject	BackgroundMusicSurf			{ get; }
+		IAudioBGM	BackgroundMusicMap_			{ get; }
+		IAudioBGM	BackgroundMusicMapDefault	{ get; }
+		IAudioBGM	BackgroundMusicEvolve		{ get; }
+		IAudioBGM	BackgroundMusicHallOfFame	{ get; }
+		IAudioBGM	BackgroundMusicRadioMarch	{ get; }
+		IAudioBGM	BackgroundMusicRadioOak		{ get; }
+		IAudioBGM	BackgroundMusicRadioLullaby	{ get; }
+		IAudioBGM	BackgroundMusicBike			{ get; }
+		IAudioBGM	BackgroundMusicSurf			{ get; }
 		#endregion
 
 		#region Music Effect
 		/// <summary>
 		/// Some wild encounters have their own theme music
 		/// </summary>
-		IAudioObject	MusicEffectWildVictory_			{ get; }
+		IAudioME	MusicEffectWildVictory_			{ get; }
 		/// <summary>
 		/// Some maps have their own theme music for any/all wild battles on that map
 		/// </summary>
-		IAudioObject	MusicEffectWildVictoryMap_		{ get; }
-		IAudioObject	MusicEffectWildVictoryDefault	{ get; }
+		IAudioME	MusicEffectWildVictoryMap_		{ get; }
+		IAudioME	MusicEffectWildVictoryDefault	{ get; }
 		/// <summary>
 		/// Some trainers have their own theme music
 		/// </summary>
-		IAudioObject	MusicEffectTrainerIntro_		{ get; }
-		IAudioObject	MusicEffectTrainerIntroDefault	{ get; }
+		IAudioME	MusicEffectTrainerIntro_		{ get; }
+		IAudioME	MusicEffectTrainerIntroDefault	{ get; }
 		/// <summary>
 		/// Some trainers have their own theme music
 		/// </summary>
-		IAudioObject	MusicEffectTrainerVictory_		{ get; }
+		IAudioME	MusicEffectTrainerVictory_		{ get; }
 		/// <summary>
 		/// Some maps have their own theme music for any/all trainer battles on that map
 		/// </summary>
-		IAudioObject	MusicEffectTrainerVictoryMap_	{ get; }
-		IAudioObject	MusicEffectTrainerVictoryDefault{ get; }
-		IAudioObject	MusicEffectEvolutionSuccess		{ get; }
-		IAudioObject	MusicEffectJingleHMTM			{ get; }
-		IAudioObject	MusicEffectCredits				{ get; }
-		IAudioObject	MusicEffectTitle				{ get; }
+		IAudioME	MusicEffectTrainerVictoryMap_	{ get; }
+		IAudioME	MusicEffectTrainerVictoryDefault{ get; }
+		IAudioME	MusicEffectEvolutionSuccess		{ get; }
+		IAudioME	MusicEffectJingleHMTM			{ get; }
+		IAudioME	MusicEffectCredits				{ get; }
+		IAudioME	MusicEffectTitle				{ get; }
 		#endregion
 	}
 }

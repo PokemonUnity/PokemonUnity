@@ -134,7 +134,10 @@ namespace PokemonEssentials.Interface.Screen
 	//  General purpose utilities
 	//
 
-	public interface IGamePurifyChamber
+	/// <summary>
+	/// Extension of <seealso cref="IGame"/>
+	/// </summary>
+	public interface IGamePurifyChamber : IGame
 	{
 		void DrawGauge(IBitmap bitmap, IRect rect, IColor color, int value, int maxValue);
 

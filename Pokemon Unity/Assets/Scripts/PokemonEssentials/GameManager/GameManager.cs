@@ -96,14 +96,13 @@ namespace PokemonUnity.Interface.UnityEngine
 				Core.Logger?.Log("Path to DB: " + ((Mono.Data.Sqlite.SqliteConnection)Game.con).DataSource);
 				game = new Game();
 				game.Scenes = gameObject.GetComponent<LevelLoader>() as IGameScenesUI;
+				Game.FileTest = gameObject.GetComponent<FileTest>() as IFileTest;
 				Core.Logger?.Log("New Game Entity Successfully Instantiated!~");
 			}
 			catch (InvalidOperationException) { Core.Logger?.LogError("Problem executing SQL with connected database"); }
 			catch (Exception e) { Core.Logger?.LogError(e.ToString()); }
 			finally
 			{
-				//Game.con.Open();
-
 				Core.Logger?.Log("Is Pokemon DB Null? " + (Kernal.PokemonData == null).ToString());
 				if (Kernal.PokemonData == null)
 				{
@@ -136,15 +135,8 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 
 			Core.Logger?.Log("Is Game Null? " + (Game.GameData == null).ToString());
-			Core.Logger?.Log("Is Player Overworld Avatar Null? " + (Game.GameData.GamePlayer == null).ToString());
-			//if (Game.GameData.Player == null)
-			//{
-			//	Core.Logger?.Log("Create Player Object");
-			//	//IGamePlayer p = new Player();
-			//	Core.Logger?.Log("Saving Player Object to Global Singleton");
-			//	//Game.GameData.Player = p;
-			//}
 			Core.Logger?.Log("Is Trainer Null? " + (Game.GameData.Trainer == null).ToString());
+			Core.Logger?.Log("Is Player Overworld Avatar Null? " + (Game.GameData.GamePlayer == null).ToString());
 		}
 		void Start()
 		{
@@ -158,14 +150,6 @@ namespace PokemonUnity.Interface.UnityEngine
 		#endregion
 
 		#region Methods
-		//public void OnLoadLevel(int id)
-		//{
-		//	if (onLoadLevel != null) onLoadLevel(id);
-		//}
-		//public void OnLoadLevel(IScene scene)
-		//{
-		//	if (onLoadLevel != null) onLoadLevel(scene);
-		//}
 		protected void Events_OnLoadLevel(object sender, EventArg.OnLoadLevelEventArgs args)
 		{
 			//if (onLoadLevel != null) onLoadLevel(scene);

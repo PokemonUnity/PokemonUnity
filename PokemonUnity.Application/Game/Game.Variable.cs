@@ -18,7 +18,7 @@ namespace PokemonUnity
 {
 	public partial class Game : PokemonEssentials.Interface.IGame//, PokemonEssentials.Interface.IEvents
 	{
-		public PokemonEssentials.Interface.IGlobalMetadata Global { get; private set; }
+		public PokemonEssentials.Interface.Field.IGlobalMetadata Global { get; private set; }
 		public PokemonEssentials.Interface.Field.IMapFactory MapFactory { get; private set; }
 		public PokemonEssentials.Interface.Field.IMapMetadata PokemonMap { get; private set; }
 		//public PokemonEssentials.Interface.Field.IMapMetadata MapData { get; private set; }
@@ -62,6 +62,7 @@ namespace PokemonUnity
 		//Used by map UI
 		public PokemonEssentials.Interface.Field.ILocationWindow LocationWindow { get; set; }
 		public PokemonEssentials.Interface.Field.IEncounterModifier EncounterModifier { get; set; }
+		public static PokemonEssentials.Interface.IFileTest FileTest { get; set; }
 
 		#region Events used by Game Interface
 		//public PokemonEssentials.Interface.IEvents Events { get; private set; }

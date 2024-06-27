@@ -226,11 +226,17 @@ namespace PokemonEssentials.Interface.Screen
 	// ===============================================================================
 	// Pokémon Mart
 	// ===============================================================================
-	public interface IGameMart {
+	/// <summary>
+	/// Extension of <seealso cref="IGame"/>
+	/// </summary>
+	public interface IGameMart : IGame {
 		void PokemonMart(Items[] stock, string speech = null, bool cantsell = false);
 	}
 
-	public interface IGameTempMart {
+	/// <summary>
+	/// Extension of <seealso cref="IGameTemp"/>
+	/// </summary>
+	public interface IGameTempMart : IGameTemp {
 		int[] mart_prices				{ get; }
 		//int[] mart_prices();
 
@@ -302,7 +308,7 @@ namespace PokemonEssentials.Interface.Screen
 	}
 	#endregion
 
-	public interface IInterpreterMart {
+	public interface IInterpreterMart : IInterpreter {
 		//p = parameter[int type,int id]
 		Items getItem(KeyValuePair<int, int> p);
 
@@ -313,10 +319,10 @@ namespace PokemonEssentials.Interface.Screen
 		void setSellPrice(Items item, int sellprice);
 	}
 
-	public interface IGameInterpreterMart {
-		//p = parameter[int type,int id]
-		Items getItem(KeyValuePair<int, int> p);
-
-		bool command_302();
-	}
+	//public interface IGameInterpreterMart {
+	//	//p = parameter[int type,int id]
+	//	Items getItem(KeyValuePair<int, int> p);
+	//
+	//	bool command_302();
+	//}
 }

@@ -18,6 +18,7 @@ using System.Data.Common;
 using PokemonUnity.Inventory.Plants;
 using PokemonUnity.Attack.Data;
 using PokemonUnity.Character;
+using PokemonEssentials.Interface.Battle;
 //using System.Data.SqlClient;
 //using System.Security.Cryptography;
 
@@ -3471,7 +3472,7 @@ namespace PokemonUnity
 				--where i.encounter_condition_value_group IS NOT NULL
 				--where i.encounter_condition_value_id IS NOT NULL
 				where e.location_area_id = {0}
-				group by e.location_area_id, s.encounter_method_id, s.slot, s.rarity; --e.pokemon_id;", GameData.GamePlayer.map.map_id);
+				group by e.location_area_id, s.encounter_method_id, s.slot, s.rarity; --e.pokemon_id;", GameData.GamePlayer.map is IGameMapOrgBattle gmo ? gmo.map_id : 0);
 				IDataReader reader = stmt.ExecuteReader();
 
 				//Step 4: Read the results

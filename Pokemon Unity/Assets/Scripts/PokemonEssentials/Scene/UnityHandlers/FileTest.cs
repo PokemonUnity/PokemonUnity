@@ -15,6 +15,8 @@ namespace PokemonUnity.Interface.UnityEngine
 		private global::UnityEngine.UI.Image[] images;
 		public string[] Image_ext { get; }
 		public string[] Audio_ext { get; }
+		IResourcesAudio IFileTest.ResourcesAudio { get { return Instance; } }
+
 		[SerializeField] private AudioData audioData;
 
 		#region Images

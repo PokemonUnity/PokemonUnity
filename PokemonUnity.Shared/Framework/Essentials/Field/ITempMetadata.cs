@@ -27,6 +27,6 @@ namespace PokemonEssentials.Interface.Field
 		IBattleRecordData lastbattle						{ get; set; }
 		int flydata											{ get; set; }
 
-		//ITempMetadata initialize();
+		ITempMetadata initialize();
 	}
 }

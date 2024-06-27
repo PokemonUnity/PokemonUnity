@@ -16,7 +16,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// Extension of <see cref="IGame"/>
 	/// </summary>
-	public interface IGameAudioPlay
+	public interface IGameAudioPlay : IGame
 	{
 		IAudioObject StringToAudioFile(string str);
 

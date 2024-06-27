@@ -612,11 +612,11 @@ namespace PokemonUnity
 
 	public partial class GamePlayer : PokemonEssentials.Interface.Battle.IGamePlayerOrgBattle {
 		public int direction							{ get; protected set; }
-		protected int @prelock_direction;//				{ get; protected set; }
-		protected float x;//							{ get; protected set; }
-		protected float y;//							{ get; protected set; }
-		protected float real_x;//						{ get; protected set; }
-		protected float real_y;//						{ get; protected set; }
+		//protected int @prelock_direction;//				{ get; protected set; }
+		//protected float x;//							{ get; protected set; }
+		//protected float y;//							{ get; protected set; }
+		//protected float real_x;//						{ get; protected set; }
+		//protected float real_y;//						{ get; protected set; }
 
 		public void moveto2(float x,float y) {
 			this.x = x;
@@ -767,7 +767,7 @@ namespace PokemonUnity
 				}
 				if (!found) @trainers.Add(newtrainer.Value);
 			}
-			@start=new TilePosition(Game.GameData.GameMap.map_id,Game.GameData.GamePlayer.x,Game.GameData.GamePlayer.y);
+			@start=new TilePosition(Game.GameData.GameMap is IGameMapOrgBattle gmo ? gmo.map_id : 0,Game.GameData.GamePlayer.x,Game.GameData.GamePlayer.y);
 			@oldParty=Game.GameData.Trainer.party;
 			if (@party != null) Game.GameData.Trainer.party=@party;
 			if (Game.GameData is IGameSave s) s.Save(true);
@@ -818,17 +818,18 @@ namespace PokemonUnity
 		}
 
 		private void SaveInProgress() {
-			int oldmapid=Game.GameData.GameMap.map_id;
+			int oldmapid=Game.GameData.GameMap is IGameMapOrgBattle gmo ? gmo.map_id : 0;
 			float oldx=Game.GameData.GamePlayer.x;
 			float oldy=Game.GameData.GamePlayer.y;
-			int olddirection=Game.GameData.GamePlayer.direction;
-			Game.GameData.GameMap.map_id=@start.MapId; //@start[0];
+			int olddirection=0; //Game.GameData.GamePlayer.direction;
+			if (Game.GameData.GamePlayer is IGamePlayerOrgBattle gpo) olddirection=gpo.direction;
+			if (Game.GameData.GameMap is IGameMapOrgBattle gmo0) gmo0.map_id=@start.MapId; //@start[0];
 			if (Game.GameData.GamePlayer is IGamePlayerOrgBattle gpob) gpob.moveto2(@start.X,@start.Y); //(@start[1],@start[2]);
-			Game.GameData.GamePlayer.direction=8; // facing up
+			if (Game.GameData.GamePlayer is IGamePlayerOrgBattle gpo1) gpo1.direction=8; // facing up
 			if (Game.GameData is IGameSave s) s.Save(true);
-			Game.GameData.GameMap.map_id=oldmapid;
+			if (Game.GameData.GameMap is IGameMapOrgBattle gmo1) gmo1.map_id=oldmapid;
 			if (Game.GameData.GamePlayer is IGamePlayerOrgBattle gpob2) gpob2.moveto2(oldx,oldy);
-			Game.GameData.GamePlayer.direction=olddirection;
+			if (Game.GameData.GamePlayer is IGamePlayerOrgBattle gpo2) gpo2.direction=olddirection;
 		}
 	}
 

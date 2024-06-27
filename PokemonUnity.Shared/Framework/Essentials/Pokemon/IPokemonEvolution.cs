@@ -81,9 +81,9 @@ namespace PokemonEssentials.Interface
 	//}
 
 	/// <summary>
-	/// Extensions of <seealso cref="IPokemon"/>
+	/// Extension of <seealso cref="IGame"/>
 	/// </summary>
-	public interface IGamePokemonEvolution
+	public interface IGamePokemonEvolution : IGame
 	{
 		// ===============================================================================
 		// Evolution helper functions

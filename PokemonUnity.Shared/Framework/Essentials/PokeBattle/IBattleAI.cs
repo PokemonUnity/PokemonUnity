@@ -12,7 +12,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// <summary>
 	/// Partial <seealso cref="IBattle"/>
 	/// </summary>
-	public interface IBattleAI
+	public interface IBattleAI : IBattle
 	{
 		/// <summary>
 		/// Get a score for each move being considered (trainer-owned Pokémon only).

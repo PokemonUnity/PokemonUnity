@@ -106,13 +106,13 @@ namespace PokemonEssentials.Interface.Field
 		//event EventHandler<IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
 		event Action<object, EventArg.IOnWildPokemonCreateEventArgs> OnWildPokemonCreate;
 		//Events.onWildPokemonCreate+=proc {|sender,e|
-		//private void onWildPokemonCreate(object sender, EventArg.OnWildPokemonCreateEventArgs e) {
-		//   // Make all wild Pokémon shiny while a certain Switch is ON (see Settings).
-		//   //Monster.Pokemon pokemon = e[0];
-		//   Monster.Pokemon pokemon = e.Pokemon;
-		//   if (Core.SHINY_WILD_POKEMON_SWITCH) {
-		//     pokemon.makeShiny();
-		//   }
+		//protected void Events_onWildPokemonCreate(object sender, EventArg.OnWildPokemonCreateEventArgs e) {
+		//	// Make all wild Pokémon shiny while a certain Switch is ON (see Settings).
+		//	//Monster.Pokemon pokemon = e[0];
+		//	IPokemon pokemon = e.Pokemon;
+		//	if (Core.SHINY_WILD_POKEMON_SWITCH) {
+		//		pokemon.makeShiny();
+		//	}
 		//}
 
 		// Used in the random dungeon map.  Makes the levels of all wild Pokémon in that
@@ -121,15 +121,15 @@ namespace PokemonEssentials.Interface.Field
 		// and other such details.  Of course, you don't HAVE to use this code.
 		//Events.onWildPokemonCreate+=proc {|sender,e|
 		//private void onWildPokemonCreate(object sender, EventArg.OnWildPokemonCreateEventArgs e) {
-		//   Monster.Pokemon pokemon = e[0];
-		//   if (Game.GameData.GameMap.map_id==51) {
-		//     int newlevel=(int)Math.Round(Game.BalancedLevel(Game.GameData.Player.Party) - 4 + Core.Rand.Next(5));   // For variety
-		//     if (newlevel < 1) newlevel=1;
-		//     if (newlevel > Core.MAXIMUMLEVEL) newlevel = Core.MAXIMUMLEVEL;
-		//     pokemon.Level=newlevel;
-		//     //pokemon.calcStats();
-		//     pokemon.resetMoves();
-		//   }
+		//	IPokemon pokemon = e[0];
+		//	if (Game.GameData.GameMap.map_id==51) {
+		//		int newlevel=(int)Math.Round(Game.BalancedLevel(Game.GameData.Player.Party) - 4 + Core.Rand.Next(5));   // For variety
+		//		if (newlevel < 1) newlevel=1;
+		//		if (newlevel > Core.MAXIMUMLEVEL) newlevel = Core.MAXIMUMLEVEL;
+		//		pokemon.Level=newlevel;
+		//		//pokemon.calcStats();
+		//		pokemon.resetMoves();
+		//	}
 		//}
 
 		/// <summary>

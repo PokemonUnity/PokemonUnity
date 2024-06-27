@@ -3,7 +3,7 @@ using PokemonUnity.Combat;
 
 namespace PokemonEssentials.Interface.Field
 {
-	public interface ISafariState 
+	public interface ISafariState
 	{
 		int ballcount				{ get; set; }
 		BattleResults decision      { get; set; }
@@ -25,7 +25,7 @@ namespace PokemonEssentials.Interface.Field
 	/// <summary>
 	/// Extension of <seealso cref="IGame"/>
 	/// </summary>
-	public interface IGameSafari
+	public interface IGameSafari : IGame
 	{
 		bool InSafari { get; }
 

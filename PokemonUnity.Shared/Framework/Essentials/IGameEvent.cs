@@ -7,19 +7,20 @@ using PokemonEssentials.Interface.RPGMaker.Kernal;
 
 namespace PokemonEssentials.Interface
 {
-	public interface IGameEvent //: IGameCharacter
+	public interface IGameEvent : IGameCharacter
 	{
-		int? trigger { get; set; }
+		int trigger { get; set; }
 		IList<IEventCommand> list { get; set; }
+		IList<IEventPage> pages { get; set; }
 		bool starting { get; set; }
 		/// <summary>
 		/// Temporary self-switches
 		/// </summary>
-		Dictionary<string, bool?> tempSwitches { get; set; }
+		IDictionary<string, bool?> tempSwitches { get; set; }
 		bool need_refresh { get; set; }
 
 		//IGameEvent(int map_id, IEntity ev, Game_Map map = null);
-		IGameEvent initialize(int map_id, int ev, IGameMap map = null);
+		IGameEvent initialize(int map_id, IGameCharacter ev, IGameMap map = null);
 
 		int map_id { get; }
 

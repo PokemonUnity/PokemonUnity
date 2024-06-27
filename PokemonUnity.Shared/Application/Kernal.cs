@@ -21,6 +21,7 @@ using Newtonsoft.Json;
 using PokemonEssentials.Interface.Battle;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.Field;
+using PokemonEssentials.Interface.RPGMaker.Kernal;
 
 namespace PokemonUnity
 {
@@ -184,6 +185,8 @@ namespace PokemonUnity
 		public static void load_data(IList<ITrainerData> trainers, string filepath = null) { }
 		public static void load_data(IList<ITrainerChallengeData> trainers, string filepath = null) { }
 		public static void load_data(IList<IRuledTeam> teams, string filepath = null) { }
+		public static void load_data(IDictionary<int,IMapInfo> mapInfo, string filepath = null) { }
+		public static void load_data(IDictionary<int, IPokemonMetadata> metaData, string filepath = null) { }
 		public static void load_data(IDictionary<int, PokemonEssentials.Interface.Field.IEncounters> encdata, string filepath = null)
 		{
 			encdata.Clear(); //= new Dictionary<int, PokemonEssentials.Interface.Field.IEncounters>();

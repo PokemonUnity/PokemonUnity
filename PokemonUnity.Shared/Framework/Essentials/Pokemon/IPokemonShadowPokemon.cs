@@ -38,14 +38,14 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// <summary>
 	/// Extensions of <seealso cref="ITempMetadata"/>
 	/// </summary>
-	public interface ITempMetadataPokemonShadow {
+	public interface ITempMetadataPokemonShadow : ITempMetadata {
 		int?[] heartgauges				{ get; set; }
 	}
 
 	/// <summary>
 	/// Extensions of <seealso cref="IGame"/>
 	/// </summary>
-	public interface IGameShadowPokemon
+	public interface IGameShadowPokemon : IGame
 	{
 		void Purify(IPokemonShadowPokemon pokemon, IPurifyChamberScene scene);
 
@@ -194,7 +194,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// <summary>
 	/// Extensions of <seealso cref="IPokemon"/>
 	/// </summary>
-	public interface IPokemonShadowPokemon
+	public interface IPokemonShadowPokemon : IPokemon
 	{
 		//public const int HEARTGAUGESIZE = 3840;
 		int? heartgauge { get; }
@@ -240,7 +240,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// <summary>
 	/// Extensions of <seealso cref="IBattle"/>
 	/// </summary>
-	public interface IBattleShadowPokemon {
+	public interface IBattleShadowPokemon : IBattle {
 		//alias __shadow_UseItemOnPokemon UseItemOnPokemon;
 
 		bool UseItemOnPokemon(Items item, int pkmnIndex, IBattler userPkmn, IHasDisplayMessage scene);
@@ -249,7 +249,7 @@ namespace PokemonEssentials.Interface.PokeBattle
 	/// <summary>
 	/// Extensions of <seealso cref="IBattler"/>
 	/// </summary>
-	public interface IBattlerShadowPokemon {
+	public interface IBattlerShadowPokemon : IBattler {
 		//alias __shadow_InitPokemon InitPokemon;
 		//alias __shadow_EndTurn EndTurn;
 

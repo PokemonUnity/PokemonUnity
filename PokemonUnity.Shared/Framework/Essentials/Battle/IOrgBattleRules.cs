@@ -14,7 +14,7 @@ namespace PokemonEssentials.Interface.Battle
 	/// <summary>
 	/// Extension of <seealso cref="IGame"/>
 	/// </summary>
-	public interface IGameOrgBattleRules
+	public interface IGameOrgBattleRules : IGame
 	{
 		int BaseStatTotal(Pokemons species);
 

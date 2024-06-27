@@ -14,6 +14,7 @@ namespace PokemonUnity
 	/// <summary>
 	/// Temporary data which is not saved and which is erased when a game restarts.
 	/// </summary>
+	/// ToDo: Rename to `TempData` or `TempMetadata`
 	public partial class PokemonTemp : PokemonEssentials.Interface.Field.ITempMetadata //PokemonEssentials.Interface.ITempMetadata,
 	{
 		public int menuLastChoice { get; set; }

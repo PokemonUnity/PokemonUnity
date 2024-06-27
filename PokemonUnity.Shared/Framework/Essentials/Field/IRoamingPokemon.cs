@@ -28,7 +28,7 @@ namespace PokemonEssentials.Interface.Field
 	public interface IGlobalMetadataRoaming : Field.IGlobalMetadata {
 		//ToDo: nullable int array?...
 		int[] roamPosition						{ get; set; }
-		Queue<int> roamHistory					{ get; set; }
+		Queue<int> roamHistory					{ get; set; } // First in, first out
 		bool roamedAlready						{ get; set; }
 		IEncounterPokemonRoaming roamEncounter	{ get; set; }
 		/// <summary>

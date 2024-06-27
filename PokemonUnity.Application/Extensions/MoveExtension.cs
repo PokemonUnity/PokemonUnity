@@ -765,7 +765,7 @@ namespace PokemonUnity
 				case Attack.Effects.x167:
 					return new Combat.PokeBattle_Move_136();
 				case Attack.Effects.x168:
-					//ToDo: I think the function both do the samething
+					//ToDo: I think the function both do the same thing
 					//MoveEffectData.Add(effect, new Combat.PokeBattle_Move_13B());
 					return new Combat.PokeBattle_Move_147();
 				case Attack.Effects.x169:

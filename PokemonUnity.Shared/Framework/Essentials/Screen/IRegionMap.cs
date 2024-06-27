@@ -380,7 +380,7 @@ namespace PokemonEssentials.Interface.Screen
 		//void pbStartScreen();
 	}
 
-	public interface IGameRegionMap {
+	public interface IGameRegionMap : IGame {
 		void ShowMap(int region= -1,bool wallmap= true);
 	}
 }

@@ -21,7 +21,8 @@ namespace PokemonEssentials.Interface.Field
 		IList<IEncounterPokemon> encounter_list	{ get; }
 		int encounter_step						{ get; }
 		int?[,,] data							{ get; }
-		IDictionary<int,int> events				{ get; }
+		//IDictionary<int,int> events			{ get; }
+		IDictionary<int, IGameCharacter> events	{ get; }
 
 		//MapData(int width, int height);
 	}

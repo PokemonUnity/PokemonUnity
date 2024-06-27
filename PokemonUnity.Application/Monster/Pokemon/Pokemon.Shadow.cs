@@ -16,7 +16,7 @@ using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonUnity
 {
-	public partial class TempData : ITempMetadataPokemonShadow
+	public partial class PokemonTemp : ITempMetadataPokemonShadow
 	{
 		public int?[] heartgauges { get; set; }
 	}

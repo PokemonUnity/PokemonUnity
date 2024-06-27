@@ -6,6 +6,7 @@ using PokemonUnity.Inventory;
 using PokemonUnity.Overworld;
 using PokemonEssentials.Interface.PokeBattle;
 using PokemonEssentials.Interface.EventArg;
+using PokemonUnity.Utility;
 
 namespace PokemonEssentials.Interface
 {
@@ -37,7 +38,7 @@ namespace PokemonEssentials.Interface
 	namespace Field
 	{
 		#region Interpolators
-		public interface IRectInterpolator
+		public interface IRectInterpolator : IRect
 		{
 			IRectInterpolator initialize(IRect oldrect, IRect newrect, int frames);
 
@@ -50,7 +51,7 @@ namespace PokemonEssentials.Interface
 			void update();
 		}
 
-		public interface IPointInterpolator
+		public interface IPointInterpolator : IPoint
 		{
 			IPointInterpolator initialize(float oldx, float oldy, float newx, float newy, int frames);
 
@@ -93,7 +94,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Extension of <see cref="IGame"/>
 		/// </summary>
-		public interface IGameHiddenMoves
+		public interface IGameHiddenMoves : IGame
 		{
 			/// <summary>
 			/// Triggers when the player presses the Action button on the map.

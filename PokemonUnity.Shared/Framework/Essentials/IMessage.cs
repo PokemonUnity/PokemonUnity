@@ -20,7 +20,7 @@ namespace PokemonEssentials.Interface
 	/// <summary>
 	/// <see cref="IGameTemp"/>
 	/// </summary>
-	public interface IGameTempMessage
+	public interface IGameTempMessage : IGameTemp
 	{
 		int background							{ get; set; }
 		bool message_window_showing			    { get; }
@@ -39,7 +39,10 @@ namespace PokemonEssentials.Interface
 		//int background();
 	}
 
-	public interface IGameSystemMessage {
+	/// <summary>
+	/// Extension of <seealso cref="IGameSystem"/>
+	/// </summary>
+	public interface IGameSystemMessage : IGameSystem {
 		int message_position				{ get; }
 
 		//int message_position();
@@ -47,26 +50,26 @@ namespace PokemonEssentials.Interface
 
 // ########
 
-	public interface ISceneMapMessage {
+	public interface ISceneMapMessage : ISceneMap {
 		void updatemini();
 	}
 
-	public interface ISceneBattleMessage {
-		void updatemini();
-	}
+	//public interface ISceneBattleMessage {
+	//	void updatemini();
+	//}
 
 	/// <summary>
 	/// Extension of <see cref="IGame"/>
 	/// </summary>
-	public interface IGameMessage
+	public interface IGameMessage : IGame
 	{
 		bool MapInterpreterRunning();
 
 		IInterpreter MapInterpreter();
 		//	if (Game.GameData.GameMap && Game.GameData.GameMap.respond_to("interpreter")) {
-		//	return Game.GameData.GameMap.interpreter;
+		//		return Game.GameData.GameMap.interpreter;
 		//	} else if (Game.GameData.GameSystem) {
-		//	return Game.GameData.GameSystem.map_interpreter;
+		//		return Game.GameData.GameSystem.map_interpreter;
 		//	}
 		//	return null;
 		//}

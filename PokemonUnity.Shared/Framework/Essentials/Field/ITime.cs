@@ -9,7 +9,10 @@ using PokemonEssentials.Interface.PokeBattle;
 
 namespace PokemonEssentials.Interface.Field
 {
-	public interface IGameTime
+	/// <summary>
+	/// Extension of <seealso cref="IGame"/>
+	/// </summary>
+	public interface IGameTime : IGame
 	{
 		#region Day and night system
 		DateTime GetTimeNow();

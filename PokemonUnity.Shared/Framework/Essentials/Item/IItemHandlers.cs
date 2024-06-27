@@ -230,7 +230,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Extension of <seealso cref="IGameItem"/>
 		/// </summary>
-		public interface IGameItemEffect
+		public interface IGameItemEffect : IGameItem
 		{
 			ItemUseResults Repel(Items item, int steps);
 		}
@@ -238,7 +238,7 @@ namespace PokemonEssentials.Interface
 		/// <summary>
 		/// Extension of <seealso cref="IGame"/>
 		/// </summary>
-		public interface IGameItem
+		public interface IGameItem : IGame
 		{
 			void TopRightWindow(string text);
 

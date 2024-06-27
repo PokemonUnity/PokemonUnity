@@ -18,7 +18,10 @@ using PokemonEssentials.Interface.EventArg;
 
 namespace PokemonEssentials.Interface.Screen
 {
-	public interface IGamePokedexNest
+	/// <summary>
+	/// Extension of <seealso cref="IGame"/>
+	/// </summary>
+	public interface IGamePokedexNest : IGame
 	{
 		bool FindEncounter(IEncounterPokemon encounter, Pokemons species);
 	}

@@ -20,7 +20,7 @@ namespace PokemonEssentials.Interface.Field
 		// Hours/stage, drying/hour, min yield, max yield
 	}
 
-	public interface ITempMetadataBerryPlants {
+	public interface ITempMetadataBerryPlants : ITempMetadata {
 		IDictionary<int, BerryData> berryPlantData				{ get; }
 
 		//int[] GetBerryPlantData(Items item);
@@ -63,7 +63,7 @@ namespace PokemonEssentials.Interface.Field
 		void setGraphic(BerryData berryData, bool fullcheck = false);
 	}
 
-	public interface IGameBerryPlants
+	public interface IGameBerryPlants : IGame
 	{
 		void BerryPlant();
 

@@ -241,7 +241,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			rect = GetComponent<global::UnityEngine.RectTransform>();
 			//image = GetComponent<UnityEngine.UI.Image>();
 			//canvasGroup = GetComponent<global::UnityEngine.CanvasGroup>();
-			GameManager.current.onUpdate += delegate { this.update(); };
+			//GameManager.current.onUpdate += delegate { this.update(); };
 		}
 
 		private void Start()
@@ -257,7 +257,7 @@ namespace PokemonUnity.Interface.UnityEngine
 
 		private void OnDestroy()
 		{
-			GameManager.current.onUpdate -= delegate { this.update(); };
+			//GameManager.current.onUpdate -= delegate { this.update(); };
 		}
 
 		private void Update()
