@@ -1,12 +1,8 @@
 fileFormatVersion: 2
-<<<<<<<< HEAD:Pokemon Unity/Assets/Game/Prefabs.meta
 guid: 49fbb1466fe7ef9499faa96fda40004a
-========
-guid: ea1b7ac53f05e0044ab1e400a7d2db38
->>>>>>>> alpha:Pokemon Unity/Assets/Prefabs.meta
 folderAsset: yes
 DefaultImporter:
   externalObjects: {}
-  userData: 
-  assetBundleName: 
-  assetBundleVariant: 
+  userData:
+  assetBundleName:
+  assetBundleVariant:
