@@ -25,7 +25,7 @@ namespace PokemonUnity.Interface.UnityEngine
 	/// Manager for all the Pokemon game's functions and relationship with Unity Engine
 	/// </remarks>
 	//[ExecuteInEditMode]
-	//[RequireComponent(typeof(LevelLoader))]
+	[RequireComponent(typeof(LevelLoader))]
 	public partial class GameManager : MonoBehaviour
 	{
 		#region Variables
@@ -91,12 +91,16 @@ namespace PokemonUnity.Interface.UnityEngine
 			}
 			else if (current != this)
 			{
-				Destroy(gameObject); // Prevent duplicate instances.
+				// Prevent duplicate instances.
+				Destroy(gameObject);
 				return;
 			}
 
 			// Subscribe to log events.
 			ConfigureLogging();
+
+			//ConfigureScenes();
+			sceneList = GetComponent<LevelLoader>();
 
 			// Load localization data.
 			LoadLocalization();
@@ -104,9 +108,7 @@ namespace PokemonUnity.Interface.UnityEngine
 			// Initialize game data and database.
 			InitializeDatabase();
 
-			//ConfigureScenes();
-
-			Debug.Log("GameManager is Awake!");
+			Core.Logger?.Log("GameManager is Awake!");
 		}
 
 		void Start()
@@ -213,7 +215,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				Core.Logger?.Log("New Game Entity Successfully Instantiated!~");
 			}
 			catch (InvalidOperationException ex) { Core.Logger?.LogError("Problem executing SQL with connected database"); Core.Logger?.LogError($"SQL Error: {ex.Message}"); }
-			catch (Exception e) { Core.Logger?.LogError(e.ToString()); } //Core.Logger?.LogError($"Unexpected Error: {e}");
+			catch (Exception e) { Core.Logger?.LogError($"Unexpected Error."); Core.Logger?.LogError(e.ToString()); }
 			finally
 			{
 				Core.Logger?.Log("Is Pokemon DB Null? " + (Kernal.PokemonData == null).ToString());
@@ -245,15 +247,15 @@ namespace PokemonUnity.Interface.UnityEngine
 					Core.Logger?.Log(string.Format("Is Pokemon DB Greater than 0? {0} : {1}",
 						(Kernal.PokemonData.Count > 0).ToString(), Kernal.PokemonData.Count));
 				}
-				Debug.Log("Database successfully initialized.");
+				Core.Logger?.Log("Database successfully initialized.");
 
 				// Ensure the connection is properly closed.
 				//if (Game.con?.State == System.Data.ConnectionState.Open)
 				//{
 				//	Game.con.Close();
-				//	Debug.Log("Database connection closed.");
+				//	Core.Logger?.Log("Database connection closed.");
 				//}
-				// SQlite Database belongs strictly to framework application, so connection doesnt need to close, nor be accessed by any other resource
+				// SQlite Database belongs strictly to framework application, so connection doesn't need to close, nor be accessed by any other resource
 			}
 		}
 
