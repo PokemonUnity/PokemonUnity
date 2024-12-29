@@ -24,8 +24,12 @@ using UnityEngine.SceneManagement;
 namespace PokemonUnity.Interface.UnityEngine
 {
 	/// <summary>
-	/// </summary>
 	/// List of all the scenes that utilized by frontend platform
+	/// </summary>
+	/// <remarks>
+	/// When the unity scenes are instantiated, they are assigned here,
+	/// so that they can be referenced as a global singleton instance
+	/// </remarks>
 	public partial class LevelLoader : MonoBehaviour, IGameScenesUI
 	{
 		#region Private Monobehavior Fields
@@ -117,12 +121,14 @@ namespace PokemonUnity.Interface.UnityEngine
 		/// <param name="scenes"></param>
 		/// <returns></returns>
 		/// This gets broken the more reliant on unity inspector the startup becomes...
+		[System.Obsolete("Maybe better to instantiate scene and destroy object, than to persist in Manager")]
 		public IGameScenesUI initialize (params PokemonEssentials.Interface.Screen.IScene[] scenes)
 		{
+			sceneMapping.Clear();
 			foreach (PokemonEssentials.Interface.Screen.IScene scene in scenes)
 			{
 				if (scene is PokemonEssentials.Interface.Screen.IIntroEventScene s1) { IntroScene = s1; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IIntroEventScene), Scenes.Intro); }
-				//else if (scene is PokemonEssentials.Interface.Screen.IPokemonEntryScene s0) { TextEntryScene = s0; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonEntryScene), Scenes.TextEntry); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPokemonEntryScene s0) { TextEntryScene = s0; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokemonEntryScene), Scenes.TextEntry); }
 				else if (scene is PokemonEssentials.Interface.Screen.ILoadScene s2) { Load = s2; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.ILoadScene), Scenes.Load); }
 				else if (scene is PokemonEssentials.Interface.Screen.ISaveScene s3) { Save = s3; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.ISaveScene), Scenes.Intro); }
 				else if (scene is PokemonEssentials.Interface.Screen.IOptionScene s4) { OptionScene = s4; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IOptionScene), Scenes.Option); }
@@ -143,7 +149,7 @@ namespace PokemonUnity.Interface.UnityEngine
 				else if (scene is PokemonEssentials.Interface.Screen.IMartScene s19) { Mart = s19; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IMartScene), Scenes.Intro); }
 				else if (scene is PokemonEssentials.Interface.Screen.IRelicStoneScene s20) { RelicStone = s20; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IRelicStoneScene), Scenes.Intro); }
 				else if (scene is PokemonEssentials.Interface.Screen.IPurifyChamberScene s21) { PurityChamber = s21; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPurifyChamberScene), Scenes.Intro); }
-				//else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_Scene s22) { battleScene = s22; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_Scene), Scenes.Intro); }
+				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattle_Scene s22) { BattleScene = s22; sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattle_Scene), Scenes.Battle); }
 				else if (scene is PokemonEssentials.Interface.Screen.IPokeBattleArena_Scene s23) { BattleArenaScene = s23; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IPokeBattleArena_Scene), Scenes.Intro); }
 				else if (scene is PokemonEssentials.Interface.Screen.IBattleSwapScene s24) { BattleSwapScene = s24; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.IBattleSwapScene), Scenes.Intro); }
 				else if (scene is PokemonEssentials.Interface.Screen.ISafariZone_Scene s25) { BattleSafari = s25; } //sceneMapping.Add(typeof(PokemonEssentials.Interface.Screen.ISafariZone_Scene), Scenes.Intro); }

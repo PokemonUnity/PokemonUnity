@@ -130,6 +130,8 @@ namespace PokemonUnity.Interface.UnityEngine
 
 			//load scene
 			//SceneManager.LoadScene(scene, LoadSceneMode.Additive);
+			//use interface to instantiate gameObject and assign in-scene entity to variable
+			//using interface variable to startScene and destroy previous scene during fade animation
 			((object)scene as GameObject).gameObject.SetActive(true); //We can assume the scene is attached to a monobehavior class
 
 			//ToDo: collect garbage while waiting for scene to load...
