@@ -1,0 +1,89 @@
+trackSelection = true
+fetchPreview = true
+defaultFlags = 0
+keepOpen = false
+queryFolder = "Assets"
+onBoardingDoNotAskAgain = true
+showPackageIndexes = false
+showStatusBar = false
+scopes = {
+	"last_search.BDE7F5D3" = "t:spriterenderer "
+	"OpenInspectorPreview.BDE7F5D3" = "0"
+	"currentGroup.BDE7F5D3" = "all"
+	"last_search.982FBD6D" = "m_hgss_walk t:sprite t:texture2d t:folder"
+	"OpenInspectorPreview.982FBD6D" = "0"
+	"currentGroup.982FBD6D" = "all"
+	"last_search.8BEC98E7" = ""
+	"OpenInspectorPreview.8BEC98E7" = "0"
+	"currentGroup.8BEC98E7" = "scene"
+	"last_search.AE24D059" = ""
+	"OpenInspectorPreview.AE24D059" = "0"
+	"currentGroup.AE24D059" = "asset"
+	"last_search.7788661B" = "player"
+	"OpenInspectorPreview.7788661B" = "0"
+	"currentGroup.7788661B" = "_group_provider_Files"
+}
+providers = {
+	adb = {
+		active = false
+		priority = 2500
+		defaultAction = null
+	}
+	asset = {
+		active = true
+		priority = 25
+		defaultAction = null
+	}
+	store = {
+		active = true
+		priority = 100
+		defaultAction = null
+	}
+	find = {
+		active = true
+		priority = 25
+		defaultAction = null
+	}
+	log = {
+		active = false
+		priority = 210
+		defaultAction = null
+	}
+	packages = {
+		active = true
+		priority = 90
+		defaultAction = null
+	}
+	performance = {
+		active = false
+		priority = 100
+		defaultAction = null
+	}
+	scene = {
+		active = true
+		priority = 50
+		defaultAction = null
+	}
+}
+objectSelectors = {
+}
+recentSearches = [
+	"t:"
+	"t"
+	"player"
+	"t:sprite t:texture2d t:folder"
+	"t:tmpro.tmp_fontasset "
+	"t:sprite menuButto"
+	"t:sprite mainButton"
+	"t:sprite button"
+]
+searchItemFavorites = [
+]
+savedSearchesSortOrder = 0
+showSavedSearchPanel = false
+expandedQueries = [
+]
+queryBuilder = false
+ignoredProperties = "id;name;classname;imagecontentshash"
+helperWidgetCurrentArea = "all"
+disabledIndexers = ""

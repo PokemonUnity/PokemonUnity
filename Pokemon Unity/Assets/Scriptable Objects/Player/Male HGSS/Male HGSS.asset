@@ -1,0 +1,29 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80479618f4521e74fb82c9a6f25cf98f, type: 3}
+  m_Name: Male HGSS
+  m_EditorClassIdentifier: 
+  Animations:
+  - {fileID: 11400000, guid: 02e966d7eb2e8044fa0b13d8db6e9a56, type: 2}
+  - {fileID: 11400000, guid: 48afa2cb4a412d44db784d40f3b9b7fe, type: 2}
+  - {fileID: 11400000, guid: bc8e2600b5b3fe749814080a67139a8d, type: 2}
+  - {fileID: 11400000, guid: 07fd2b25a35ee7d4b89df3b09f953436, type: 2}
+  - {fileID: 11400000, guid: efaa5711d4b1e6b4493568fbdde781e1, type: 2}
+  - {fileID: 11400000, guid: b54d113598bebd5429114bef23daa459, type: 2}
+  - {fileID: 11400000, guid: b935fd9856c2dbf47a50119a66ccd304, type: 2}
+  - {fileID: 11400000, guid: 99f977d1c8dfa9d44ad7db8231e67126, type: 2}
+  - {fileID: 11400000, guid: 7ac21ee93171e134fbb10ac17cd2051e, type: 2}
+  - {fileID: 11400000, guid: 6c2a9fbe450b19e4d8f6e325a6e67143, type: 2}
+  - {fileID: 11400000, guid: 62c8b7ba5c45c1d46b46b80f89804927, type: 2}
+  - {fileID: 11400000, guid: de5dd5b9414c2c6488820e31ca5b3c26, type: 2}
+  Party:
+  - {fileID: 11400000, guid: 895611169deee6947b56b4bf963157da, type: 2}

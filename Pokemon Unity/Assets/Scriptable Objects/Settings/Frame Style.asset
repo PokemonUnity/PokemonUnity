@@ -1,0 +1,26 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: afc731fcd4c0958458e68d48c5fe6300, type: 3}
+  m_Name: Frame Style
+  m_EditorClassIdentifier: 
+  Key: Frame Style
+  defaultValue: {fileID: 21300000, guid: b8620f625f970084bb9cf2e751db651b, type: 3}
+  OnValueChange:
+    m_PersistentCalls:
+      m_Calls: []
+  choices:
+  - DisplayText: Frame 1
+    Value: {fileID: 21300000, guid: b8620f625f970084bb9cf2e751db651b, type: 3}
+  - DisplayText: Frame 2
+    Value: {fileID: 21300000, guid: 7cdc6982905e3bf4d9565eb1f1e6f71c, type: 3}
+  - DisplayText: Frame 3
+    Value: {fileID: 21300000, guid: efa6d8b143bc0cb439e266451829203c, type: 3}

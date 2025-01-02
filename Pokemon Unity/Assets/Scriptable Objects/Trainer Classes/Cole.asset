@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3e5c6a0fc91fca449229f03534225eb, type: 3}
+  m_Name: Cole
+  m_EditorClassIdentifier: 
+  ClassName: Cole
+  VsScreen: {fileID: 0}
+  BasePrizeMoney: 0
+  SpottedAudioTrack: {fileID: 11400000, guid: 5412eef0eb3f1ee4badf5f7fcbbfa618, type: 2}
+  BattleBackgroundMusic: {fileID: 11400000, guid: 758b58d87813f1448961cbea78fc491d,
+    type: 2}
+  VictoryBackgroundMusic: {fileID: 0}
+  LowHpBackgroundMusic: {fileID: 0}
+  Animations:
+  - {fileID: 11400000, guid: 6c63eb676bff370489c583c4b7172f55, type: 2}
+  - {fileID: 11400000, guid: bddd8d9859957414bb1297d49ea826cc, type: 2}
+  - {fileID: 11400000, guid: 1ecf7b4721629cd499c59820a3af31f6, type: 2}
+  - {fileID: 11400000, guid: 6cde36da236c3754e946d8fdae47466a, type: 2}
+  - {fileID: 11400000, guid: 3272d010987ca7143be7a234f08dae46, type: 2}
+  - {fileID: 11400000, guid: 47eca10916fcfa543b98cda078310ba8, type: 2}
+  - {fileID: 11400000, guid: 868b345d6aff22e4285d44558b5c33e1, type: 2}
+  - {fileID: 11400000, guid: 6cb2502431edbdf4185dbe047e2ddb7e, type: 2}

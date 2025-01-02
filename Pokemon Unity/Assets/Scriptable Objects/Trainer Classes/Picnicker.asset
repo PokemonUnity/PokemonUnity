@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d3e5c6a0fc91fca449229f03534225eb, type: 3}
+  m_Name: Picnicker
+  m_EditorClassIdentifier: 
+  ClassName: Picnicker
+  VsScreen: {fileID: 0}
+  BasePrizeMoney: 0
+  SpottedAudioTrack: {fileID: 11400000, guid: 5412eef0eb3f1ee4badf5f7fcbbfa618, type: 2}
+  BattleBackgroundMusic: {fileID: 11400000, guid: 758b58d87813f1448961cbea78fc491d,
+    type: 2}
+  VictoryBackgroundMusic: {fileID: 0}
+  LowHpBackgroundMusic: {fileID: 0}
+  Animations:
+  - {fileID: 11400000, guid: 24b3c45d7e4ca3a44ad6434eb413fe90, type: 2}
+  - {fileID: 11400000, guid: c2e4f47580a3b8646965405f7e059c2c, type: 2}
+  - {fileID: 11400000, guid: 4ada33463d30bf7408ad7a4aadb317ae, type: 2}
+  - {fileID: 11400000, guid: 5ec57cd6190b65e46bf72b70da571ffa, type: 2}
+  - {fileID: 11400000, guid: 478dac260180efb41856fc8afdec0245, type: 2}
+  - {fileID: 11400000, guid: 93e58b015d4527b40952bd214a86e490, type: 2}
+  - {fileID: 11400000, guid: 4f333e29c6df8824a9355cbad6ba0c9b, type: 2}
+  - {fileID: 11400000, guid: c65f55715932de1428ece3f0f4887d4d, type: 2}
